@@ -20,8 +20,8 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(20), primary_key=True)
-    email = db.Column(db.String(50), unique=True, nullable=False)
+    username = db.Column(db.String(20), primary_key=True, unique=True)
+    email = db.Column(db.String(50), unique=True, nullable=False, unique=True)
     password = db.Column(db.Text, nullable=False)
     img_url = db.Column(
         db.String, default='/static/images/icons8-kawaii-cupcake-64.png')
@@ -80,9 +80,19 @@ class Recipe(db.Model):
         "Ingredient", secondary="recipes_ingredients", backref="recipes")
 
 
+class RecipeIngredient(db.Model):
+    """ Many to Many Recipes to Ingredients """
+    __tablename__ = "recipes_ingredients"
+
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients'))
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes'))
+    amount = db.Column(db.Float)
+    unit = db.Column(db.String)
+
+
 class Ingredient(db.Model):
     """ Ingredient Model """
     __tablename__ = 'ingredients'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False, unique=True)
