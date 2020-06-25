@@ -57,6 +57,14 @@ class User(db.Model):
         return f'{self.first_name} {self.last_name}'
 
 
+class UserRecipe(db.Model):
+    """ Many to Many Users to Recipes """
+    __tablename__ = "users_recipes"
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users'))
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes'))
+
+
 class Recipe(db.Model):
     """ Recipe Model """
     __tablename__ = 'recipes'
