@@ -53,9 +53,8 @@ class User(db.Model):
         else:
             return False
 
-    def get_full_name(self):
-        """ Returns first and last name together """
-        return f'{self.first_name} {self.last_name}'
+    def __repr__(self):
+        return f'<User: {self.username}>'
 
 
 class UserRecipe(db.Model):
@@ -80,6 +79,9 @@ class Recipe(db.Model):
     ingredients = db.relationship(
         "Ingredient", secondary="recipes_ingredients", backref="recipes")
 
+    def __repr__(self):
+        return f'<Recipe: {self.title}>'
+
 
 class RecipeIngredient(db.Model):
     """ Many to Many Recipes to Ingredients """
@@ -98,6 +100,9 @@ class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False, unique=True)
 
+    def __repr__(self):
+        return f'<Ingredient: {self.name}>'
+
 
 class Step(db.Model):
     """ Step Model """
@@ -107,6 +112,9 @@ class Step(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     number = db.Column(db.Integer)
     step = db.Column(db.String)
+
+    def __repr__(self):
+        return f'<Step: {self.number} - {self.step}>'
 
 
 class ListIngredient(db.Model):
@@ -131,3 +139,6 @@ class GroceryList(db.Model):
     )
     ingredients = db.relationship(
         'Ingredient', secondary='lists_ingredients', backref="grocery_lists")
+
+    def __repr__(self):
+        return f'<Grocery List: {self.title} for {self.user.username}>'
