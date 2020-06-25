@@ -32,7 +32,7 @@ class User(db.Model):
     grocery_lists = db.relationship('GroceryList', backref='user')
 
     @classmethod
-    def register(cls, data):
+    def signup(cls, data):
         """ Generate hashed password and register a new user """
         hashed = bcrypt.generate_password_hash(data['password'])
         # Turn bytestring into normal (unicode utf8) string

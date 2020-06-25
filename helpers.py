@@ -9,7 +9,7 @@ def generate_user_data(form):
     username = form.username.data
     password = form.password.data
     email = form.email.data
-    img_url = form.img_url.data
+    img_url = form.img_url.data or User.image_url.default.arg
     return {
         'username': username,
         'password': password,

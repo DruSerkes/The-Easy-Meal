@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, session, flash, jsonify, url
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList
 from forms import SignupForm, LoginForm, GroceryListForm
+from helpers import generate_login_data, generate_user_data
 import os
 
 app = Flask(__name__)
@@ -58,17 +59,15 @@ def signup():
     form = SignupForm()
 
     if form.validate_on_submit():
+        user_data = generate_user_data(form)
         try:
-            user = User.signup(
-                username=form.username.data,
-                password=form.password.data,
-                email=form.email.data,
-                image_url=form.image_url.data or User.image_url.default.arg,
-            )
+            user = User.signup(user_data)
+            db.session.add(user)
             db.session.commit()
 
         except IntegrityError:
             flash("Username already taken", 'danger')
+            # TODO flash a different message for email IntegrityError
             return render_template('users/signup.html', form=form)
 
         do_login(user)
