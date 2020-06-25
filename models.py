@@ -19,13 +19,15 @@ class User(db.Model):
     """ User Model """
     __tablename__ = 'users'
 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(20), primary_key=True)
-    password = db.Column(db.Text, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.Text, nullable=False)
     img_url = db.Column(
         db.String, default='/static/images/icons8-kawaii-cupcake-64.png')
     is_admin = db.Column(db.Boolean, default=False)
-    recipes = db.relationship('Recipe', backref='users')
+    recipes = db.relationship(
+        'Recipe', secondary="users_recipes", backref='users')
 
     @classmethod
     def register(cls, data):
@@ -53,3 +55,18 @@ class User(db.Model):
     def get_full_name(self):
         """ Returns first and last name together """
         return f'{self.first_name} {self.last_name}'
+
+
+class Recipe(db.Model):
+    """ Recipe Model """
+    __tablename__ = 'recipes'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String, nullable=False)
+    img_url = db.Column(db.String, nullable=False)
+    source_url = db.Column(db.String)
+    description = db.Column(db.String, nullable=False)
+    ready_in = db.Column(db.Integer)
+    servings = db.Column(db.Integer)
+    ingredients = db.relationship(
+        "Ingredient", secondary="recipes_ingredients", backref="recipes")
