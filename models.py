@@ -70,3 +70,11 @@ class Recipe(db.Model):
     servings = db.Column(db.Integer)
     ingredients = db.relationship(
         "Ingredient", secondary="recipes_ingredients", backref="recipes")
+
+
+class Ingredient(db.Model):
+    """ Ingredient Model """
+    __tablename__ = 'ingredients'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
