@@ -106,3 +106,11 @@ class Step(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     number = db.Column(db.Integer)
     step = db.Column(db.String)
+
+
+class ListIngredient(db.Model):
+    """ Many to Many Lists to Ingredients """
+    __tablename__ = "lists_ingredients"
+
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'))
+    list_id = db.Column(db.Integer, db.ForeignKey('grocery_lists.id'))
