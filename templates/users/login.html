@@ -6,7 +6,23 @@
 
 <h1 class="display-1 text-center">Easy Meals</h1>
 
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-5 my-2">
+        <h2 class="text-dark">Welcome back!</h2>
+        <form method="POST" id="login-form" class="my-3">
+        {{ form.hidden_tag() }}
 
+        {% for field in form if field.widget.input_type != 'hidden' %}
+            {% for error in field.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            {{ field(placeholder=field.label.text, class="form-control my-3") }}
+        {% endfor %}
+
+        <button class="btn btn-primary btn-block btn-lg">Lets Go!</button>
+        </form>
+    </div>
+  </div>
 
 
 
