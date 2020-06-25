@@ -22,7 +22,8 @@ class User(db.Model):
     username = db.Column(db.String(20), primary_key=True)
     password = db.Column(db.Text, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
-    img_url = db.Column(db.String, nullable=True default='/static/')
+    img_url = db.Column(
+        db.String, default='/static/images/icons8-kawaii-cupcake-64.png')
     is_admin = db.Column(db.Boolean, default=False)
     recipes = db.relationship('Recipe', backref='users')
 
