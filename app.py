@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, session, flash, jsonify, g
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db
-from forms import SignUpForm, LoginForm
+from forms import SignupForm, LoginForm, GroceryListForm
 import os
 
 app = Flask(__name__)
