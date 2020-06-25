@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, session, flash, jsonify, g
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db
+from models import connect_db, db, User, Recipe, Ingredient, GroceryList
 from forms import SignupForm, LoginForm, GroceryListForm
 import os
 
@@ -12,11 +12,11 @@ app.config["SQLALCHEMY_ECHO"] = True
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', "easysecretmeal")
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 
-
+toolbar = DebugToolbarExtension(app)
 connect_db(app)
 db.create_all()
 
-toolbar = DebugToolbarExtension(app)
+CURR_USER_KEY = "user_id"
 
 
 #####################################
