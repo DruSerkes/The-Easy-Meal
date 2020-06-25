@@ -61,8 +61,8 @@ class UserRecipe(db.Model):
     """ Many to Many Users to Recipes """
     __tablename__ = "users_recipes"
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users'))
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
 
 
 class Recipe(db.Model):
@@ -84,8 +84,8 @@ class RecipeIngredient(db.Model):
     """ Many to Many Recipes to Ingredients """
     __tablename__ = "recipes_ingredients"
 
-    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients'))
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes'))
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'))
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     amount = db.Column(db.Float)
     unit = db.Column(db.String)
 
@@ -96,3 +96,13 @@ class Ingredient(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False, unique=True)
+
+
+class Step(db.Model):
+    """ Step Model """
+
+    __tablename__ = 'steps'
+
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    number = db.Column(db.Integer)
+    step = db.Column(db.String)
