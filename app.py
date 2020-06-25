@@ -17,3 +17,27 @@ connect_db(app)
 db.create_all()
 
 toolbar = DebugToolbarExtension(app)
+
+
+@app.route('/')
+def home_page():
+    """ Home Page """
+    return render_template('index.html')
+
+
+########################
+#     Custom Errors    #
+########################
+
+# CUSTOM 404 PAGE
+@app.errorhandler(404)
+def display_404(error):
+    """ Displays a custom error page when returning a 404 error """
+    return render_template('error.html'), 404
+
+
+# CUSTOM 401 PAGE
+@app.errorhandler(401)
+def display_401(error):
+    """ Displays a custom error page when returning a 404 error """
+    return render_template('error401.html'), 401
