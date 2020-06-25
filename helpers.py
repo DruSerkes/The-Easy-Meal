@@ -1,4 +1,5 @@
 """ Helper functions to keep views clean """
+from models import User
 
 
 def generate_user_data(form):
@@ -9,7 +10,7 @@ def generate_user_data(form):
     username = form.username.data
     password = form.password.data
     email = form.email.data
-    img_url = form.img_url.data or User.image_url.default.arg
+    img_url = form.img_url.data or User.img_url.default.arg
     return {
         'username': username,
         'password': password,

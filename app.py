@@ -118,6 +118,13 @@ def home_page():
     return render_template('index.html')
 
 
+# TODO
+@app.route('/favorites/<int:id>')
+def view_saved_recipes(id):
+    """ Route to view saved recipes """
+    return "Saved Recipes"
+
+
 ########################
 #     Custom Errors    #
 ########################
