@@ -4,7 +4,7 @@ from wtforms.validators import InputRequired, Email, Length
 
 
 # THESE STILL NEED WORK - I JUST COPY/PASTED THESE SO I KNOW WHERE TO START
-class RegisterForm(FlaskForm):
+class SignUpForm(FlaskForm):
     """ Registration form  """
     username = StringField("Username", validators=[
         InputRequired(message="Username required")])

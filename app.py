@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, session, flash, jsonify, g
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db
-from forms import RegisterForm, LoginForm
+from forms import SignUpForm, LoginForm
 import os
 
 app = Flask(__name__)
@@ -45,6 +45,67 @@ def do_logout():
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
+
+
+@app.route('/signup', methods=["GET", "POST"])
+def signup():
+    """
+    Handles user signup.
+    GET Displays signup form 
+    POST Creates/Adds new user to DB and redirects home
+    """
+
+    form = SignUpForm()
+
+    if form.validate_on_submit():
+        try:
+            user = User.signup(
+                username=form.username.data,
+                password=form.password.data,
+                email=form.email.data,
+                image_url=form.image_url.data or User.image_url.default.arg,
+            )
+            db.session.commit()
+
+        except IntegrityError:
+            flash("Username already taken", 'danger')
+            return render_template('users/signup.html', form=form)
+
+        do_login(user)
+
+        return redirect("/")
+
+    else:
+        return render_template('users/signup.html', form=form)
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    """Handle user login."""
+
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = User.authenticate(form.username.data,
+                                 form.password.data)
+
+        if user:
+            do_login(user)
+            flash(f"Hello, {user.username}!", "success")
+            return redirect("/")
+
+        flash("Invalid credentials.", 'danger')
+
+    return render_template('users/login.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    """Handle logout of user."""
+
+    do_logout()
+    flash('You have been logged out', 'success')
+    return redirect(url_for('homepage'))
 
 
 ########################
