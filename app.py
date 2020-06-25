@@ -55,7 +55,7 @@ def signup():
     POST Creates/Adds new user to DB and redirects home
     """
 
-    form = SignUpForm()
+    form = SignupForm()
 
     if form.validate_on_submit():
         try:
