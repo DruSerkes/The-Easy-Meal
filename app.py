@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, flash
+from flask import Flask, render_template, redirect, session, flash, jsonify, g
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db
 from forms import RegisterForm, LoginForm
@@ -17,6 +17,11 @@ connect_db(app)
 db.create_all()
 
 toolbar = DebugToolbarExtension(app)
+
+
+########################
+#       Routes         #
+########################
 
 
 @app.route('/')
