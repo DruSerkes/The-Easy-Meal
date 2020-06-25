@@ -114,3 +114,18 @@ class ListIngredient(db.Model):
 
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'))
     list_id = db.Column(db.Integer, db.ForeignKey('grocery_lists.id'))
+
+
+class GroceryList(db.Model):
+    """ Grocery List model """
+    __tablename__ = 'grocery_lists'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(50))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    date_created = db.Column(
+        db.DateTime,
+        nullable=False,
+        default=datetime.date(datetime.now())
+    )
+    ingredients = db.relationship('Ingredient', secondary='lists_ingredients', backref="grocery_lists")
