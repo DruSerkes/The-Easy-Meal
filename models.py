@@ -28,6 +28,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     recipes = db.relationship(
         'Recipe', secondary="users_recipes", backref='users')
+    grocery_lists = db.relationship('GroceryList', backref='user')
 
     @classmethod
     def register(cls, data):
@@ -128,4 +129,5 @@ class GroceryList(db.Model):
         nullable=False,
         default=datetime.date(datetime.now())
     )
-    ingredients = db.relationship('Ingredient', secondary='lists_ingredients', backref="grocery_lists")
+    ingredients = db.relationship(
+        'Ingredient', secondary='lists_ingredients', backref="grocery_lists")
