@@ -15,7 +15,7 @@ class SignUpForm(FlaskForm):
     email = StringField("Email", validators=[
         InputRequired(message="Email required"), Email()])
 
-    img_url = Url
+    img_url = URLField('Profile Image URL (optional)', validators=[Optional()])
 
 
 class LoginForm(FlaskForm):
