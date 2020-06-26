@@ -9,40 +9,65 @@
 
 <div class="container-fluid mt-5">
     <div class="row">
-        <!-- Recipe info column -->
-        <div class="col-sm-12 col-6">
-            <div class="card bg-secondary mx-auto" style="width: 50%">
+        <!-- Recipe overview column -->
+        <div class="col">
+            <div class="card bg-secondary" style="width: 18rem">
                 <img src="{{recipe.img_url}}" class="card-img-top" alt="Photo of {{recipe.title}}">
-                <div class="card-body">
+                <div class="card-body text-center">
                   <h5 class="card-title">{{ recipe.title }}</h5>
                   <p class="card-text">{{ recipe.description }}</p>
                 </div>
-                <ul class="list-group list-group-flush">
+                <ul class="list-group list-group-flush text-center">
                   <li class="list-group-item bg-secondary">Ready in: {{ recipe.ready_in }} minutes</li>
                   <li class="list-group-item bg-secondary">Serves: {{ recipe.servings }}</li>
                 </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">See more</a>
+                <div class="card-body text-center">
+                  <a href="{{ recipe.source_url }}" class="card-link">See Original Recipe</a>
                 </div>
             </div>
         </div>
+        <!-- End recipe overview  -->
 
-        <!-- Recipe directions column -->
-        <div class="col-sm-12 col-6">
-            <div class="card bg-secondary mx-auto">
-                <div class="card-title">Instructions</div>
-                
+        <!-- Recipe ingredients column -->
+        <div class="col">
+            <div class="card bg-secondary" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ingredients</h5>
+                    {% if recipe.ingredients %}
+                    <ul class="list-group list-group-flush text-center">
+                        {% for ingredient in recipe.ingredients %}
+                        <li class="list-group-item bg-secondary">{{ ingredient.name }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="card-text">Sorry!</p>
+                    <p class="card-text">We can't find the ingredients for this recipe!</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
+        <!-- End recipe ingredients  -->
+
+        <!-- Recipe directions column -->
+        <div class="col">
+            <div class="card bg-secondary" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Instructions</h5>
+                    {% if recipe.steps %}
+                    <ul class="list-group list-group-flush text-center">
+                        {% for step in recipe.steps %}
+                        <li class="list-group-item bg-secondary">{{ step.show_step() }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="card-text">Sorry!</p>
+                    <p class="card-text">We can't find any instructions for this recipe!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- End recipe directions -->
     </div>
-    
-
-      <!-- TODO add more  -->
 </div>
-
-
-
-
-
 
 {% endblock %}
