@@ -126,6 +126,17 @@ def view_saved_recipes(id):
 
 
 ########################
+#      User Routes     #
+########################
+
+@app.route('/users/<int:id>')
+def view_profile(id):
+    """ Dispay user profile """
+    user = User.query.get_or_404(id)
+    return render_template('users/profile.html', user=user)
+
+
+########################
 #     Custom Errors    #
 ########################
 

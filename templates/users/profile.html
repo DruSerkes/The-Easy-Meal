@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+
+{% block content %} 
+
+<h1 class="display-2 text-center">User Profile</h1>
+
+<div class="container justify-content-center">
+    <div class="row">
+        <div class="col-6">
+            <h3 class="h3">{{user.username}}</h3>
+            <p class="lead">
+                Email: {{ user.email }}
+                Recipes Saved: {{ len(user.recipes) }}
+                Grocery Lists Created: {{ len(user.grocery_lists) }}
+            </p>
+            
+        </div>
+        
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}
