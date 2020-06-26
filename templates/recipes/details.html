@@ -35,8 +35,8 @@
                     <h5 class="card-title">Ingredients</h5>
                     {% if recipe.ingredients %}
                     <ul class="list-group list-group-flush text-center">
-                        {% for ingredient in recipe.ingredients %}
-                        <li class="list-group-item bg-secondary">{{ ingredient.name }}</li>
+                        {% for measurement in recipe.measurements %}
+                        <li class="list-group-item bg-secondary">{{ measurement.show_measurement() }}</li>
                         {% endfor %}
                     </ul>
                     {% else %}

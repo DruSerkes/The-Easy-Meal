@@ -103,7 +103,7 @@ class Measurement(db.Model):
 
     def show_measurement(self):
         """ Returns a string with the full measurement """
-        return f"{self.amount} {self.unit} {self.ingredient.name}"
+        return f"{int(self.amount)} {self.unit} {self.ingredient.name}"
     
 
 
