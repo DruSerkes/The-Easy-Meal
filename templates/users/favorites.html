@@ -19,7 +19,7 @@
       <li class="list-group-item">Serves: {{ recipe.servings }}</li>
     </ul>
     <div class="card-body">
-      <a href="#" class="card-link">See more</a>
+      <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="card-link">See more</a>
     </div>
   </div>
 {% endfor %}

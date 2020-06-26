@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ recipe.title }}{% endblock %}
+
+
+{% block content %} 
+
+<h1 class="display-3 text-center">User Profile</h1>
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <!-- Recipe info column -->
+        <div class="col-sm-12 col-6">
+            <div class="card bg-secondary mx-auto" style="width: 50%">
+                <img src="{{recipe.img_url}}" class="card-img-top" alt="Photo of {{recipe.title}}">
+                <div class="card-body">
+                  <h5 class="card-title">{{ recipe.title }}</h5>
+                  <p class="card-text">{{ recipe.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item bg-secondary">Ready in: {{ recipe.ready_in }} minutes</li>
+                  <li class="list-group-item bg-secondary">Serves: {{ recipe.servings }}</li>
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">See more</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipe directions column -->
+        <div class="col-sm-12 col-6">
+            <div class="card bg-secondary mx-auto">
+                <div class="card-title">Instructions</div>
+                
+            </div>
+        </div>
+    </div>
+    
+
+      <!-- TODO add more  -->
+</div>
+
+
+
+
+
+
+{% endblock %}
