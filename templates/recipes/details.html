@@ -11,32 +11,30 @@
     <div class="row">
         <!-- Recipe overview column -->
         <div class="col">
-            <div class="card bg-secondary" style="width: 18rem">
+            <div class="card" style="width: 18rem">
                 <img src="{{recipe.img_url}}" class="card-img-top" alt="Photo of {{recipe.title}}">
                 <div class="card-body text-center">
                   <h5 class="card-title">{{ recipe.title }}</h5>
                   <p class="card-text">{{ recipe.description }}</p>
                 </div>
                 <ul class="list-group list-group-flush text-center">
-                  <li class="list-group-item bg-secondary">Ready in: {{ recipe.ready_in }} minutes</li>
-                  <li class="list-group-item bg-secondary">Serves: {{ recipe.servings }}</li>
+                  <li class="list-group-item">Ready in: {{ recipe.ready_in }} minutes</li>
+                  <li class="list-group-item">Serves: {{ recipe.servings }}</li>
+                  <li class="list-group-item">Source: <a href="{{ recipe.source_url }}" class="card-link">{{ recipe.source_name }}</a></li>
                 </ul>
-                <div class="card-body text-center">
-                  <a href="{{ recipe.source_url }}" class="card-link">See Original Recipe</a>
-                </div>
             </div>
         </div>
         <!-- End recipe overview  -->
 
         <!-- Recipe ingredients column -->
         <div class="col">
-            <div class="card bg-secondary" style="width: 18rem;">
+            <div class="card" style="width: 18rem;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Ingredients</h5>
                     {% if recipe.ingredients %}
                     <ul class="list-group list-group-flush text-center">
                         {% for measurement in recipe.measurements %}
-                        <li class="list-group-item bg-secondary">{{ measurement.show_measurement() }}</li>
+                        <li class="list-group-item">{{ measurement.show_measurement() }}</li>
                         {% endfor %}
                     </ul>
                     <!-- AJAX FOR THIS ONE  -->
@@ -53,13 +51,13 @@
 
         <!-- Recipe directions column -->
         <div class="col">
-            <div class="card bg-secondary" style="width: 18rem;">
+            <div class="card" style="width: 18rem;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Instructions</h5>
                     {% if recipe.steps %}
                     <ul class="list-group list-group-flush text-center">
                         {% for step in recipe.steps %}
-                        <li class="list-group-item bg-secondary">{{ step.show_step() }}</li>
+                        <li class="list-group-item">{{ step.show_step() }}</li>
                         {% endfor %}
                     </ul>
                     {% else %}
