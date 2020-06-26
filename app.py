@@ -48,16 +48,6 @@ def do_logout():
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
 
-def check_if_logged_in():
-    """ 
-    Check if a user is logged in
-    Redirects to login page if not.  
-    """ 
-    if not g.user:
-        flash('You must be logged in to do that', 'warning')
-        return redirect(url_for('login'))
-
-
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     """
@@ -139,6 +129,9 @@ def home_page():
 @app.route('/users/<int:id>')
 def view_profile(id):
     """ Dispay user profile """
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
     
     return render_template('users/profile.html')
 
@@ -146,12 +139,20 @@ def view_profile(id):
 @app.route('/favorites/<int:id>')
 def view_saved_recipes(id):
     """ Route to view saved recipes """
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login')) 
+
     return render_template('users/favorites.html')
 
 
 @app.route('/recipes/<int:id>')
 def view_recipe_details(id):
     """ View recipe in detail """
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
+
     recipe = Recipe.query.get_or_404(id)
     return render_template('recipes/details.html', recipe=recipe)
 
@@ -161,6 +162,10 @@ def view_recipe_details(id):
 @app.route('/groceries/')
 def view_grocery_list():
     """ View current grocery list """
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
+
     return "Current Grocery List"
 
 
@@ -168,6 +173,10 @@ def view_grocery_list():
 @app.route('/groceries-history')
 def view_all_lists():
     """ View all grocery lists """
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
+        
     return "All grocery lists"
 
 
