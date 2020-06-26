@@ -31,11 +31,8 @@
                 Grocery Lists
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Current List</a>
-                <a class="dropdown-item" href="#">List History</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+                <a class="dropdown-item" href="{{ url_for('view_grocery_list')}}">Current List</a>
+                <a class="dropdown-item" href="{{ url_for('view_all_lists') }}">List History</a>
             </li>
             <li class="nav-item mx-2">
               <button class="btn btn-sm btn-outline-warning my-1 py-0"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></button>

@@ -123,13 +123,6 @@ def home_page():
     return render_template('index.html')
 
 
-# TODO
-@app.route('/favorites/<int:id>')
-def view_saved_recipes(id):
-    """ Route to view saved recipes """
-    return "Saved Recipes"
-
-
 ########################
 #      User Routes     #
 ########################
@@ -141,10 +134,30 @@ def view_profile(id):
     return render_template('users/profile.html', user=user)
 
 
+# TODO
+@app.route('/favorites/<int:id>')
+def view_saved_recipes(id):
+    """ Route to view saved recipes """
+    return "Saved Recipes"
+
+
+# TODO
+@app.route('/groceries/')
+def view_grocery_list():
+    """ View current grocery list """
+    return "Current Grocery List"
+
+
+# TODO
+@app.route('/groceries-history')
+def view_all_lists():
+    """ View all grocery lists """
+    return "All grocery lists"
+
+
 ########################
 #     Custom Errors    #
 ########################
-
 # CUSTOM 404 PAGE
 @app.errorhandler(404)
 def display_404(error):
