@@ -1,6 +1,6 @@
 """ Seed file to make sample data for pets db """
 
-from models import User, Recipe, Measurement, Ingredient, db
+from models import User, Recipe, Measurement, Ingredient, Step, db
 from app import app
 
 # Create all tables
