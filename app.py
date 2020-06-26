@@ -48,6 +48,15 @@ def do_logout():
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
 
+def check_if_logged_in():
+    """ 
+    Check if a user is logged in
+    Redirects to login page if not.  
+    """ 
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
+
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -130,6 +139,7 @@ def home_page():
 @app.route('/users/<int:id>')
 def view_profile(id):
     """ Dispay user profile """
+    
     return render_template('users/profile.html')
 
 
