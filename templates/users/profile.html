@@ -9,16 +9,18 @@
 
 <div class="container justify-content-center">
     <div class="row">
-        <div class="col-6">
+        <div class="col-sm-12 col-6">
+            <img src="{{ user.img_url }}" alt="{{user.username}} profile image" class="img img-thumbnail">
+        </div>
+
+        <div class="col-sm-12 col-6">
             <h3 class="h3">{{user.username}}</h3>
             <p class="lead">
                 Email: {{ user.email }}
                 Recipes Saved: {{ len(user.recipes) }}
                 Grocery Lists Created: {{ len(user.grocery_lists) }}
             </p>
-            
-        </div>
-        
+        </div>        
     </div>
 
 
