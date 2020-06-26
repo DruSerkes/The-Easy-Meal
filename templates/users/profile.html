@@ -5,21 +5,17 @@
 
 {% block content %} 
 
-<h1 class="display-2 text-center">User Profile</h1>
+<h1 class="display-3 text-center">User Profile</h1>
 
-<div class="container justify-content-center">
+<div class="container-fluid mt-5">
     <div class="row">
-        <div class="col-sm-12 col-6">
-            <img src="{{ user.img_url }}" alt="{{user.username}} profile image" class="img img-thumbnail">
-        </div>
-
-        <div class="col-sm-12 col-6">
-            <h3 class="h3">{{user.username}}</h3>
-            <p class="lead">
-                Email: {{ user.email }}
-                Recipes Saved: {{ len(user.recipes) }}
-                Grocery Lists Created: {{ len(user.grocery_lists) }}
-            </p>
+        <div class="col-6" style='background-image:url({{user.img_url}}); background-repeat:no-repeat; background-size:contain; background-position:center;'></div>
+        <div class="col-6 text-center">
+            <h2 class="h2 mb-1">{{user.username}}</h2>
+            <button id="edit" class="badge badge-pill btn btn-outline-info mb-2">Edit Profile</button>
+            <p class="lead">Email: {{ user.email }}</p>
+            <p class="lead"> <a href="{{ url_for('view_saved_recipes', id=g.user.id) }}">Recipes Saved:</a> {{ user.recipes|length }}</p>    
+            <p class="lead"><a href="{{ url_for('view_saved_recipes', id=g.user.id) }}">Grocery Lists Created:</a> {{ user.grocery_lists|length }}</p>
         </div>        
     </div>
 
