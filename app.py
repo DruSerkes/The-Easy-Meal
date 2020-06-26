@@ -130,8 +130,8 @@ def home_page():
 @app.route('/users/<int:id>')
 def view_profile(id):
     """ Dispay user profile """
-    user = User.query.get_or_404(id)
-    return render_template('users/profile.html', user=user)
+    # user = User.query.get_or_404(id)
+    return render_template('users/profile.html')
 
 
 @app.route('/favorites/<int:id>')
