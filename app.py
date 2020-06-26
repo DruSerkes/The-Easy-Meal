@@ -90,8 +90,8 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = User.authenticate(form.username.data,
-                                 form.password.data)
+        data = generate_login_data(form)
+        user = User.authenticate(data)
 
         if user:
             do_login(user)
