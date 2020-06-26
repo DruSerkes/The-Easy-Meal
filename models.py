@@ -90,14 +90,19 @@ class Measurement(db.Model):
     """ Many to Many Recipes to Ingredients """
     __tablename__ = "measurements"
 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     ingredient_id = db.Column(db.Integer, db.ForeignKey(
-        'ingredients.id'), primary_key=True)
+        'ingredients.id'))
     recipe_id = db.Column(db.Integer, db.ForeignKey(
-        'recipes.id'), primary_key=True)
+        'recipes.id'))
     amount = db.Column(db.Float)
     unit = db.Column(db.String)
     recipe = db.relationship('Recipe', backref='measurements')
-    ingredient = db.relationship("Ingredient")
+    ingredient = db.relationship("Ingredient", backref='measurements')
+
+    def show_measurement(self):
+        """ Returns a string with the full measurement """
+        return f"{self.amount} {self.unit} {self.ingredient.name}"
     
 
 

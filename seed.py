@@ -1,17 +1,17 @@
 """ Seed file to make sample data for pets db """
 
-from models import User, Recipe, Measurement, Ingredient, db, 
+from models import User, Recipe, Measurement, Ingredient, db
 from app import app
+
+# Create all tables
+db.drop_all()
+db.create_all()
 
 # Empty all tables
 User.query.delete()
 Recipe.query.delete()
 Measurement.query.delete()
 Ingredient.query.delete()
-
-# Create all tables
-db.drop_all()
-db.create_all()
 
 
 # Add Users
@@ -20,7 +20,7 @@ phil = User(username='phil', email='test2@test.com', password='password')
 will = User(username='will', email='test3@test.com', password='password')
 
 # Add new objects to session, so they'll persist
-db.session.add_all(john, phil, will)
+db.session.add_all([john, phil, will])
 
 
 # Add Recipe 
@@ -37,6 +37,6 @@ db.session.commit()
 
 
 # Add Measurement
-m1 = Measurement(recipe_id=cookies.id, ingredient_id=dough.id, amount=24, unit="spoonfuls")
+m1 = Measurement(recipe=cookies, ingredient=dough, amount=24, unit="spoonfuls")
 db.session.add(m1)
 db.session.commit()
