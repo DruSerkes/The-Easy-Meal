@@ -158,7 +158,6 @@ def view_recipe_details(id):
 
 
 
-# TODO
 @app.route('/groceries/')
 def view_grocery_list():
     """ View current grocery list """
@@ -166,7 +165,8 @@ def view_grocery_list():
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
 
-    return "Current Grocery List"
+    grocery_list = GroceryList.query.order_by('date_created desc').limit(1)
+    return render_template('groceries.html' grocery_list=grocery_list)
 
 
 # TODO
@@ -176,7 +176,7 @@ def view_all_lists():
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
-        
+
     return "All grocery lists"
 
 
