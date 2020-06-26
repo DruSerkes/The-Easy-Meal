@@ -81,6 +81,7 @@ class Recipe(db.Model):
     servings = db.Column(db.Integer)
     ingredients = db.relationship(
         "Ingredient", secondary="measurements", backref="recipes")
+    steps = db.relationship("Step", backref='recipe')
 
     def __repr__(self):
         return f'<Recipe: {self.title}>'

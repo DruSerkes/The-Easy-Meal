@@ -6,8 +6,8 @@
 
 <h1 class="display-1 text-center">Easy Meals</h1>
 
-{% if user.recipes %}
-{% for recipe in user.recipes %}
+{% if g.user.recipes %}
+{% for recipe in g.user.recipes %}
 <div class="card" style="width: 18rem;">
     <img src="{{recipe.img_url}}" class="card-img-top" alt="Photo of {{recipe.title}}">
     <div class="card-body">

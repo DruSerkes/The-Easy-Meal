@@ -134,11 +134,18 @@ def view_profile(id):
     return render_template('users/profile.html', user=user)
 
 
-# TODO
 @app.route('/favorites/<int:id>')
 def view_saved_recipes(id):
     """ Route to view saved recipes """
     return render_template('users/favorites.html')
+
+
+@app.route('/recipes/<int:id>')
+def view_recipe_details(id):
+    """ View recipe in detail """
+    recipe = Recipe.query.get_or_404(id)
+    return render_template('recipes/details.html', recipe=recipe)
+
 
 
 # TODO

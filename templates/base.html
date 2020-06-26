@@ -41,8 +41,8 @@
           </ul>
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-            <a href="{{ url_for('view_profile', id=g.user.id) }}"><img src="{{g.user.img_url}}" alt="" class="border-0 rounded-circle z-depth-2"></a>
+            <button class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Search</button>
+            <a href="{{ url_for('view_profile', id=g.user.id) }}"><img src="{{g.user.img_url}}" alt="{{g.user.username}}" class="border-0 rounded-circle z-depth-2"></a>
           </form>
             {% else %} 
             <li class="nav-item mx-2">
