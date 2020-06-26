@@ -58,3 +58,8 @@ s5 = Step(recipe=cookies, number=5, step="Remove cookies from oven and let cool 
 s6 = Step(recipe=cookies, number=6, step="Enjoy!")
 db.session.add_all([s1, s2, s3, s4, s5, s6])                                                                                                                                                
 db.session.commit()  
+
+
+# Add cookies recipe to user Darby 
+darby.recipes.append(cookies)
+db.session.commit()
