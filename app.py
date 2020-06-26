@@ -3,6 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList
 from forms import SignupForm, LoginForm, GroceryListForm
 from helpers import generate_login_data, generate_user_data
+from sqlalchemy.exc import IntegrityError
 import os
 
 app = Flask(__name__)
@@ -65,9 +66,13 @@ def signup():
             db.session.add(user)
             db.session.commit()
 
-        except IntegrityError:
-            flash("Username already taken", 'danger')
-            # TODO flash a different message for email IntegrityError
+        except IntegrityError as error:
+            db.session.rollback()
+            if (f'(username)=({user.username}) already exists') in error._message():
+                flash("Username already taken", 'danger')
+            elif (f'(email)=({user.email}) already exists') in error._message():
+                flash("Email already taken", 'danger')
+
             return render_template('users/signup.html', form=form)
 
         do_login(user)
@@ -104,7 +109,7 @@ def logout():
 
     do_logout()
     flash('You have been logged out', 'success')
-    return redirect(url_for('homepage'))
+    return redirect(url_for('home_page'))
 
 
 ########################
