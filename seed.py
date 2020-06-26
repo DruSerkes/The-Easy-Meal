@@ -40,3 +40,12 @@ db.session.commit()
 m1 = Measurement(recipe=cookies, ingredient=dough, amount=24, unit="spoonfuls")
 db.session.add(m1)
 db.session.commit()
+
+# Add steps for recipe
+s1 = Step(recipe=cookies, number=1, step="preheat oven to 350F")                                                                                                                        
+s2 = Step(recipe=cookies, number=2, step="Place balls of dough on baking sheet 2 inches apart")                                                                                         
+s3 = Step(recipe=cookies, number=3, step="Place baking sheet in oven 10-12 minutes or until edges are light golden brown")                                                              
+s4 = Step(recipe=cookies, number=4, step="Remove cookies from oven and let cool for 5 minutes")                                                                                         
+s5 = Step(recipe=cookies, number=5, step="Enjoy!")                                                                                                                                      
+db.session.add_all([s1, s2, s3, s4, s5])                                                                                                                                                
+db.session.commit()  
