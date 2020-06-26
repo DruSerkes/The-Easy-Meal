@@ -139,5 +139,12 @@ def display_404(error):
 # CUSTOM 401 PAGE
 @app.errorhandler(401)
 def display_401(error):
-    """ Displays a custom error page when returning a 404 error """
+    """ Displays a custom error page when returning a 401 error """
     return render_template('errors/error401.html'), 401
+
+
+# CUSTOM 500 PAGE
+@app.errorhandler(500)
+def display_500(error):
+    """ Displays a custom error page when returning a 500 error"""
+    return render_template('errors/error500.html'), 500
