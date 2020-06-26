@@ -122,9 +122,10 @@ class Step(db.Model):
     """ Step Model """
 
     __tablename__ = 'steps'
-
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey(
-        'recipes.id'), primary_key=True)
+        'recipes.id'))
     number = db.Column(db.Integer)
     step = db.Column(db.String)
 
