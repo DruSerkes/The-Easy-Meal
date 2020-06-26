@@ -138,7 +138,7 @@ def view_profile(id):
 @app.route('/favorites/<int:id>')
 def view_saved_recipes(id):
     """ Route to view saved recipes """
-    return "Saved Recipes"
+    return render_template('users/favorites.html')
 
 
 # TODO

@@ -80,15 +80,15 @@ class Recipe(db.Model):
     ready_in = db.Column(db.Integer)
     servings = db.Column(db.Integer)
     ingredients = db.relationship(
-        "Ingredient", secondary="recipes_ingredients", backref="recipes")
+        "Ingredient", secondary="measurements", backref="recipes")
 
     def __repr__(self):
         return f'<Recipe: {self.title}>'
 
 
-class RecipeIngredient(db.Model):
+class Measurement(db.Model):
     """ Many to Many Recipes to Ingredients """
-    __tablename__ = "recipes_ingredients"
+    __tablename__ = "measurements"
 
     ingredient_id = db.Column(db.Integer, db.ForeignKey(
         'ingredients.id'), primary_key=True)
@@ -96,6 +96,9 @@ class RecipeIngredient(db.Model):
         'recipes.id'), primary_key=True)
     amount = db.Column(db.Float)
     unit = db.Column(db.String)
+    recipe = db.relationship('Recipe', backref='measurements')
+    ingredient = db.relationship("Ingredient")
+    
 
 
 class Ingredient(db.Model):
@@ -121,16 +124,11 @@ class Step(db.Model):
 
     def __repr__(self):
         return f'<Step: {self.number} - {self.step}>'
+    
+    def show_step(self):
+        """ returns a string of the step number and instructions """
+        return f"{self.number}. {self.step}"
 
-
-class ListIngredient(db.Model):
-    """ Many to Many Lists to Ingredients """
-    __tablename__ = "lists_ingredients"
-
-    ingredient_id = db.Column(db.Integer, db.ForeignKey(
-        'ingredients.id'), primary_key=True)
-    list_id = db.Column(db.Integer, db.ForeignKey(
-        'grocery_lists.id'), primary_key=True)
 
 
 class GroceryList(db.Model):
@@ -150,3 +148,13 @@ class GroceryList(db.Model):
 
     def __repr__(self):
         return f'<Grocery List: {self.title} for {self.user.username}>'
+
+
+class ListIngredient(db.Model):
+    """ Many to Many Lists to Ingredients """
+    __tablename__ = "lists_ingredients"
+
+    ingredient_id = db.Column(db.Integer, db.ForeignKey(
+        'ingredients.id'), primary_key=True)
+    list_id = db.Column(db.Integer, db.ForeignKey(
+        'grocery_lists.id'), primary_key=True)
