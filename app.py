@@ -133,11 +133,11 @@ def view_saved_recipes(id):
 @app.errorhandler(404)
 def display_404(error):
     """ Displays a custom error page when returning a 404 error """
-    return render_template('error.html'), 404
+    return render_template('errors/error404.html'), 404
 
 
 # CUSTOM 401 PAGE
 @app.errorhandler(401)
 def display_401(error):
     """ Displays a custom error page when returning a 404 error """
-    return render_template('error401.html'), 401
+    return render_template('errors/error401.html'), 401

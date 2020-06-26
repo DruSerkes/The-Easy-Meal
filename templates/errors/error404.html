@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}404 Error{% endblock %}
+
+
+{% block content %} 
+
+
+<div class="container-fluid text-center">
+    <img src="/static/images/404-error-page-vector-15472762.jpg" alt="404 Error Image" class="img img-fluid">
+    <a href="{{ url_for('home_page') }}" class="btn btn-lg btn-primary my-2">Return Home</a>
+</div>
+
+
+
+{% endblock %}
