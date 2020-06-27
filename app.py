@@ -157,8 +157,11 @@ def view_recipe_details(id):
     return render_template('recipes/details.html', recipe=recipe)
 
 
+########################
+# Grocery List Routes  #
+########################
 
-@app.route('/groceries/')
+@app.route('/groceries')
 def view_grocery_list():
     """ View current grocery list """
     if not g.user:
@@ -170,14 +173,28 @@ def view_grocery_list():
 
 
 # TODO
-@app.route('/groceries-history')
-def view_all_lists():
-    """ View all grocery lists """
+@app.route('/groceries/history')
+def view_list_history():
+    """ View grocery lists """
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
 
     return "All grocery lists"
+
+
+
+@app.route('/groceries', methods=['POST'])
+def create_list():
+    """ 
+    Expects JSON with title, list of ingredient names
+    Creates a grocery list 
+    Returns JSON of created list and success message.  
+    """
+    
+
+
+
 
 
 ########################
