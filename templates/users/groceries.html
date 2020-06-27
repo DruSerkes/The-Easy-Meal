@@ -4,23 +4,22 @@
 
 {% block content %} 
 
-<h1 class="display-2 text-center text-primary">Easy Meals</h1>
+<h1 class="display-2 mb-5 text-center text-primary">Easy Meals</h1>
 
 {% if g.user.grocery_lists %}
-<div class="card " style="width: 18rem;">
+<div class="card mx-auto" style="width: 18rem;">
     <img src="/static/images/groceries.jpeg" class="card-img-top" alt="Photo of groceries">
-    <div class="card-body">
+    <div class="card-body text-center">
       <h5 class="card-title">{{ grocery_list.title }}</h5>
-      <p class="card-text">{{ grocery_list.date_created }}</p>
+      <p class="card-text">{{ grocery_list.date_created.strftime('List created: %b, %d %Y') }}</p>
+          <!-- TODO Implement email functionality -->
+      <a href="#" class="btn btn-sm btn-primary text-light">Email Me This List</a>
     </div>
     <ul class="list-group list-group-flush">
         {% for ingredient in grocery_list.ingredients %}
-        <li>{{ingredient.name}}</li>
+        <li class='text-center mb-1'>{{ingredient.name}}</li>
         {% endfor %}
     </ul>
-    <div class="card-body">
-      <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="card-link">See more</a>
-    </div>
   </div>
 
 {% else %}
