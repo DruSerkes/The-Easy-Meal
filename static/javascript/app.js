@@ -17,10 +17,19 @@ $('#add-ingredients').on('click', addIngredientsToGroceryList);
 async function addIngredientsToGroceryList(evt) {
 	const id = $(this).data('id');
 	response = await axios.post(`/groceries`, (data = { id }));
-	// Display response on DOM
 	const modalHTML = generateModalHTML(response.data);
 	$('body > .container').append(modalHTML);
 	$('#myModal').modal('show');
+}
+
+async function removeIngredientFromGroceryList(evt) {
+	const id = $(this).data('id');
+	response = await axios.delete('/groceries', (data = { id }));
+	// have DELETE /groceries remove ingredient with this id from the grocerylist
+	// remove parent li
+	// display alert
+	// alert fades out after 2-3 seconds
+	const alertHTML = generateAlertHTML(response.data);
 }
 
 /* 
@@ -47,4 +56,11 @@ function generateModalHTML(data) {
     </div>
   </div>
 </div>`;
+}
+
+function generateAlertHTML(data) {
+	// return html for an alert
+	return `<div class="alert alert-success" role="alert">
+	Ingredient removed from list.
+  </div>`;
 }
