@@ -118,6 +118,13 @@ class Ingredient(db.Model):
     def __repr__(self):
         return f'<Ingredient: {self.name}>'
 
+    def serialize(self):
+        """ Serialize Ingredient instance for JSON """
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
 
 class Step(db.Model):
     """ Step Model """

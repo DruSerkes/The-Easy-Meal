@@ -30,6 +30,7 @@ async function removeIngredientFromGroceryList(evt) {
 	// display alert
 	// alert fades out after 2-3 seconds
 	const alertHTML = generateAlertHTML(response.data);
+	
 }
 
 /* 
