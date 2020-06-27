@@ -29,17 +29,11 @@ async function removeIngredientFromGroceryList(evt) {
 	const id = $(this).data('id');
 	const listId = $(this).closest('ul').attr('id');
 	const response = await axios.patch(`/groceries/${listId}`, (data = { id }));
-	console.log(response.data);
-	console.log(this);
-
-	// Display message in place of parent LI
 
 	displayAndRemove.call(this, response.data);
-	// const $toRemove = $(this).closest('li');
-	// $toRemove.innerHTML(`${response.data.message}`);
-	// $toRemove.delay(500).fadeOut(2000);
-	// const alertHTML = generateAlertHTML(response.data);
 }
+
+// TODO Remove all items from list
 
 /* 
 // HELPERS
