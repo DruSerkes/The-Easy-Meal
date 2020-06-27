@@ -166,7 +166,7 @@ def view_grocery_list():
         return redirect(url_for('login'))
 
     grocery_list = GroceryList.query.order_by('date_created desc').limit(1)
-    return render_template('groceries.html' grocery_list=grocery_list)
+    return render_template('users/groceries.html', grocery_list=grocery_list)
 
 
 # TODO
