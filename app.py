@@ -191,7 +191,15 @@ def create_list():
     Creates a grocery list 
     Returns JSON of created list and success message.  
     """
-    
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
+
+    new_list = GroceryList(title=)
+    title = session.json.get(title, None)
+    ingredients = session.json.get(ingredients, None)
+    if title == None or len(ingredients) == 0:
+         return jsonify(error=)
 
 
 
