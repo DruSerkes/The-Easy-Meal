@@ -18,5 +18,7 @@ async function addIngredientsToGroceryList(evt) {
 	const id = $(this).data('id');
 	response = await axios.post(`/groceries`, (data = { id }));
 	// Display response on DOM
-	console.log(response.data);
+	console.log(response.data.message);
 }
+
+

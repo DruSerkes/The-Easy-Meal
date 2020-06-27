@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, flash, jsonify, url_for, g
+from flask import Flask, render_template, redirect, session, request, flash, jsonify, url_for, g
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step
 from forms import SignupForm, LoginForm, GroceryListForm
@@ -167,8 +167,8 @@ def view_grocery_list():
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
-
-    grocery_list = GroceryList.query.order_by('date_created desc').limit(1)
+    # TODO - THIS WILL NEED TO BE UPDATED FOR USERS TO VIEW PAST LISTS 
+    grocery_list = GroceryList.query.filter_by(user_id=g.user.id).order_by(GroceryList.date_created.desc()).first()
     return render_template('users/groceries.html', grocery_list=grocery_list)
 
 
@@ -205,7 +205,7 @@ def add_ingredients_to_list():
         db.session.add(new_list)
         db.session.commit()
     # Grab most recent grocery list and recipe being added 
-    grocery_list = GroceryList.query.filter(GroceryList.user_id == g.user.id).order_by('date_created desc').limit(1)
+    grocery_list = GroceryList.query.filter_by(user_id=g.user.id).order_by(GroceryList.date_created.desc()).first()
     recipe = Recipe.query.get_or_404(request.json['id'])
     # Add recipe ingredients to grocery list if they're not already there
     for ingredient in recipe.ingredients:
