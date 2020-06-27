@@ -190,8 +190,9 @@ def view_list_history():
 @app.route('/groceries', methods=['POST'])
 def add_ingredients_to_list():
     """ 
-    Expects JSON
-    Creates a grocery list 
+    Expects JSON with recipe id
+    Creates grocery list if one is not already associated with this user. 
+    Adds ingredients to most recently created grocery list 
     Returns JSON of created list and success message.  
     """
     # Check if authorized
