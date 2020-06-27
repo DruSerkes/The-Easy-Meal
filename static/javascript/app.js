@@ -5,9 +5,7 @@ $(document).ready(function() {
 	// Flashed messages fade in and out
 	$('#flash').hide().delay(300).fadeIn(500).delay(3000).fadeOut(800);
 	// Enable Tooltips
-	$(function() {
-		$('[data-toggle="tooltip"]').tooltip();
-	});
+	$('[data-toggle="tooltip"]').tooltip();
 });
 
 /* 
@@ -25,19 +23,46 @@ async function addIngredientsToGroceryList(evt) {
 	$('#myModal').modal('show');
 }
 
+$('#remove').on('click', changeToConfirmRemove);
+
 async function removeIngredientFromGroceryList(evt) {
 	const id = $(this).data('id');
-	response = await axios.delete('/groceries', (data = { id }));
-	// have DELETE /groceries remove ingredient with this id from the grocerylist
-	// remove parent li
-	// display alert
-	// alert fades out after 2-3 seconds
-	const alertHTML = generateAlertHTML(response.data);
+	const listId = $(this).closest('ul').attr('id');
+	const response = await axios.patch(`/groceries/${listId}`, (data = { id }));
+	console.log(response.data);
+	console.log(this);
+
+	// Display message in place of parent LI
+
+	displayAndRemove.call(this, response.data);
+	// const $toRemove = $(this).closest('li');
+	// $toRemove.innerHTML(`${response.data.message}`);
+	// $toRemove.delay(500).fadeOut(2000);
+	// const alertHTML = generateAlertHTML(response.data);
 }
 
 /* 
 // HELPERS
 */
+
+function displayAndRemove(data) {
+	console.log(this);
+	const $toRemove = $(this).closest('li');
+	$toRemove.html(`${data.message}`);
+	$toRemove.delay(500).fadeOut(2000);
+}
+
+function changeToConfirmRemove() {
+	$(this).removeClass('far fa-trash-alt');
+	$(this).addClass('fas fa-minus-circle');
+	$(this)
+		.attr('id', 'confirm-remove')
+		.attr('data-toggle', 'tooltip')
+		.attr('data-placement', 'right')
+		.attr('title', 'Remove from list')
+		.tooltip()
+		.on('click', removeIngredientFromGroceryList);
+}
 
 function generateModalHTML(data) {
 	return `<div id="myModal" class="modal" tabindex="-1" role="dialog">

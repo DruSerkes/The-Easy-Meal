@@ -225,14 +225,15 @@ def remove_ingredient_from_list(list_id):
         return abort(401)
     
     grocery_list = GroceryList.query.get_or_404(list_id)
-    id_to_remove = Ingredient.query.get_or_404(request.json.get['id'])
+    i_to_remove = Ingredient.query.get_or_404(request.json['id'])
+
     for ingredient in grocery_list.ingredients:
-        if ingredient.id == id_to_remove:
+        if ingredient == i_to_remove:
             grocery_list.ingredients.remove(ingredient)
             break
     db.session.commit()
 
-    response_json = jsonify(grocery_list.serialize(), message="List updated!")
+    response_json = jsonify(grocery_list=grocery_list.serialize(), message="List updated!")
     return (response_json, 200)
 
 
