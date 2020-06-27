@@ -184,9 +184,6 @@ def view_list_history():
 
 
 
-# Check if user has a grocery list - if not, create a grocery list associated with this user with default title
-# For every ingredient coming from the currently viewed recipe, check if it's already on the list - if not, add it to the list! 
-# Return JSON of the created w/201 or updated grocery list w/200  
 @app.route('/groceries', methods=['POST'])
 def add_ingredients_to_list():
     """ 
@@ -214,7 +211,7 @@ def add_ingredients_to_list():
     db.session.commit()
     # Return JSON response 
     response_json = jsonify(grocery_list=grocery_list.serialize(), message="Ingredients Added!")
-    return (response_json, 201)
+    return (response_json, 200)
     
 
 

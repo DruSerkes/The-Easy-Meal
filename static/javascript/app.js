@@ -20,10 +20,12 @@ async function addIngredientsToGroceryList(evt) {
 	// Display response on DOM
 	console.log(response.data.message);
 	const modalHTML = generateModalHTML(response.data);
+	$('body > .container').append(modalHTML);
+	$('#myModal').modal('show');
 }
 
 function generateModalHTML(data) {
-	return `<div class="modal" tabindex="-1" role="dialog">
+	return `<div id="myModal" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -33,10 +35,10 @@ function generateModalHTML(data) {
         </button>
       </div>
       <div class="modal-body">
-        <p>Modal body text goes here.</p>
+        <p>${data.message}</p>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary text-white" href="{{ url_for('view_grocery_list') }}">Go to Shopping List</a>
+        <a class="btn btn-primary text-white" href="/groceries") }}">Go to Shopping List</a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
