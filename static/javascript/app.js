@@ -1,10 +1,13 @@
 /* 
 // ANIMATIONS
 */
-
-// Flashed messages fade in, fade out
 $(document).ready(function() {
+	// Flashed messages fade in and out
 	$('#flash').hide().delay(300).fadeIn(500).delay(3000).fadeOut(800);
+	// Enable Tooltips
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
 });
 
 /* 
@@ -30,7 +33,6 @@ async function removeIngredientFromGroceryList(evt) {
 	// display alert
 	// alert fades out after 2-3 seconds
 	const alertHTML = generateAlertHTML(response.data);
-	
 }
 
 /* 
