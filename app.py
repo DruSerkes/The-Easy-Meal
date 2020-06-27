@@ -169,7 +169,7 @@ def view_grocery_list(id):
         return redirect(url_for('login'))
 
     grocery_list = GroceryList.query.get_or_404(id)
-    return render_template('users/groceries.html', grocery_list=grocery_list)
+    return render_template('groceries/list.html', grocery_list=grocery_list)
 
 
 # TODO
@@ -180,7 +180,7 @@ def view_list_history():
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
 
-    return "All grocery lists"
+    return render_template('')
 
 
 
