@@ -157,6 +157,16 @@ class GroceryList(db.Model):
     def __repr__(self):
         return f'<Grocery List: {self.title} for {self.user.username}>'
 
+    def serialize(self):
+        """ Serialize a Grocery List instance for JSON """
+        return {
+            'id' : self.id,
+            'title' : self.title, 
+            'user_id' : self.user_id,
+            'date_created' : self.date_created,
+            'ingredients' : [ingredient.name for ingredient in self.ingredients]
+        }
+
 
 class ListIngredient(db.Model):
     """ Many to Many Lists to Ingredients """

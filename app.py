@@ -185,24 +185,36 @@ def view_list_history():
 
 
 # Check if user has a grocery list - if not, create a grocery list associated with this user with default title
-# 
-# 
+# For every ingredient coming from the currently viewed recipe, check if it's already on the list - if not, add it to the list! 
+# Return JSON of the created w/201 or updated grocery list w/200  
 @app.route('/groceries', methods=['POST'])
-def create_list():
+def add_ingredients_to_list():
     """ 
-    Expects JSON with title, list of ingredient names
+    Expects JSON
     Creates a grocery list 
     Returns JSON of created list and success message.  
     """
+    # Check if authorized
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
-
-    new_list = GroceryList(title=)
-    title = session.json.get(title, None)
-    ingredients = session.json.get(ingredients, None)
-    if title == None or len(ingredients) == 0:
-         return jsonify(error=)
+    # Make a grocery list if user doesn't already have one
+    if len(g.user.grocery_lists) == 0:
+        new_list = GroceryList(user_id=g.user.id)
+        db.session.add(new_list)
+        db.session.commit()
+    # Grab most recent grocery list and recipe being added 
+    grocery_list = GroceryList.query.filter(GroceryList.user_id == g.user.id).order_by('date_created desc').limit(1)
+    recipe = Recipe.query.get_or_404(request.json['id'])
+    # Add recipe ingredients to grocery list if they're not already there
+    for ingredient in recipe.ingredients:
+        if ingredient not in grocery_list.ingredients:
+            grocery_list.ingredients.append(ingredient)
+    db.session.commit()
+    # Return JSON response 
+    response_json = jsonify(grocery_list=grocery_list.serialize(), message="Ingredients Added!")
+    return (response_json, 201)
+    
 
 
 

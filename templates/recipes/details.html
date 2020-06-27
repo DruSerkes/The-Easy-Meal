@@ -38,7 +38,7 @@
                         {% endfor %}
                     </ul>
                     <!-- TODO AJAX FOR THIS ONE  -->
-                    <button id='add-ingredients' class="btn btn-primary">Add to Shopping List</button>
+                    <button id='add-ingredients' data-id="{{ recipe.id }}" class="btn btn-primary">Add to Shopping List</button>
                     <!-- ^^ -->
                     {% else %}
                     <p class="card-text">Sorry!</p>
