@@ -18,11 +18,14 @@ async function addIngredientsToGroceryList(evt) {
 	const id = $(this).data('id');
 	response = await axios.post(`/groceries`, (data = { id }));
 	// Display response on DOM
-	console.log(response.data.message);
 	const modalHTML = generateModalHTML(response.data);
 	$('body > .container').append(modalHTML);
 	$('#myModal').modal('show');
 }
+
+/* 
+// HELPERS
+*/
 
 function generateModalHTML(data) {
 	return `<div id="myModal" class="modal" tabindex="-1" role="dialog">
@@ -38,7 +41,7 @@ function generateModalHTML(data) {
         <p>${data.message}</p>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary text-white" href="/groceries") }}">Go to Shopping List</a>
+        <a class="btn btn-primary text-white" href="/groceries/${data.grocery_list.id}") }}">Go to Shopping List</a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

@@ -161,14 +161,14 @@ def view_recipe_details(id):
 # Grocery List Routes  #
 ########################
 
-@app.route('/groceries')
-def view_grocery_list():
-    """ View current grocery list """
+@app.route('/groceries/<int:id>')
+def view_grocery_list(id):
+    """ View a grocery list """
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
-    # TODO - THIS WILL NEED TO BE UPDATED FOR USERS TO VIEW PAST LISTS 
-    grocery_list = GroceryList.query.filter_by(user_id=g.user.id).order_by(GroceryList.date_created.desc()).first()
+
+    grocery_list = GroceryList.query.get_or_404(id)
     return render_template('users/groceries.html', grocery_list=grocery_list)
 
 

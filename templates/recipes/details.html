@@ -37,9 +37,7 @@
                         <li class="list-group-item">{{ measurement.show_measurement() }}</li>
                         {% endfor %}
                     </ul>
-                    <!-- TODO AJAX FOR THIS ONE  -->
                     <button id='add-ingredients' data-id="{{ recipe.id }}" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Add to Shopping List</button>
-                    <!-- ^^ -->
                     {% else %}
                     <p class="card-text">Sorry!</p>
                     <p class="card-text">We can't find the ingredients for this recipe!</p>
