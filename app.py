@@ -184,6 +184,9 @@ def view_list_history():
 
 
 
+# Check if user has a grocery list - if not, create a grocery list associated with this user with default title
+# 
+# 
 @app.route('/groceries', methods=['POST'])
 def create_list():
     """ 
@@ -200,6 +203,7 @@ def create_list():
     ingredients = session.json.get(ingredients, None)
     if title == None or len(ingredients) == 0:
          return jsonify(error=)
+
 
 
 

@@ -144,7 +144,7 @@ class GroceryList(db.Model):
     __tablename__ = 'grocery_lists'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(50))
+    title = db.Column(db.String(50), default="My Shopping List")
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     date_created = db.Column(
         db.DateTime,
