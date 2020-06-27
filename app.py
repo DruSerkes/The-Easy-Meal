@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, request, flash, jsonify, url_for, g
+from flask import Flask, render_template, redirect, session, request, flash, jsonify, url_for, abort, g
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step
 from forms import SignupForm, LoginForm, GroceryListForm
@@ -194,8 +194,7 @@ def add_ingredients_to_list():
     """
     # Check if authorized
     if not g.user:
-        flash('You must be logged in to do that', 'warning')
-        return redirect(url_for('login'))
+        return abort(401)
     # Make a grocery list if user doesn't already have one
     if len(g.user.grocery_lists) == 0:
         new_list = GroceryList(user_id=g.user.id)
