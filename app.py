@@ -5,7 +5,7 @@ from forms import SignupForm, LoginForm, GroceryListForm
 from helpers import generate_login_data, generate_user_data
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
-from secrets import email_password
+from secrets import app_password
 import os
 
 app = Flask(__name__)
@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_DEFAULT_SENDER'] = ('Easy Meals', 'EasyMealsOfficial@gmail.com')
 app.config['MAIL_USERNAME'] = 'EasyMealsOfficial@gmail.com'
-app.config['MAIL_PASSWORD'] = email_password
+app.config['MAIL_PASSWORD'] = app_password
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
