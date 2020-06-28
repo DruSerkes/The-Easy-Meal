@@ -254,13 +254,14 @@ def mail_grocery_list(list_id):
     """ Email grocery list to a user """
     try:
         grocery_list = GroceryList.query.get_or_404(list_id)
-        msg = Message(subject="Your Grocery List!", sender=f"{g.user.email}", recipients=[f"{g.user.email}"])
+        msg = Message(subject="Your Grocery List!", recipients=[f"{g.user.email}"])
         msg.body = [f"ingredient.name \n" for ingredient in grocery_list.ingredients].join('')
         msg.html = render_template('/groceries/email.html', grocery_list=grocery_list)
         mail.send(msg)
-        return jsonify(message=f'Message Sent to {g.user.email}')
+        response_json = jsonify(grocery_list=grocery_list, message=f'Message sent to {g.user.email}')
+        return (response_json, 200)
     except Exception as e:
-        return str(e)
+        return jsonify(errors=str(e))
 
 
 

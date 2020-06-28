@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="/static/styles/theme_1593064276523.css">
 </head>
 <body class='text-center justify-content-center'>
-    <h1 class='h1 mb-3'>{{ grocery_list.title }}</h1>
-    <ol>
+    <h1 class='h1 mb-1'>{{ grocery_list.title }}</h1>
+    <hr>
+    
+    <ol class='my-2'>
         {% for ingredient in grocery_list.ingredients %}
         <li>{{ ingredient.name }}</li>
         {% endfor %}
     </ol>
-    
 
     <p>This email was send by {{g.user.username}} at EasyMeals.com</p>
 </body>
