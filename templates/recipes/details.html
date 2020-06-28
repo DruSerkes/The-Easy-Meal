@@ -7,10 +7,10 @@
 
 <h1 class="display-3 text-center">User Profile</h1>
 
-<div class="container-fluid mt-5">
-    <div class="row">
+<!-- <div class="container-fluid mt-5">
+    <div class="row"> -->
         <!-- Recipe overview column -->
-        <div class="col-sm-12 col-md-4">
+        <!-- <div class="col-sm-12 col-md-4">
             <div class="card" style="width: 100%">
                 <img src="{{recipe.img_url}}" class="card-img-top" alt="Photo of {{recipe.title}}">
                 <div class="card-body text-center">
@@ -26,11 +26,11 @@
                   </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
         <!-- End recipe overview  -->
 
         <!-- Recipe ingredients column -->
-        <div class="col">
+        <!-- <div class="col">
             <div class="card" style="width: 18rem;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Ingredients</h5>
@@ -47,11 +47,11 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- End recipe ingredients  -->
 
         <!-- Recipe directions column -->
-        <div class="col">
+        <!-- <div class="col">
             <div class="card" style="width: 18rem;">
                 <div class="card-body text-center">
                     <h5 class="card-title">Instructions</h5>
@@ -67,9 +67,66 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- End recipe directions -->
+    <!-- </div>
+</div> -->
+
+<div class="jumbotron">
+    <div class="container-fluid">
+      <div class="row mb-1">
+
+        <div class="col-sm-12 col-md-6 text-center">
+          <h1 class="display-4">{{ recipe.title }}</h1>
+          <p class="lead">{{ recipe.description }}</p>
+          <hr class="my-2">
+          <p class="lead my-1">Ready in: {{ recipe.ready_in }} minutes</p>
+          <p class="lead my-1">Serves: {{ recipe.servings }}</p>
+        </div>
+  
+        <div class="col-sm-12 col-md-6 mr-0">
+          <img src="{{recipe.img_url}}" class="img img-fluid img-thumbnail" alt="Photo of {{recipe.title}}">
+          <p class="lead text-center">By {{ recipe.source_name }}
+            <br>
+            <small class="small"><a href="{{ recipe.source_url }}" class="text-muted">View the original recipe here</a></small>
+          </p>
+        </div>
+      </div>
+      <hr class="my-4">
+
+      <div class="row">
+          <!-- left column for directions  -->
+            <div class="col-sm-12 col-md-6 text-center">
+                <h5 class="card-title">Instructions</h5>
+                {% if recipe.steps %}
+                <ul class="list-group list-group-flush text-center">
+                    {% for step in recipe.steps %}
+                    <li class="list-group-item">{{ step.show_step() }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="card-text">Sorry!</p>
+                <p class="card-text">We can't find any instructions for this recipe!</p>
+                {% endif %}
+            </div>
+
+            <!-- right column for ingredients  -->
+            <div class="col-sm-12 col-md-6 text-center">
+                <h5 class="card-title">Ingredients</h5>
+                {% if recipe.ingredients %}
+                <ul class="list-group list-group-flush text-center mb-3">
+                    {% for measurement in recipe.measurements %}
+                    <li class="list-group-item">{{ measurement.show_measurement() }}</li>
+                    {% endfor %}
+                </ul>
+                <button id='add-ingredients' data-id="{{ recipe.id }}" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Add to Shopping List</button>
+                {% else %}
+                <p class="card-text">Sorry!</p>
+                <p class="card-text">We can't find the ingredients for this recipe!</p>
+                {% endif %}
+            </div>
+      </div>
     </div>
-</div>
+  </div>
 
 {% endblock %}
