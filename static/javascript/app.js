@@ -34,10 +34,15 @@ async function removeIngredientFromGroceryList(evt) {
 }
 
 // TODO send an email
+
+$('#send-email').on('click', sendEmail);
+
 async function sendEmail() {
+	console.log('emailing');
 	const id = $(this).data('id');
 	response = await axios.get(`/groceries/${id}/send`);
-	if (response.data.message.contains('Message sent')) {
+
+	if (!response.data.errors) {
 		const alertHTML = generateAlertHTML(response.data.message, 'success');
 		$('h1').after(alertHTML).alert();
 	} else {
@@ -45,6 +50,7 @@ async function sendEmail() {
 		$('h1').after(alertHTML).alert();
 	}
 }
+
 // TODO Remove all items from list
 
 /* 
@@ -52,7 +58,6 @@ async function sendEmail() {
 */
 
 function displayAndRemove(data) {
-	console.log(this);
 	const $toRemove = $(this).closest('li');
 	$toRemove.html(`${data.message}`);
 	$toRemove.delay(500).fadeOut(2000);
@@ -94,10 +99,12 @@ function generateModalHTML(data) {
 
 function generateAlertHTML(message, category) {
 	// return html for an alert
-	return `<div class="alert alert-${category} alert-dismissible fade show" role="alert">
+	return `<div class="container w-75 mx-auto">
+	<div class="alert alert-${category} alert-dismissible fade show text-center" role="alert">
 	${message}
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
+  </div>
   </div>`;
 }
