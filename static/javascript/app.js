@@ -23,7 +23,7 @@ async function addIngredientsToGroceryList(evt) {
 	$('#myModal').modal('show');
 }
 
-$('#remove').on('click', changeToConfirmRemove);
+$('#remove').on('click', confirmRemove);
 
 async function removeIngredientFromGroceryList(evt) {
 	const id = $(this).data('id');
@@ -33,9 +33,8 @@ async function removeIngredientFromGroceryList(evt) {
 	displayAndRemove.call(this, response.data);
 }
 
-// TODO send an email 
-
-
+// TODO send an email
+confirm;
 
 // TODO Remove all items from list
 
@@ -50,7 +49,7 @@ function displayAndRemove(data) {
 	$toRemove.delay(500).fadeOut(2000);
 }
 
-function changeToConfirmRemove() {
+function confirmRemove() {
 	$(this).removeClass('far fa-trash-alt');
 	$(this).addClass('fas fa-minus-circle');
 	$(this)
@@ -84,9 +83,9 @@ function generateModalHTML(data) {
 </div>`;
 }
 
-function generateAlertHTML(data) {
+function generateAlertHTML(data, category) {
 	// return html for an alert
-	return `<div class="alert alert-success" role="alert">
-	Ingredient removed from list.
+	return `<div class="alert alert-${category}" role="alert">
+	${data.message}
   </div>`;
 }
