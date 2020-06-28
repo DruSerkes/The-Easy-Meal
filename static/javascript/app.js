@@ -39,11 +39,11 @@ async function sendEmail() {
 	const id = $(this).data('id');
 	response = await axios.get(`/email/${id}`);
 
-	if (!response.data.errors) {
-		const alertHTML = generateAlertHTML(response.data.message, 'success');
+	if (response.data.errors) {
+		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
 		$('h1').after(alertHTML).alert();
 	} else {
-		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
+		const alertHTML = generateAlertHTML(response.data.message, 'success');
 		$('h1').after(alertHTML).alert();
 	}
 }
@@ -52,7 +52,16 @@ async function sendEmail() {
 
 async function clearList() {
 	const id = $(this).data('id');
-	response = await axios.delete(`/groceries/${id}`)
+	response = await axios.delete(`/groceries/${id}`);
+
+	if (response.status !== 200) {
+		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
+		$('h1').after(alertHTML).alert();
+	} else {
+		const alertHTML = generateAlertHTML(response.data.message, 'success');
+		$('h1').after(alertHTML).alert();
+		$('ul').empty();
+	}
 }
 
 /* 
