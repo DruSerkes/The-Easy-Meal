@@ -13,7 +13,7 @@
       <h5 class="card-title">{{ grocery_list.title }}</h5>
       <p class="card-text">{{ grocery_list.date_created.strftime('List created: %b, %d %Y') }}</p>
           <!-- TODO Implement email functionality -->
-      <a href="#" class="btn btn-sm btn-primary text-light">Email Me This List</a>
+      <button id='email' data-id="{{ grocery_list.id }}"" class="btn btn-sm btn-primary">Email Me This List</button>
     </div>
     <ul class="list-group list-group-flush" id="{{ grocery_list.id }}">
         {% for ingredient in grocery_list.ingredients %}

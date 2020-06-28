@@ -33,6 +33,10 @@ async function removeIngredientFromGroceryList(evt) {
 	displayAndRemove.call(this, response.data);
 }
 
+// TODO send an email 
+
+
+
 // TODO Remove all items from list
 
 /* 
