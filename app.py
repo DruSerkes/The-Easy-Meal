@@ -263,9 +263,12 @@ def empty_list(list_id):
     try:
         grocery_list = GroceryList.query.get_or_404(list_id)
         grocery_list.ingredients = []
+        db.session.commit()
+
         response_json = jsonify(message="Shopping list cleared successfully!")
         return (response_json, 200)
     except Exception as e:
+        db.session.rollback()
         return jsonify(errors=str(e))
 
 
