@@ -253,6 +253,22 @@ def remove_ingredient_from_list(list_id):
     return (response_json, 200)
 
 
+@app.route('/groceries/<int:list_id>', methods=['DELETE'])
+def empty_list(list_id):
+    """ Remove all ingredients from a grocery list """
+    # Check if authorized
+    if not g.user:
+        return abort(401)
+
+    try:
+        grocery_list = GroceryList.query.get_or_404(list_id)
+        grocery_list.ingredients = []
+        response_json = jsonify(message="Shopping list cleared successfully!")
+        return (response_json, 200)
+    except Exception as e:
+        return jsonify(errors=str(e))
+
+
 @app.route('/email/<int:list_id>')
 def mail_grocery_list(list_id):
     """ Email grocery list to a user """
