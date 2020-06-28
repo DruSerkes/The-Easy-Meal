@@ -248,10 +248,12 @@ def remove_ingredient_from_list(list_id):
     response_json = jsonify(grocery_list=grocery_list.serialize(), message="List updated!")
     return (response_json, 200)
 
-# TODO AJAX GET to this route  
 @app.route('/groceries/<int:list_id>/send')
 def mail_grocery_list(list_id):
     """ Email grocery list to a user """
+    if not g.user:
+        return abort(401)
+        
     try:
         grocery_list = GroceryList.query.get_or_404(list_id)
         msg = Message(subject="Your Grocery List!", recipients=[f"{g.user.email}"])
@@ -287,3 +289,6 @@ def display_401(error):
 def display_500(error):
     """ Displays a custom error page when returning a 500 error"""
     return render_template('errors/error500.html'), 500
+
+
+

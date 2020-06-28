@@ -12,7 +12,7 @@
     <div class="card-body text-center">
       <h5 class="card-title">{{ grocery_list.title }}</h5>
       <p class="card-text">{{ grocery_list.date_created.strftime('List created: %b, %d %Y') }}</p>
-          <!-- TODO Implement email functionality -->
+          <!-- TODO Add clear-list button -->
       <button id='send-email' data-id="{{ grocery_list.id }}" class="btn btn-sm btn-primary">Email Me This List</button>
     </div>
     <ul class="list-group list-group-flush" id="{{ grocery_list.id }}">
