@@ -12,14 +12,15 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     'DATABASE_URL', "postgres:///easymeal")
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_DEFAULT_SENDER'] = ('Easy Meals', 'EasyMealsOfficial@gmail.com')
+app.config['MAIL_DEFAULT_SENDER'] = (
+    'Easy Meals', 'EasyMealsOfficial@gmail.com')
 app.config['MAIL_USERNAME'] = 'EasyMealsOfficial@gmail.com'
 app.config['MAIL_PASSWORD'] = app_password
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_DEBUG'] = True # Set to false once in production
-app.config['MAIL_MAX_EMAILS'] = 1 
+app.config['MAIL_DEBUG'] = True  # Set to false once in production
+app.config['MAIL_MAX_EMAILS'] = 1
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', "easysecretmeal")
@@ -59,6 +60,7 @@ def do_logout():
 
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
+
 
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -144,7 +146,7 @@ def view_profile(id):
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
-    
+
     return render_template('users/profile.html')
 
 
@@ -153,7 +155,7 @@ def view_saved_recipes(id):
     """ Route to view saved recipes """
     if not g.user:
         flash('You must be logged in to do that', 'warning')
-        return redirect(url_for('login')) 
+        return redirect(url_for('login'))
 
     return render_template('users/favorites.html')
 
@@ -195,7 +197,6 @@ def view_list_history():
     return render_template('')
 
 
-
 @app.route('/groceries', methods=['POST'])
 def add_ingredients_to_list():
     """ 
@@ -212,18 +213,20 @@ def add_ingredients_to_list():
         new_list = GroceryList(user_id=g.user.id)
         db.session.add(new_list)
         db.session.commit()
-    # Grab most recent grocery list and recipe being added 
-    grocery_list = GroceryList.query.filter_by(user_id=g.user.id).order_by(GroceryList.date_created.desc()).first()
+    # Grab most recent grocery list and recipe being added
+    grocery_list = GroceryList.query.filter_by(user_id=g.user.id).order_by(
+        GroceryList.date_created.desc()).first()
     recipe = Recipe.query.get_or_404(request.json['id'])
     # Add recipe ingredients to grocery list if they're not already there
     for ingredient in recipe.ingredients:
         if ingredient not in grocery_list.ingredients:
             grocery_list.ingredients.append(ingredient)
     db.session.commit()
-    # Return JSON response 
-    response_json = jsonify(grocery_list=grocery_list.serialize(), message="Ingredients Added!")
+    # Return JSON response
+    response_json = jsonify(
+        grocery_list=grocery_list.serialize(), message="Ingredients Added!")
     return (response_json, 200)
-    
+
 
 @app.route('/groceries/<int:list_id>', methods=['PATCH'])
 def remove_ingredient_from_list(list_id):
@@ -235,7 +238,7 @@ def remove_ingredient_from_list(list_id):
     # Check if authorized
     if not g.user:
         return abort(401)
-    
+
     grocery_list = GroceryList.query.get_or_404(list_id)
     i_to_remove = Ingredient.query.get_or_404(request.json['id'])
 
@@ -245,10 +248,12 @@ def remove_ingredient_from_list(list_id):
             break
     db.session.commit()
 
-    response_json = jsonify(grocery_list=grocery_list.serialize(), message="List updated!")
+    response_json = jsonify(
+        grocery_list=grocery_list.serialize(), message="List updated!")
     return (response_json, 200)
 
-@app.route('/groceries/<int:list_id>/send')
+
+@app.route('/email/<int:list_id>')
 def mail_grocery_list(list_id):
     """ Email grocery list to a user """
     if not g.user:
@@ -256,15 +261,18 @@ def mail_grocery_list(list_id):
 
     try:
         grocery_list = GroceryList.query.get_or_404(list_id)
-        msg = Message(subject="Your Grocery List!", recipients=[f"{g.user.email}"])
-        msg.body = " ".join([f"ingredient.name \n" for ingredient in grocery_list.ingredients])
-        msg.html = render_template('/groceries/email.html', grocery_list=grocery_list)
+        msg = Message(subject="Your Grocery List!",
+                      recipients=[f"{g.user.email}"])
+        msg.body = " ".join(
+            [f"ingredient.name \n" for ingredient in grocery_list.ingredients])
+        msg.html = render_template(
+            '/groceries/email.html', grocery_list=grocery_list)
         mail.send(msg)
-        response_json = jsonify(grocery_list=grocery_list.serialize(), message=f'Message sent to {g.user.email}')
+        response_json = jsonify(grocery_list=grocery_list.serialize(
+        ), message=f'Message sent to {g.user.email}')
         return (response_json, 200)
     except Exception as e:
         return jsonify(errors=str(e))
-
 
 
 ########################
@@ -291,12 +299,12 @@ def display_500(error):
     return render_template('errors/error500.html'), 500
 
 
-
 @app.route('/email/kang')
 def email_kang():
     """ Email a sweet TG to Kang """
     try:
-        msg = Message(subject="Dru Serkes Capstone Project", recipients=['daniel8kang@gmail.com'], bcc=['andrewserkes@gmail.com'])
+        msg = Message(subject="Dru Serkes Capstone Project", recipients=[
+                      'daniel8kang@gmail.com'], bcc=['andrewserkes@gmail.com'])
         msg.body = f"Todd Goldman \n (This message was sent by Dru's Capstone App)"
         msg.html = render_template('tg.html')
 

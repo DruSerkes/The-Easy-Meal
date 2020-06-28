@@ -33,14 +33,11 @@ async function removeIngredientFromGroceryList(evt) {
 	displayAndRemove.call(this, response.data);
 }
 
-// TODO send an email
-
 $('#send-email').on('click', sendEmail);
 
 async function sendEmail() {
-	console.log('emailing');
 	const id = $(this).data('id');
-	response = await axios.get(`/groceries/${id}/send`);
+	response = await axios.get(`/email/${id}`);
 
 	if (!response.data.errors) {
 		const alertHTML = generateAlertHTML(response.data.message, 'success');
@@ -52,6 +49,11 @@ async function sendEmail() {
 }
 
 // TODO Remove all items from list
+
+async function clearList() {
+	const id = $(this).data('id');
+	response = await axios.delete(`/groceries/${id}`)
+}
 
 /* 
 // HELPERS
