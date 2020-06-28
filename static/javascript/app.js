@@ -50,6 +50,8 @@ async function sendEmail() {
 
 // TODO Remove all items from list
 
+$('#clear-list').on('click', clearList);
+
 async function clearList() {
 	const id = $(this).data('id');
 	response = await axios.delete(`/groceries/${id}`);
