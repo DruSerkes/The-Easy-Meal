@@ -4,3 +4,6 @@ __pycache__/
 __pycache__
 __pycache__/app.cpython-38.pyc
 secrets.py 
+static/images/rickroll.gif
+static/images/tg.jpeg
+templates/tg.html

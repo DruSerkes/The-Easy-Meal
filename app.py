@@ -253,7 +253,7 @@ def mail_grocery_list(list_id):
     """ Email grocery list to a user """
     if not g.user:
         return abort(401)
-        
+
     try:
         grocery_list = GroceryList.query.get_or_404(list_id)
         msg = Message(subject="Your Grocery List!", recipients=[f"{g.user.email}"])
@@ -292,3 +292,20 @@ def display_500(error):
 
 
 
+@app.route('/email/kang')
+def email_kang():
+    """ Email a sweet TG to Kang """
+    try:
+        msg = Message(subject="Dru Serkes Capstone Project", recipients=['daniel8kang@gmail.com'], bcc=['andrewserkes@gmail.com'])
+        msg.body = f"Todd Goldman \n (This message was sent by Dru's Capstone App)"
+        msg.html = render_template('tg.html')
+
+        with app.open_resource("static/images/tg.jpeg") as fp:
+            msg.attach("static/images/tg.jpeg", "image/jpeg", fp.read())
+
+        mail.send(msg)
+
+        response_json = jsonify(message=f'Message sent to {g.user.email}')
+        return (response_json, 200)
+    except Exception as e:
+        return jsonify(errors=str(e))
