@@ -3,6 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step
 from forms import SignupForm, LoginForm, GroceryListForm
 from helpers import generate_login_data, generate_user_data
+from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
 import os
 
@@ -15,6 +16,7 @@ app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', "easysecretmeal")
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 
 toolbar = DebugToolbarExtension(app)
+mail = Mail(app)
 connect_db(app)
 db.create_all()
 
