@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/styles/theme_1593064276523.css">
+</head>
+<body class='text-center justify-content-center'>
+    <h1 class='h1 mb-3'>{{ grocery_list.title }}</h1>
+    <ol>
+        {% for ingredient in grocery_list.ingredients %}
+        <li>{{ ingredient.name }}</li>
+        {% endfor %}
+    </ol>
+    
+
+    <p>This email was send by {{g.user.username}} at EasyMeals.com</p>
+</body>
+</html>

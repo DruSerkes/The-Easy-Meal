@@ -5,11 +5,21 @@ from forms import SignupForm, LoginForm, GroceryListForm
 from helpers import generate_login_data, generate_user_data
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
+from secrets import email_password
 import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     'DATABASE_URL', "postgres:///easymeal")
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_DEFAULT_SENDER'] = ('Easy Meals', 'EasyMealsOfficial@gmail.com')
+app.config['MAIL_USERNAME'] = 'EasyMealsOfficial@gmail.com'
+app.config['MAIL_PASSWORD'] = email_password
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_DEBUG'] = True # Set to false once in production
+app.config['MAIL_MAX_EMAILS'] = 1 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', "easysecretmeal")
@@ -238,6 +248,19 @@ def remove_ingredient_from_list(list_id):
     response_json = jsonify(grocery_list=grocery_list.serialize(), message="List updated!")
     return (response_json, 200)
 
+# TODO AJAX GET to this route  
+@app.route('/groceries/<int:list_id>/send')
+def mail_grocery_list(list_id):
+    """ Email grocery list to a user """
+    try:
+        grocery_list = GroceryList.query.get_or_404(list_id)
+        msg = Message(subject="Your Grocery List!", sender=f"{g.user.email}", recipients=[f"{g.user.email}"])
+        msg.body = [f"ingredient.name \n" for ingredient in grocery_list.ingredients].join('')
+        msg.html = render_template('/groceries/email.html', grocery_list=grocery_list)
+        mail.send(msg)
+        return jsonify(message=f'Message Sent to {g.user.email}')
+    except Exception as e:
+        return str(e)
 
 
 

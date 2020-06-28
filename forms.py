@@ -13,7 +13,7 @@ class SignupForm(FlaskForm):
         InputRequired(message="Username required")])
 
     email = StringField("Email", validators=[
-        InputRequired(message="Email required"), Email()])
+        InputRequired(message="Email required"), Email(message="Invalid email")])
 
     password = PasswordField("Password", validators=[
         InputRequired(message="Password required")])
