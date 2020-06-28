@@ -239,8 +239,6 @@ def remove_ingredient_from_list(list_id):
 
 
 
-
-
 ########################
 #     Custom Errors    #
 ########################
