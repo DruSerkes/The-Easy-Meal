@@ -9,19 +9,21 @@
 {% if g.user.recipes %}
 <div class="row justify-content-center my-5">
   {% for recipe in g.user.recipes %}
-  <div class="col-4">
+  <div class="col-4 border border-secondary rounded-lg p-0">
     <div class="card text-center" style="width: 100%;">
-      <img src="{{recipe.img_url}}" class="card-img-top" alt="Photo of {{recipe.title}}">
-      <div class="card-body">
-        <h5 class="card-title">{{ recipe.title }}</h5>
-        <p class="card-text">{{ recipe.description }}</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Ready in: {{ recipe.ready_in }} minutes</li>
-        <li class="list-group-item">Serves: {{ recipe.servings }}</li>
-      </ul>
-      <div class="card-body">
-        <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="card-link">See more</a>
+      <img src="{{recipe.img_url}}" class="card-img-top img-fluid" alt="Photo of {{recipe.title}}">
+      <div class="card-body py-2">
+        <h5 class="card-title d-inline">{{ recipe.title }} </h5>
+        <form class="d-inline">
+          <!-- TODO click heart to remove recipe from favorites and DOM  -->
+          {% if recipe in g.user.recipes %}
+          <button class='btn btn-sm'><i class="fas fa-heart"></i></button>
+          {% else %}
+          <button class='btn btn-sm'><i class="far fa-heart"></i></button>
+          {% endif %}
+        </form>
+        <p class="small">By {{ recipe.source_name }} </p>
+        <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-info">See more</a>
       </div>
     </div>
   </div>

@@ -10,8 +10,8 @@
 <div class="container-fluid mt-5">
     <div class="row">
         <!-- Recipe overview column -->
-        <div class="col">
-            <div class="card" style="width: 18rem">
+        <div class="col-sm-12 col-md-4">
+            <div class="card" style="width: 100%">
                 <img src="{{recipe.img_url}}" class="card-img-top" alt="Photo of {{recipe.title}}">
                 <div class="card-body text-center">
                   <h5 class="card-title">{{ recipe.title }}</h5>
@@ -20,7 +20,10 @@
                 <ul class="list-group list-group-flush text-center">
                   <li class="list-group-item">Ready in: {{ recipe.ready_in }} minutes</li>
                   <li class="list-group-item">Serves: {{ recipe.servings }}</li>
-                  <li class="list-group-item">Source: <a href="{{ recipe.source_url }}" class="card-link">{{ recipe.source_name }}</a></li>
+                  <li class="list-group-item">By {{ recipe.source_name }}
+                      <br>
+                      <small class="small"><a href="{{ recipe.source_url }}" class="text-muted">View the original recipe here</a></small>
+                  </li>
                 </ul>
             </div>
         </div>
