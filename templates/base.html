@@ -17,7 +17,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
       
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse align-items-center" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto align-items-center text-dark">
             <li class="nav-item mx-2">
               <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
@@ -26,17 +26,20 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('view_saved_recipes') }}">My Recipes</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('view_grocery_list') }}">Grocery List</a>
+            </li>
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Grocery Lists
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ url_for('view_grocery_list') }}">Current List</a>
                 <a class="dropdown-item" href="{{ url_for('view_list_history') }}">List History</a>
-            </li>
-            <li class="nav-item mx-2">
+            </li> -->
+            <!-- <li class="nav-item mx-2">
               <button class="btn btn-sm btn-outline-warning my-1 py-0"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></button>
-          </li>
+          </li> -->
           <!-- 3 Dropdown checkbox/radio menus for search filter options   -->
           </ul>
           <form class="form-inline my-2 my-lg-0">
@@ -44,6 +47,7 @@
             <button class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Search</button>
             <a href="{{ url_for('view_profile', id=g.user.id) }}"><img src="{{g.user.img_url}}" alt="{{g.user.username}}" class="border-0 rounded-circle z-depth-2"></a>
           </form>
+          <a class="nav-link btn btn-sm btn-outline-warning my-1 text-dark" href="{{ url_for('logout') }}">Logout</a>
             {% else %} 
             <li class="nav-item mx-2">
                 <a class="nav-link" href="{{ url_for('login') }}">Login</a>
