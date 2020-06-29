@@ -197,7 +197,7 @@ class GroceryList(db.Model):
         }
 
     @classmethod
-    def create(self, user_id):
+    def create(cls, user_id):
         """ Create a grocery list """
         return cls(user_id=user_id)
 
