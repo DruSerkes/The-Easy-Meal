@@ -82,7 +82,13 @@ async function handleFavorite(evt) {
 		toggleFavorite.call(this, response);
 	}
 }
-
+$('#edit').on('click', showUpdateForm());
+function showUpdateForm() {
+	const id = $(this).data('id');
+	generateUpdateModalHTML(id);
+}
+// $('#submit-edit').on('click', handleUpdate());
+async function handleUpdate() {}
 /* 
 // HELPERS
 */
@@ -171,5 +177,36 @@ function generateAlertHTML(message, category) {
     <span aria-hidden="true">&times;</span>
   </button>
   </div>
+  </div>`;
+}
+
+function generateUpdateModalHTML(id) {
+	return `<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title text-center">Update Profile</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <form>
+			<div class="form-group">
+			  <label for="email" class="col-form-label">Email:</label>
+			  <input type="text" class="form-control" id="email">
+			</div>
+			<div class="form-group">
+			  <label for="img-url" class="col-form-label">Image URL:</label>
+			  <input type="url" class="form-control" id="img-url">
+			</div>
+		  </form>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  <button data-id="${id}" type="button" class="btn btn-primary">Update</button>
+		</div>
+	  </div>
+	</div>
   </div>`;
 }
