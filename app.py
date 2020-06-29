@@ -145,13 +145,18 @@ def home_page():
 ########################
 
 @app.route('/users/<int:id>')
-def view_profile(id):
+def view_user(id):
     """ Dispay user profile """
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
 
     return render_template('users/profile.html')
+
+
+@app.route('/users/<int:id>', methods=['PATCH'])
+def update_user(id):
+    """ Update user info """
 
 
 @app.route('/favorites/')

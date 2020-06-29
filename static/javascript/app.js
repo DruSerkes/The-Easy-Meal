@@ -18,6 +18,7 @@ $('#remove').on('click', confirmRemove);
 $('#send-email').on('click', sendEmail);
 $('#clear-list').on('click', clearList);
 $('#favorite-form').on('click', '.fa-heart', handleFavorite);
+$('#update').on('click', showUpdateForm);
 
 /* 
 // AJAX
@@ -82,17 +83,20 @@ async function handleFavorite(evt) {
 	}
 }
 
-$('#edit').on('click', showUpdateForm);
+async function handleUpdate() {
+	const id = $(this).data('id');
+	let response = await axios.patch('/')
+}
+/* 
+// HELPERS
+*/
+
 function showUpdateForm() {
 	const id = $(this).data('id');
 	const modalHTML = generateUpdateModalHTML(id);
 	addShowModal(modalHTML);
+	$('#submit-update').on('click', handleUpdate());
 }
-// $('#submit-edit').on('click', handleUpdate());
-async function handleUpdate() {}
-/* 
-// HELPERS
-*/
 
 function toggleFavorite(response) {
 	if (response.status !== 200) {
@@ -209,7 +213,7 @@ function generateUpdateModalHTML(id) {
 		</div>
 		<div class="modal-footer">
 		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  <button data-id="${id}" type="button" class="btn btn-primary">Update</button>
+		  <button data-id="${id}" id="submit-update" type="button" class="btn btn-primary">Update</button>
 		</div>
 	  </div>
 	</div>
