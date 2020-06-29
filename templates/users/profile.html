@@ -10,11 +10,11 @@
 <div class="container-fluid mt-5">
     <div class="row">
         <!-- <div class="col-6" style='background-image:url({{g.user.img_url}}); background-repeat:no-repeat; background-size:contain; background-position:center;'></div> -->
-        <div class="col-6 justify-content-right text-right"><img src="{{ g.user.img_url }}" alt="profile image" class="img img-thumbnail"></div>
+        <div class="col-6 justify-content-right text-right"><img src="{{ g.user.img_url }}" alt="profile image" id="user-image" class="img img-thumbnail"></div>
         <div class="col-6 text-left mr-auto">
             <h2 class="h2 mb-1">{{g.user.username}}</h2>
             <button data-id="{{ g.user.id }}" id="update" class="badge badge-pill btn btn-outline-info mb-2">Update Profile</button>
-            <p class="lead">Email: {{ g.user.email }}</p>
+            <p class="lead" id="user-email">Email: {{ g.user.email }}</p>
             <a href="{{ url_for('view_saved_recipes', id=g.user.id) }}">Recipes Saved:</a> <span>{{ g.user.recipes|length }} </span> 
             <br> 
             <a href="{{ url_for('view_grocery_list', id=g.user.id) }}">Grocery List Items:</a> <span>{{ g.user.grocery_list.ingredients|length }}</span>

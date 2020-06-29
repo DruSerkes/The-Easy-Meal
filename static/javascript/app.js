@@ -83,12 +83,20 @@ async function handleFavorite(evt) {
 	}
 }
 
-async function handleUpdate() {
+async function handleUserUpdate(evt) {
+	evt.preventDefault();
 	const id = $(this).data('id');
 	const email = $('#email').val();
 	const imgUrl = $('#image-url').val();
 	let response = await axios.patch(`/users/${id}`, (data = { id, email, imgUrl }));
+
+	if (response.status !== 200) {
+		displayError(response);
+	} else{
+		
+	}
 }
+
 /* 
 // HELPERS
 */
@@ -97,7 +105,7 @@ function showUpdateForm() {
 	const id = $(this).data('id');
 	const modalHTML = generateUpdateModalHTML(id);
 	addShowModal(modalHTML);
-	$('#submit-update').on('click', handleUpdate());
+	$('#submit-update').on('click', handleUserUpdate(evt));
 }
 
 function toggleFavorite(response) {
@@ -191,6 +199,11 @@ function addShowModal(modalHTML) {
 	$('#myModal').modal('show');
 }
 
+// function doNothingOnSubmit(evt) {
+// 	evt.preventDefault();
+// 	return;
+// }
+
 function generateUpdateModalHTML(id) {
 	return `<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -202,7 +215,7 @@ function generateUpdateModalHTML(id) {
 		  </button>
 		</div>
 		<div class="modal-body">
-		  <form>
+		  <form id="user-update">
 			<div class="form-group">
 			  <label for="email" class="col-form-label">Email:</label>
 			  <input type="text" class="form-control" id="email">
@@ -215,7 +228,7 @@ function generateUpdateModalHTML(id) {
 		</div>
 		<div class="modal-footer">
 		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		  <button data-id="${id}" id="submit-update" type="button" class="btn btn-primary">Update</button>
+		  <button data-id="${id}" data-dismiss="modal" id="submit-update" type="button" class="btn btn-primary">Update</button>
 		</div>
 	  </div>
 	</div>
