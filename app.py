@@ -133,7 +133,8 @@ def logout():
 @app.route('/')
 def home_page():
     """ Home Page """
-    return render_template('index.html')
+    recipes = Recipe.query.all()
+    return render_template('index.html', recipes=recipes)
 
 
 ########################
