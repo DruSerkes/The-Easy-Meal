@@ -29,7 +29,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     recipes = db.relationship(
         'Recipe', secondary="users_recipes", backref='users')
-    grocery_lists = db.relationship('GroceryList', backref='user')
+    grocery_list = db.relationship('GroceryList', backref='user')
 
     @classmethod
     def signup(cls, data):
@@ -195,6 +195,11 @@ class GroceryList(db.Model):
             'date_created': self.date_created,
             'ingredients': [ingredient.name for ingredient in self.ingredients]
         }
+
+    @classmethod
+    def create(self, user_id):
+        """ Create a grocery list """
+        return cls(user_id=user_id)
 
 
 class ListIngredient(db.Model):

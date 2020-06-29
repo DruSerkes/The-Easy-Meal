@@ -31,7 +31,7 @@
                 Grocery Lists
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ url_for('view_grocery_list', id=g.user.grocery_lists[-1].id) }}">Current List</a>
+                <a class="dropdown-item" href="{{ url_for('view_grocery_list') }}">Current List</a>
                 <a class="dropdown-item" href="{{ url_for('view_list_history') }}">List History</a>
             </li>
             <li class="nav-item mx-2">

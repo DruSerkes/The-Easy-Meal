@@ -104,14 +104,12 @@ function displayError(response) {
 }
 
 function displaySuccess(response) {
-	// const alertHTML = generateRecipeModalHTML(response.data);
 	const modalHTML = generateRecipeModalHTML(response.data);
 	if ($('#myModal')) {
 		$('#myModal').remove();
 	}
 	$('body > .container').append(modalHTML);
 	$('#myModal').modal('show');
-	// $('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
 }
 
 function displayAndRemove(data) {
@@ -167,7 +165,6 @@ function generateRecipeModalHTML(data) {
 }
 
 function generateAlertHTML(message, category) {
-	// return html for an alert
 	return `<div class="container w-75 mx-auto feedback">
 	<div class="alert alert-${category} alert-dismissible fade show text-center" role="alert">
 	${message}

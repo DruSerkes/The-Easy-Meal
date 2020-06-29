@@ -78,6 +78,9 @@ def signup():
             user = User.signup(user_data)
             db.session.add(user)
             db.session.commit()
+            grocery_list = GroceryList.create(user.id)
+            db.session.add(grocery_list)
+            db.session.commit()
 
         except IntegrityError as error:
             db.session.rollback()
@@ -213,14 +216,15 @@ def view_recipe_details(id):
 # Grocery List Routes  #
 ########################
 
-@ app.route('/groceries/<int:id>')
-def view_grocery_list(id):
+@ app.route('/groceries')
+def view_grocery_list():
     """ View a grocery list """
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
 
-    grocery_list = GroceryList.query.get_or_404(id)
+    grocery_list = GroceryList.query.filter(
+        GroceryList.user_id == g.user.id).first()
     return render_template('groceries/list.html', grocery_list=grocery_list)
 
 
@@ -247,7 +251,7 @@ def add_ingredients_to_list():
     if not g.user:
         return abort(401)
     # Make a grocery list if user doesn't already have one
-    if len(g.user.grocery_lists) == 0:
+    if not g.user.grocery_list:
         new_list = GroceryList(user_id=g.user.id)
         db.session.add(new_list)
         db.session.commit()

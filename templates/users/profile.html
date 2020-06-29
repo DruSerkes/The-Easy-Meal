@@ -10,13 +10,14 @@
 <div class="container-fluid mt-5">
     <div class="row">
         <!-- <div class="col-6" style='background-image:url({{g.user.img_url}}); background-repeat:no-repeat; background-size:contain; background-position:center;'></div> -->
-        <div class="col-6 justify-content-right text-right"><img src="{{ g.user.img_url }}" alt="profile image" class="img rounded"></div>
-        <div class="col-6 text-center">
+        <div class="col-6 justify-content-right text-right"><img src="{{ g.user.img_url }}" alt="profile image" class="img img-thumbnail"></div>
+        <div class="col-6 text-left mr-auto">
             <h2 class="h2 mb-1">{{g.user.username}}</h2>
             <button id="edit" class="badge badge-pill btn btn-outline-info mb-2">Edit Profile</button>
             <p class="lead">Email: {{ g.user.email }}</p>
-            <p class="lead"> <a href="{{ url_for('view_saved_recipes', id=g.user.id) }}">Recipes Saved:</a> {{ g.user.recipes|length }}</p>    
-            <p class="lead"><a href="{{ url_for('view_saved_recipes', id=g.user.id) }}">Grocery Lists Created:</a> {{ g.user.grocery_lists|length }}</p>
+            <a href="{{ url_for('view_saved_recipes', id=g.user.id) }}">Recipes Saved:</a> <span>{{ g.user.recipes|length }} </span> 
+            <br> 
+            <a href="{{ url_for('view_grocery_list', id=g.user.id) }}">Grocery List Items:</a> <span>{{ g.user.grocery_list.ingredients|length }}</span>
         </div>        
     </div>
 
