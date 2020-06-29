@@ -66,7 +66,22 @@ async function clearList() {
 }
 
 async function addFavorite() {
-	$('#')
+	const $favorite = $('.fa-heart');
+	if ($favorite.hasClass('fas')) {
+		// Get id from data-id
+		// AJAX delete request to favorites/id to remove from favorites
+		// Server removes recipe from user.favorites
+		// returns success message
+		// toggle class fas and far
+		// remove nearest .card ????
+		// flash alert for user feedback with response message for text ???
+	} else {
+		// Get id from data-id
+		// AJAX post request to favorites id in data
+		// Server adds recipe to user.favorites
+		// returns recipe and success message
+		// toggle class fas and far
+	}
 }
 
 /* 
