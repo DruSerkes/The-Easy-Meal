@@ -5,7 +5,7 @@ $(document).ready(function() {
 	// Flashed messages fade in and out
 	$('#flash').hide().delay(300).fadeIn(500).delay(3000).fadeOut(800);
 	// Enable Tooltips
-	$('[data-toggle="tooltip"]').tooltip();
+	// $('[data-toggle="tooltip"]').tooltip();
 });
 
 /* 
@@ -83,7 +83,8 @@ function confirmRemove() {
 		.attr('data-placement', 'right')
 		.attr('title', 'Remove from list')
 		.tooltip()
-		.on('click', removeIngredientFromGroceryList);
+		.on('click', removeIngredientFromGroceryList)
+		.tooltip('hide');
 }
 
 function generateModalHTML(data) {
