@@ -139,8 +139,7 @@ function generateGroceryModalHTML(data) {
 		<p class="mx-auto my-0">${data.message}</p>
       </div>
 	  <div class="modal-footer">
-        <a class="btn btn-primary text-white ml-auto" href="/groceries/${data.grocery_list
-			.id}") }}">Go to Shopping List</a>
+        <a class="btn btn-primary text-white ml-auto" href="/groceries") }}">Go to Shopping List</a>
         <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Close</button>
       </div>
     </div>
