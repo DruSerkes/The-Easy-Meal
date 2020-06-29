@@ -85,7 +85,7 @@ async function handleFavorite(evt) {
 $('#edit').on('click', showUpdateForm());
 function showUpdateForm() {
 	const id = $(this).data('id');
-	generateUpdateModalHTML(id);
+	const updateModal = generateUpdateModalHTML(id);
 }
 // $('#submit-edit').on('click', handleUpdate());
 async function handleUpdate() {}
@@ -180,8 +180,13 @@ function generateAlertHTML(message, category) {
   </div>`;
 }
 
+function addShowModal() {
+	$('body > .container').append(modalHTML);
+	$('#myModal').modal('show');
+}
+
 function generateUpdateModalHTML(id) {
-	return `<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	return `<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 	  <div class="modal-content">
 		<div class="modal-header">
