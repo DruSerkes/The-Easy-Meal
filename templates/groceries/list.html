@@ -17,8 +17,9 @@
     </div>
     <ul class="list-group list-group-flush" id="{{ grocery_list.id }}">
         {% for ingredient in grocery_list.ingredients %}
-        <li class='text-center mb-1'>{{ingredient.name}}<span class="btn"><i data-id="{{ ingredient.id }}" id="remove" class="far fa-trash-alt"></i></span></li>
+        <li class='list-group-item text-center py-2 mb-1'>{{ingredient.name}}<span class="btn"><i data-id="{{ ingredient.id }}" id="remove" class="far fa-trash-alt"></i></span></li>
         {% endfor %}
+        <li class='list-group-item pt-0 pb-1 text-center'><button id="add-ingredient" class='btn btn-sm btn-outline-primary my-0 px-2 py-0'><span><i class="fas fa-plus"></i></span></button></li>
     </ul>
   </div>
 
