@@ -29,7 +29,9 @@ body {
 
 .feedback {
 	position: fixed;
-	left: 50%;
-	top: 50%;
+	left: 0;
+	right: 0;
+	margin: 5% auto;
 	z-index: 10;
+	width: 18rem;
 }
