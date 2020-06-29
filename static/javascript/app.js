@@ -27,8 +27,7 @@ async function addIngredientsToGroceryList(evt) {
 	const id = $(this).data('id');
 	response = await axios.post(`/groceries`, (data = { id }));
 	const modalHTML = generateGroceryModalHTML(response.data);
-	$('body > .container').append(modalHTML);
-	$('#myModal').modal('show');
+	addShowModal(modalHTML);
 }
 
 async function removeIngredientFromGroceryList(evt) {
@@ -82,10 +81,12 @@ async function handleFavorite(evt) {
 		toggleFavorite.call(this, response);
 	}
 }
-$('#edit').on('click', showUpdateForm());
+
+$('#edit').on('click', showUpdateForm);
 function showUpdateForm() {
 	const id = $(this).data('id');
-	const updateModal = generateUpdateModalHTML(id);
+	const modalHTML = generateUpdateModalHTML(id);
+	addShowModal(modalHTML);
 }
 // $('#submit-edit').on('click', handleUpdate());
 async function handleUpdate() {}
@@ -114,8 +115,7 @@ function displaySuccess(response) {
 	if ($('#myModal')) {
 		$('#myModal').remove();
 	}
-	$('body > .container').append(modalHTML);
-	$('#myModal').modal('show');
+	addShowModal(modalHTML);
 }
 
 function displayAndRemove(data) {
@@ -180,7 +180,7 @@ function generateAlertHTML(message, category) {
   </div>`;
 }
 
-function addShowModal() {
+function addShowModal(modalHTML) {
 	$('body > .container').append(modalHTML);
 	$('#myModal').modal('show');
 }
