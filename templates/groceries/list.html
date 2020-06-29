@@ -7,7 +7,7 @@
 
 {% if grocery_list.ingredients %}
   <div class="container w-50 mx-auto">
-    <ul class="list-group border rounded" id="list">
+    <ul class="list-group border rounded" data-id="{{ grocery_list.id }}" id="list">
       {% for ingredient in grocery_list.ingredients %}
       <li class='list-group-item text-center py-1 mb-0'>{{ingredient.name}}<span class="btn"><i data-id="{{ ingredient.id }}" id="remove" class="far fa-trash-alt"></i></span></li>
       {% endfor %}

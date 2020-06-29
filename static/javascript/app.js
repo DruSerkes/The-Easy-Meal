@@ -27,7 +27,7 @@ $('#remove').on('click', confirmRemove);
 
 async function removeIngredientFromGroceryList(evt) {
 	const id = $(this).data('id');
-	const listId = $(this).closest('ul').attr('id');
+	const listId = $(this).closest('ul').data('id');
 	const response = await axios.patch(`/groceries/${listId}`, (data = { id }));
 
 	displayAndRemove.call(this, response.data);
