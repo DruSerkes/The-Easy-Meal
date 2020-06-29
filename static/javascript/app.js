@@ -1,6 +1,7 @@
 /* 
 // ANIMATIONS
 */
+
 $(document).ready(function() {
 	// Flashed messages fade in and out
 	$('#flash').hide().delay(300).fadeIn(500).delay(3000).fadeOut(800);
@@ -9,11 +10,17 @@ $(document).ready(function() {
 });
 
 /* 
-// AJAX
+// LISTENERS
 */
 
-//
 $('#add-ingredients').on('click', addIngredientsToGroceryList);
+$('#remove').on('click', confirmRemove);
+$('#send-email').on('click', sendEmail);
+$('#clear-list').on('click', clearList);
+
+/* 
+// AJAX
+*/
 
 async function addIngredientsToGroceryList(evt) {
 	const id = $(this).data('id');
@@ -23,8 +30,6 @@ async function addIngredientsToGroceryList(evt) {
 	$('#myModal').modal('show');
 }
 
-$('#remove').on('click', confirmRemove);
-
 async function removeIngredientFromGroceryList(evt) {
 	const id = $(this).data('id');
 	const listId = $(this).closest('ul').data('id');
@@ -32,8 +37,6 @@ async function removeIngredientFromGroceryList(evt) {
 
 	displayAndRemove.call(this, response.data);
 }
-
-$('#send-email').on('click', sendEmail);
 
 async function sendEmail() {
 	const id = $(this).data('id');
@@ -47,8 +50,6 @@ async function sendEmail() {
 		$('h1').after(alertHTML).alert();
 	}
 }
-
-$('#clear-list').on('click', clearList);
 
 async function clearList() {
 	const id = $(this).data('id');
