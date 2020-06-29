@@ -162,14 +162,19 @@ def update_user(id):
     if request.json['id'] != id:
         return jsonify(errors="You don't have permission to do that!")
 
-    user = User.query.get_or_404(id)
-    new_email = request.json['email']
-    new_img_url = request.json['imgUrl']
-    user.email = new_email
-    user.img_url = new_img_url
-    db.session.commit()
+    try:
+        user = User.query.get_or_404(id)
+        new_email = request.json['email'] or None
+        new_img_url = request.json['imgUrl'] or None
+        user.email = new_email or user.email
+        user.img_url = new_img_url or user.img_url
+        db.session.commit()
 
-    response_json = jsonify(user=)
+        response_json = jsonify(user=user.serialize(),
+                                message="Update successful!")
+        return (response_json, 200)
+    except Exception as e:
+        return jsonify(errors=str(e))
 
 
 @app.route('/favorites/')
