@@ -46,9 +46,11 @@ async function sendEmail() {
 	if (response.data.errors) {
 		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
 		$('body').append(alertHTML).alert();
+		$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(2000);
 	} else {
 		const alertHTML = generateAlertHTML(response.data.message, 'success');
 		$('body').append(alertHTML).alert();
+		$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(2000);
 	}
 }
 
@@ -58,10 +60,12 @@ async function clearList() {
 
 	if (response.status !== 200) {
 		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
-		$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
+		$('body').append(alertHTML).alert();
+		$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(2000);
 	} else {
 		const alertHTML = generateAlertHTML(response.data.message, 'success');
-		$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
+		$('body').append(alertHTML).alert();
+		$('.feedback').hide().fadeIn(1500).delay(1000).fadeOut(2200);
 		$('#list').empty();
 	}
 }
@@ -95,7 +99,8 @@ function toggleFavorite(response) {
 
 function displayError(response) {
 	const alertHTML = generateAlertHTML(response.data.errors, 'danger');
-	$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
+	$('body').append(alertHTML).alert();
+	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(2000);
 }
 
 function displaySuccess(response) {
