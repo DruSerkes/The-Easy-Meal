@@ -54,6 +54,16 @@ class User(db.Model):
         else:
             return False
 
+    def serialize(self):
+        """ Serialize User instance for JSON """
+        return {
+            'id': self.id,
+            'username': self.usernam,
+            'email': self.email,
+            'img_url': self.img_url,
+            'is_admin': self.is_admin
+        }
+
     def __repr__(self):
         return f'<User: {self.username}>'
 

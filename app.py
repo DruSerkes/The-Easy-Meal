@@ -157,6 +157,19 @@ def view_user(id):
 @app.route('/users/<int:id>', methods=['PATCH'])
 def update_user(id):
     """ Update user info """
+    if not g.user:
+        return abort(401)
+    if request.json['id'] != id:
+        return jsonify(errors="You don't have permission to do that!")
+
+    user = User.query.get_or_404(id)
+    new_email = request.json['email']
+    new_img_url = request.json['imgUrl']
+    user.email = new_email
+    user.img_url = new_img_url
+    db.session.commit()
+
+    response_json = jsonify(user=)
 
 
 @app.route('/favorites/')

@@ -85,7 +85,9 @@ async function handleFavorite(evt) {
 
 async function handleUpdate() {
 	const id = $(this).data('id');
-	let response = await axios.patch('/')
+	const email = $('#email').val();
+	const imgUrl = $('#image-url').val();
+	let response = await axios.patch(`/users/${id}`, (data = { id, email, imgUrl }));
 }
 /* 
 // HELPERS
