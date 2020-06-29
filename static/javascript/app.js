@@ -17,6 +17,7 @@ $('#add-ingredients').on('click', addIngredientsToGroceryList);
 $('#remove').on('click', confirmRemove);
 $('#send-email').on('click', sendEmail);
 $('#clear-list').on('click', clearList);
+$('.fa-heart').on('click', handleFavorite());
 
 /* 
 // AJAX
@@ -65,28 +66,42 @@ async function clearList() {
 	}
 }
 
-async function addFavorite() {
-	const $favorite = $('.fa-heart');
-	if ($favorite.hasClass('fas')) {
-		// Get id from data-id
-		// AJAX delete request to favorites/id to remove from favorites
-		// Server removes recipe from user.favorites
-		// returns success message
-		// toggle class fas and far
-		// remove nearest .card ????
-		// flash alert for user feedback with response message for text ???
+async function handleFavorite() {
+	let id = $(this).closest('button').data('id').toString();
+
+	if ($(this).hasClass('fas')) {
+		console.log('clicked with a class of fas');
+		let response = await axios.delete(`/favorites/${id}`);
+		toggleFavorite(response);
 	} else {
-		// Get id from data-id
-		// AJAX post request to favorites id in data
-		// Server adds recipe to user.favorites
-		// returns recipe and success message
-		// toggle class fas and far
+		let response = await axios.post(`/favorites/${id}`, (data = { id }));
+		toggleFavorite(response);
 	}
 }
 
 /* 
 // HELPERS
 */
+
+function displayError(response) {
+	const alertHTML = generateAlertHTML(response.data.errors, 'danger');
+	$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
+}
+
+function displaySuccess(response) {
+	const alertHTML = generateAlertHTML(response.data.message, 'success');
+	$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
+}
+
+function toggleFavorite(response) {
+	if (response.status !== 200) {
+		displayError(response);
+	} else {
+		$favorite.toggleClass('fas');
+		$favorite.toggleClass('far');
+		displaySuccess(response);
+	}
+}
 
 function displayAndRemove(data) {
 	const $toRemove = $(this).closest('li');

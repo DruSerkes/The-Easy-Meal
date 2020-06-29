@@ -16,9 +16,9 @@
         <form class="d-inline">
           <!-- TODO click heart to remove recipe from favorites and DOM  -->
           {% if recipe in g.user.recipes %}
-          <button class='btn btn-sm'><i data-id="{{ recipe.id }}" class="fas fa-heart"></i></button>
+          <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
           {% else %}
-          <button class='btn btn-sm'><i class="far fa-heart"></i></button>
+          <button data-id=" {{ recipe.id }} " class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
           {% endif %}
         </form>
         <p class="small">By {{ recipe.source_name }} </p>

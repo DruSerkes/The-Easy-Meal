@@ -66,7 +66,7 @@ def do_logout():
 def signup():
     """
     Handles user signup.
-    GET Displays signup form 
+    GET Displays signup form
     POST Creates/Adds new user to DB and redirects home
     """
 
@@ -160,7 +160,44 @@ def view_saved_recipes():
     return render_template('users/favorites.html')
 
 
-@app.route('/recipes/<int:id>')
+@app.route('/favorites/<int:id>', methods=['POST'])
+def add_favorite(id):
+    """ Favorite a recipe """
+    if not g.user:
+        return abort(401)
+    try:
+        recipe = Recipe.query.get_or_404(id)
+        g.user.favorites.append(recipe)
+        db.session.commit()
+
+        response_json = jsonify(
+            recipe=recipe.serialize(), message="Recipe Added!")
+        return (response_json, 200)
+    except Exception as e:
+        return jsonify(errors=str(e))
+
+
+@app.route('/favorites/<int:id>', methods=['DELETE'])
+def remove_favorite(id):
+    """ Unfavorite a recipe """
+    if not g.user:
+        return abort(401)
+    try:
+        r_to_remove = Recipe.query.get_or_404(id)
+        for recipe in g.user.recipes:
+            if recipe == r_to_remove:
+                g.user.favorites.remove(recipe)
+                break
+        db.session.commit()
+
+        response_json = jsonify(recipe=recipe.serialize(),
+                                message="Recipe removed!")
+        return (response_json, 200)
+    except Exception as e:
+        return jsonify(errors=str(e))
+
+
+@ app.route('/recipes/<int:id>')
 def view_recipe_details(id):
     """ View recipe in detail """
     if not g.user:
@@ -175,7 +212,7 @@ def view_recipe_details(id):
 # Grocery List Routes  #
 ########################
 
-@app.route('/groceries/<int:id>')
+@ app.route('/groceries/<int:id>')
 def view_grocery_list(id):
     """ View a grocery list """
     if not g.user:
@@ -187,7 +224,7 @@ def view_grocery_list(id):
 
 
 # TODO
-@app.route('/groceries/history')
+@ app.route('/groceries/history')
 def view_list_history():
     """ View grocery lists """
     if not g.user:
@@ -197,13 +234,13 @@ def view_list_history():
     return render_template('')
 
 
-@app.route('/groceries', methods=['POST'])
+@ app.route('/groceries', methods=['POST'])
 def add_ingredients_to_list():
-    """ 
+    """
     Expects JSON with recipe id
-    Creates grocery list if one is not already associated with this user. 
-    Adds ingredients to most recently created grocery list 
-    Returns JSON of created list and success message.  
+    Creates grocery list if one is not already associated with this user.
+    Adds ingredients to most recently created grocery list
+    Returns JSON of created list and success message.
     """
     # Check if authorized
     if not g.user:
@@ -228,11 +265,11 @@ def add_ingredients_to_list():
     return (response_json, 200)
 
 
-@app.route('/groceries/<int:list_id>', methods=['PATCH'])
+@ app.route('/groceries/<int:list_id>', methods=['PATCH'])
 def remove_ingredient_from_list(list_id):
-    """ 
-    Expects JSON with ingredient ID 
-    Removes ingredient from grocery list 
+    """
+    Expects JSON with ingredient ID
+    Removes ingredient from grocery list
     Returns JSON of update Grocery List and success message
     """
     # Check if authorized
@@ -253,7 +290,7 @@ def remove_ingredient_from_list(list_id):
     return (response_json, 200)
 
 
-@app.route('/groceries/<int:list_id>', methods=['DELETE'])
+@ app.route('/groceries/<int:list_id>', methods=['DELETE'])
 def empty_list(list_id):
     """ Remove all ingredients from a grocery list """
     # Check if authorized
@@ -272,7 +309,7 @@ def empty_list(list_id):
         return jsonify(errors=str(e))
 
 
-@app.route('/email/<int:list_id>')
+@ app.route('/email/<int:list_id>')
 def mail_grocery_list(list_id):
     """ Email grocery list to a user """
     if not g.user:
@@ -298,32 +335,32 @@ def mail_grocery_list(list_id):
 #     Custom Errors    #
 ########################
 # CUSTOM 404 PAGE
-@app.errorhandler(404)
+@ app.errorhandler(404)
 def display_404(error):
     """ Displays a custom error page when returning a 404 error """
     return render_template('errors/error404.html'), 404
 
 
 # CUSTOM 401 PAGE
-@app.errorhandler(401)
+@ app.errorhandler(401)
 def display_401(error):
     """ Displays a custom error page when returning a 401 error """
     return render_template('errors/error401.html'), 401
 
 
 # CUSTOM 500 PAGE
-@app.errorhandler(500)
+@ app.errorhandler(500)
 def display_500(error):
     """ Displays a custom error page when returning a 500 error"""
     return render_template('errors/error500.html'), 500
 
 
-@app.route('/email/kang')
+@ app.route('/email/kang')
 def email_kang():
     """ Email a sweet TG to Kang """
     try:
         msg = Message(subject="Dru Serkes Capstone Project", recipients=[
-                      'daniel8kang@gmail.com'], bcc=['andrewserkes@gmail.com'])
+            'daniel8kang@gmail.com'], bcc=['andrewserkes@gmail.com'])
         msg.body = f"Todd Goldman \n (This message was sent by Dru's Capstone App)"
         msg.html = render_template('tg.html')
 
