@@ -150,8 +150,8 @@ def view_profile(id):
     return render_template('users/profile.html')
 
 
-@app.route('/favorites/<int:id>')
-def view_saved_recipes(id):
+@app.route('/favorites/')
+def view_saved_recipes():
     """ Route to view saved recipes """
     if not g.user:
         flash('You must be logged in to do that', 'warning')

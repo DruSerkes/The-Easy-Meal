@@ -48,8 +48,6 @@ async function sendEmail() {
 	}
 }
 
-// TODO Remove all items from list
-
 $('#clear-list').on('click', clearList);
 
 async function clearList() {
@@ -58,11 +56,11 @@ async function clearList() {
 
 	if (response.status !== 200) {
 		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
-		$('h1').after(alertHTML).alert();
+		$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
 	} else {
 		const alertHTML = generateAlertHTML(response.data.message, 'success');
-		$('h1').after(alertHTML).alert();
-		$('ul').empty();
+		$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
+		$('#list').empty();
 	}
 }
 
