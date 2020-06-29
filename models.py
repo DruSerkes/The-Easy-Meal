@@ -91,7 +91,7 @@ class Recipe(db.Model):
         """ Serialize Recipe instance for JSON """
         return {
             'id': self.id,
-            'name': self.name,
+            'title': self.title,
             'img_url': self.img_url,
             'source_name': self.source_name,
             'source_url': self.source_url,

@@ -15,7 +15,7 @@
         {% if recipe in g.user.recipes %}
         <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
         {% else %}
-        <button data-id=" {{ recipe.id }} " class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
+        <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
         {% endif %}
       </form>
       <p class="small">By {{ recipe.source_name }} </p>

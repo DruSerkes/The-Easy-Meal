@@ -26,7 +26,7 @@ $('#favorite-form').on('click', '.fa-heart', handleFavorite);
 async function addIngredientsToGroceryList(evt) {
 	const id = $(this).data('id');
 	response = await axios.post(`/groceries`, (data = { id }));
-	const modalHTML = generateModalHTML(response.data);
+	const modalHTML = generateGroceryModalHTML(response.data);
 	$('body > .container').append(modalHTML);
 	$('#myModal').modal('show');
 }
@@ -45,10 +45,10 @@ async function sendEmail() {
 
 	if (response.data.errors) {
 		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
-		$('h1').after(alertHTML).alert();
+		$('body').append(alertHTML).alert();
 	} else {
 		const alertHTML = generateAlertHTML(response.data.message, 'success');
-		$('h1').after(alertHTML).alert();
+		$('body').append(alertHTML).alert();
 	}
 }
 
@@ -68,17 +68,14 @@ async function clearList() {
 
 async function handleFavorite(evt) {
 	evt.preventDefault();
-	console.log(this);
 	const id = $(this).closest('button').data('id');
 
 	if ($(this).hasClass('fas')) {
-		console.log('clicked with a class of fas');
 		let response = await axios.delete(`/favorites/${id}`);
-		console.log(response.data);
-		toggleFavorite(response);
+		toggleFavorite.call(this, response);
 	} else {
 		let response = await axios.post(`/favorites/${id}`, (data = { id }));
-		toggleFavorite(response);
+		toggleFavorite.call(this, response);
 	}
 }
 
@@ -86,24 +83,30 @@ async function handleFavorite(evt) {
 // HELPERS
 */
 
+function toggleFavorite(response) {
+	if (response.status !== 200) {
+		displayError(response);
+	} else {
+		$(this).toggleClass('fas fa-heart');
+		$(this).toggleClass('far fa-heart');
+		displaySuccess(response);
+	}
+}
+
 function displayError(response) {
 	const alertHTML = generateAlertHTML(response.data.errors, 'danger');
 	$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
 }
 
 function displaySuccess(response) {
-	const alertHTML = generateAlertHTML(response.data.message, 'success');
-	$('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
-}
-
-function toggleFavorite(response) {
-	if (response.status !== 200) {
-		displayError(response);
-	} else {
-		$(this).toggleClass('fas');
-		$(this).toggleClass('far');
-		displaySuccess(response);
+	// const alertHTML = generateRecipeModalHTML(response.data);
+	const modalHTML = generateRecipeModalHTML(response.data);
+	if ($('#myModal')) {
+		$('#myModal').remove();
 	}
+	$('body > .container').append(modalHTML);
+	$('#myModal').modal('show');
+	// $('h1').after(alertHTML).alert().delay(300).fadeOut(3000);
 }
 
 function displayAndRemove(data) {
@@ -125,22 +128,33 @@ function confirmRemove() {
 		.tooltip('hide');
 }
 
-function generateModalHTML(data) {
+function generateGroceryModalHTML(data) {
 	return `<div id="myModal" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">${data.message}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<p class="mx-auto my-0">${data.message}</p>
       </div>
-      <div class="modal-body">
-        <p>${data.message}</p>
+	  <div class="modal-footer">
+        <a class="btn btn-primary text-white ml-auto" href="/groceries/${data.grocery_list
+			.id}") }}">Go to Shopping List</a>
+        <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Close</button>
       </div>
-      <div class="modal-footer">
-        <a class="btn btn-primary text-white" href="/groceries/${data.grocery_list.id}") }}">Go to Shopping List</a>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>`;
+}
+
+function generateRecipeModalHTML(data) {
+	return `<div id="myModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<p class="mx-auto my-0">${data.message}</p>
+      </div>
+	  <div class="modal-footer">
+        <a class="btn btn-primary text-white ml-auto" href="/recipes/${data.recipe.id}") }}">Recipe Details</a>
+        <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Thanks</button>
       </div>
     </div>
   </div>
@@ -149,7 +163,7 @@ function generateModalHTML(data) {
 
 function generateAlertHTML(message, category) {
 	// return html for an alert
-	return `<div class="container w-75 mx-auto">
+	return `<div class="container w-75 mx-auto feedback">
 	<div class="alert alert-${category} alert-dismissible fade show text-center" role="alert">
 	${message}
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">

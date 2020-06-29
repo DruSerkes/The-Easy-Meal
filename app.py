@@ -191,7 +191,7 @@ def remove_favorite(id):
                 break
         db.session.commit()
 
-        response_json = jsonify(recipe=recipe.serialize(),
+        response_json = jsonify(recipe=r_to_remove.serialize(),
                                 message="Recipe removed!")
         return (response_json, 200)
     except Exception as e:

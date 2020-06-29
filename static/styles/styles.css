@@ -26,3 +26,10 @@ body {
 	opacity: 0.5;
 	border-radius: 10px;
 }
+
+.feedback {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 10;
+}
