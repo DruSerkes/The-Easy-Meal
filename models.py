@@ -87,6 +87,21 @@ class Recipe(db.Model):
     def __repr__(self):
         return f'<Recipe: {self.title}>'
 
+    def serialize(self):
+        """ Serialize Recipe instance for JSON """
+        return {
+            'id': self.id,
+            'name': self.name,
+            'img_url': self.img_url,
+            'source_name': self.source_name,
+            'source_url': self.source_url,
+            'description': self.description,
+            'ready_in': self.ready_in,
+            'servings': self.servings,
+            'ingredients': [ingredient.serialize() for ingredient in self.ingredients],
+            'steps': [step.serialize() for step in self.steps]
+        }
+
 
 class Measurement(db.Model):
     """ Many to Many Recipes to Ingredients """
@@ -105,7 +120,6 @@ class Measurement(db.Model):
     def show_measurement(self):
         """ Returns a string with the full measurement """
         return f"{int(self.amount)} {self.unit} {self.ingredient.name}"
-    
 
 
 class Ingredient(db.Model):
@@ -130,7 +144,7 @@ class Step(db.Model):
     """ Step Model """
 
     __tablename__ = 'steps'
-    
+
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey(
         'recipes.id'))
@@ -139,11 +153,19 @@ class Step(db.Model):
 
     def __repr__(self):
         return f'<Step: {self.number} - {self.step}>'
-    
+
     def show_step(self):
         """ returns a string of the step number and instructions """
         return f"{self.number}. {self.step}"
 
+    def serialize(self):
+        """ Serialize Ingredient instance for JSON """
+        return {
+            'id': self.id,
+            'recipe_id': self.recipe_id,
+            'number': self.number,
+            'step': self.step
+        }
 
 
 class GroceryList(db.Model):
@@ -167,11 +189,11 @@ class GroceryList(db.Model):
     def serialize(self):
         """ Serialize a Grocery List instance for JSON """
         return {
-            'id' : self.id,
-            'title' : self.title, 
-            'user_id' : self.user_id,
-            'date_created' : self.date_created,
-            'ingredients' : [ingredient.name for ingredient in self.ingredients]
+            'id': self.id,
+            'title': self.title,
+            'user_id': self.user_id,
+            'date_created': self.date_created,
+            'ingredients': [ingredient.name for ingredient in self.ingredients]
         }
 
 

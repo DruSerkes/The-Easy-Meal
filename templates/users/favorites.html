@@ -13,7 +13,7 @@
       <img src="{{recipe.img_url}}" class="card-img-top img-fluid" alt="Photo of {{recipe.title}}">
       <div class="card-body py-2">
         <h5 class="card-title d-inline">{{ recipe.title }} </h5>
-        <form class="d-inline">
+        <form id="favorite-form" class="d-inline">
           <!-- TODO click heart to remove recipe from favorites and DOM  -->
           {% if recipe in g.user.recipes %}
           <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>

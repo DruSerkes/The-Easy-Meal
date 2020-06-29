@@ -167,7 +167,7 @@ def add_favorite(id):
         return abort(401)
     try:
         recipe = Recipe.query.get_or_404(id)
-        g.user.favorites.append(recipe)
+        g.user.recipes.append(recipe)
         db.session.commit()
 
         response_json = jsonify(
@@ -186,7 +186,7 @@ def remove_favorite(id):
         r_to_remove = Recipe.query.get_or_404(id)
         for recipe in g.user.recipes:
             if recipe == r_to_remove:
-                g.user.favorites.remove(recipe)
+                g.user.recipes.remove(recipe)
                 break
         db.session.commit()
 

@@ -17,7 +17,7 @@ $('#add-ingredients').on('click', addIngredientsToGroceryList);
 $('#remove').on('click', confirmRemove);
 $('#send-email').on('click', sendEmail);
 $('#clear-list').on('click', clearList);
-$('.fa-heart').on('click', handleFavorite());
+$('#favorite-form').on('click', '.fa-heart', handleFavorite);
 
 /* 
 // AJAX
@@ -66,12 +66,15 @@ async function clearList() {
 	}
 }
 
-async function handleFavorite() {
-	let id = $(this).closest('button').data('id').toString();
+async function handleFavorite(evt) {
+	evt.preventDefault();
+	console.log(this);
+	const id = $(this).closest('button').data('id');
 
 	if ($(this).hasClass('fas')) {
 		console.log('clicked with a class of fas');
 		let response = await axios.delete(`/favorites/${id}`);
+		console.log(response.data);
 		toggleFavorite(response);
 	} else {
 		let response = await axios.post(`/favorites/${id}`, (data = { id }));
@@ -97,8 +100,8 @@ function toggleFavorite(response) {
 	if (response.status !== 200) {
 		displayError(response);
 	} else {
-		$favorite.toggleClass('fas');
-		$favorite.toggleClass('far');
+		$(this).toggleClass('fas');
+		$(this).toggleClass('far');
 		displaySuccess(response);
 	}
 }
