@@ -65,6 +65,10 @@ async function clearList() {
 	}
 }
 
+async function addFavorite() {
+	$('#')
+}
+
 /* 
 // HELPERS
 */
