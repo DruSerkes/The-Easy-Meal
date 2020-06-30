@@ -46,45 +46,38 @@ async function handleSearch(evt) {
 	const response = await axios.get('/search', { params: { query, id } });
 	displayResults(response);
 }
-
+// TODO animation makes the background shrink/expand all weird
 function displayResults(response) {
-	$('main').children().fadeOut('slow').promise().done(function() {
-		$('main').children().remove();
+	$('main').children().slideUp('slow', function() {
+		$(this).remove();
 	});
+
 	setTimeout(() => {
 		const $h1 = makeH1();
 		const $row = makeRow();
-		$('main').append($h1).fadeIn(500);
+		$('main').prepend($h1).hide().slideDown('slow');
 		$('h1').after($row);
 		response.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data);
 		});
-	}, 1200);
+	}, 800);
 }
 
 function showRecipeCard(recipe, data) {
 	const recipeHTML = generateRecipeCardHTML(recipe, data);
-	$('#recipe-container').append(recipeHTML).hide().fadeIn(500);
+	$('#recipe-container').append(recipeHTML).hide().slideDown(800);
 }
 
-// TODO JINJA elements need attention
 function generateRecipeCardHTML(recipe, data) {
 	return `<div class="card col-sm-10 col-md-5 col-lg-4 col-xl-3 border border-secondary p-2 rounded text-center my-3">
 	<img src="${data.baseUri}${recipe.image}" class="card-img-top img-fluid" alt="Photo of ${recipe.title}">
 	<div class="card-body py-2">
 	  <h5 class="card-title d-inline">${recipe.title}</h5>
-	  <form id="favorite-form" class="d-inline">
-		{% if recipe in g.user.recipes %}
-		<button data-id="${recipe.id}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
-		{% else %}
-		<button data-id="${recipe.id}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
-		{% endif %}
-	  </form>
 	  <p class="lead mb-0">Ready In: ${recipe.readyInMinutes}</p>
 	  <p class="lead">Servings: ${recipe.servings}</p>
 	  <a class="small text-muted" href="${recipe.sourceUrl}">View original</a>
 	  <br>
-	  <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-primary">See more</a>
+	  <a href="/recipes/${recipe.id}" class="btn btn-outline-primary">See more</a>
 	</div>
 </div>`;
 }

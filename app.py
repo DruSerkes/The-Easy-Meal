@@ -248,6 +248,7 @@ def remove_favorite(id):
     except Exception as e:
         return jsonify(errors=str(e))
 
+# TODO
 
 @ app.route('/recipes/<int:id>')
 def view_recipe_details(id):
