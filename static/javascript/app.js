@@ -38,6 +38,31 @@ async function handleSearch(evt) {
 	}
 
 	const response = axios.get('/search', { params: { query, id } });
+	console.log(response);
+	displayResults(response);
+}
+
+function displayResults(response) {
+	$('main').children().fadeOut(1500);
+
+	const $h1 = makeH1();
+	const $row = makeRow();
+	$('main').append($h1);
+	$('h1').after($row);
+
+	for (let result of response.results) {
+		console.log(result);
+		makeRecipeCard(result);
+	}
+	
+}
+function makeH1(text = 'Easy Meals') {
+	let $newH1 = $('<h1>').text(text).addClass('display-2 text-center');
+	return $newH1;
+}
+function makeRow() {
+	let $newRow = $('<div>').addClass('row p-0 m-0').attr('id', 'recipe-container');
+	return $newRow;
 }
 
 async function addIngredientsToGroceryList(evt) {
