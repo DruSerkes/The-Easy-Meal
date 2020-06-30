@@ -91,7 +91,7 @@ async function handleUserUpdate(evt) {
 	let response = await axios.patch(`/users/${id}`, (data = { id, email, imgUrl }));
 
 	if (response.data.errors) {
-		displayError(response);
+		displayErrorAlert(response);
 	} else {
 		$('#user-email').text(`Email: ${response.data.user.email}`);
 		$('#user-image').attr('src', `${response.data.user.img_url}`);
@@ -114,22 +114,28 @@ function showUpdateForm() {
 
 function toggleFavorite(response) {
 	if (response.status !== 200) {
-		displayError(response);
+		displayErrorAlert(response);
 	} else {
 		$(this).toggleClass('fas fa-heart');
 		$(this).toggleClass('far fa-heart');
-		displaySuccess(response);
+		displaySuccessModal(response);
 	}
 }
 
-function displayError(response) {
+function displayErrorAlert(response) {
 	console.log(response.data.errors);
 	const alertHTML = generateAlertHTML('Something went wrong, please try again', 'danger');
 	$('body').append(alertHTML).alert();
 	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
 }
 
-function displaySuccess(response) {
+function displaySuccessAlert(response) {
+	const alertHTML = generateAlertHTML(response.data.message, 'success');
+	$('body').append(alertHTML).alert();
+	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
+}
+
+function displaySuccessModal(response) {
 	const modalHTML = generateRecipeModalHTML(response.data);
 	if ($('#myModal')) {
 		$('#myModal').remove();
