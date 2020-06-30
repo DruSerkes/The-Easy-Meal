@@ -24,6 +24,16 @@ $('#update').on('click', showUpdateForm);
 // AJAX
 */
 
+/* TODO 
+1. LISTEN FOR SUBMIT FROM search-form 
+2. GRAB VAL: IF IT'S AN EMPTY STRING, DO NOTHING
+3. OTHERWISE: AJAX GET TO BACKEND ROUTE /search WITH PARAM OF query = VAL
+4. BACKEND: MAKE API REQUEST WITH query = VAL 
+5. RETURN JSON FROM API TO FRONTEND 
+6. FRONTEND: EMPTY MAIN, ADD BACK IN THE EASY MEALS H1 AND A RECIPE CONTAINER ROW
+7. FOR EACH RESULT, GENERATE RECIPE CARD HTML AND APPEND TO MAIN
+*/
+
 async function addIngredientsToGroceryList(evt) {
 	const id = $(this).data('id');
 	response = await axios.post(`/groceries`, (data = { id }));
@@ -209,10 +219,10 @@ function addShowModal(modalHTML) {
 	$('#myModal').modal('show');
 }
 
-// function doNothingOnSubmit(evt) {
-// 	evt.preventDefault();
-// 	return;
-// }
+function doNothingOnSubmit(evt) {
+	evt.preventDefault();
+	return;
+}
 
 function generateUpdateModalHTML(id) {
 	return `<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
