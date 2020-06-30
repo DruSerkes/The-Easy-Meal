@@ -85,6 +85,7 @@ async function handleFavorite(evt) {
 
 async function handleUserUpdate(evt) {
 	evt.preventDefault();
+
 	const id = $(this).data('id');
 	const email = $('#email').val();
 	const imgUrl = $('#img-url').val();
@@ -93,11 +94,8 @@ async function handleUserUpdate(evt) {
 	if (response.data.errors) {
 		displayErrorAlert(response);
 	} else {
-		$('#user-email').text(`Email: ${response.data.user.email}`);
-		$('#user-image').attr('src', `${response.data.user.img_url}`);
-		$('#user-profile').attr('src', `${response.data.user.img_url}`);
+		updateProfile(response);
 		displaySuccessAlert(response);
-		console.log(response.data);
 	}
 }
 
@@ -110,6 +108,12 @@ function showUpdateForm() {
 	const modalHTML = generateUpdateModalHTML(id);
 	addShowModal(modalHTML);
 	$('#submit-update').on('click', handleUserUpdate);
+}
+
+function updateProfile(response) {
+	$('#user-email').text(`Email: ${response.data.user.email}`);
+	$('#user-image').attr('src', `${response.data.user.img_url}`);
+	$('#user-profile').attr('src', `${response.data.user.img_url}`);
 }
 
 function toggleFavorite(response) {
