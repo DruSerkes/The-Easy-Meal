@@ -96,8 +96,8 @@ async function handleUserUpdate(evt) {
 		$('#user-email').text(`Email: ${response.data.user.email}`);
 		$('#user-image').attr('src', `${response.data.user.img_url}`);
 		$('#user-profile').attr('src', `${response.data.user.img_url}`);
-		// Resize the navbar img
-		// Display an alert for user feedback
+		displaySuccessAlert(response);
+		console.log(response.data);
 	}
 }
 
@@ -123,7 +123,7 @@ function toggleFavorite(response) {
 }
 
 function displayErrorAlert(response) {
-	console.log(response.data.errors);
+	console.log(`Error details: ${response.data.errors}`);
 	const alertHTML = generateAlertHTML('Something went wrong, please try again', 'danger');
 	$('body').append(alertHTML).alert();
 	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
@@ -131,7 +131,7 @@ function displayErrorAlert(response) {
 
 function displaySuccessAlert(response) {
 	const alertHTML = generateAlertHTML(response.data.message, 'success');
-	$('body').append(alertHTML).alert();
+	$('main').append(alertHTML).alert();
 	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
 }
 
