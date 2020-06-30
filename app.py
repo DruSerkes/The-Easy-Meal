@@ -33,11 +33,12 @@ connect_db(app)
 db.create_all()
 
 CURR_USER_KEY = "user_id"
-
+BASE_URL = "https://api.spoonacular.com"
 
 #####################################
 #     User Signup/Login/Logout      #
 #####################################
+
 
 @app.before_request
 def add_user_to_g():
