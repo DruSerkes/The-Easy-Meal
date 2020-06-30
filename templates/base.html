@@ -45,7 +45,7 @@
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Search</button>
-            <a href="{{ url_for('view_user', id=g.user.id) }}"><img src="{{g.user.img_url}}" alt="{{g.user.username}}" class="border-0 rounded-circle z-depth-2"></a>
+            <a href="{{ url_for('view_user', id=g.user.id) }}"><img id="user-profile" src="{{g.user.img_url}}" alt="{{g.user.username}}" class="img border-0 rounded-circle z-depth-2"></a>
           </form>
           <a class="nav-link btn btn-sm btn-outline-warning my-1 text-dark" href="{{ url_for('logout') }}">Logout</a>
             {% else %} 

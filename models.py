@@ -58,7 +58,7 @@ class User(db.Model):
         """ Serialize User instance for JSON """
         return {
             'id': self.id,
-            'username': self.usernam,
+            'username': self.username,
             'email': self.email,
             'img_url': self.img_url,
             'is_admin': self.is_admin

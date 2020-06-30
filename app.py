@@ -164,10 +164,11 @@ def update_user(id):
 
     try:
         user = User.query.get_or_404(id)
-        new_email = request.json['email'] or None
-        new_img_url = request.json['imgUrl'] or None
-        user.email = new_email or user.email
-        user.img_url = new_img_url or user.img_url
+        new_email = request.json.get('email', user.email)
+        new_img_url = request.json.get('imgUrl', user.img_url)
+        user.email = new_email
+        user.img_url = new_img_url
+
         db.session.commit()
 
         response_json = jsonify(user=user.serialize(),

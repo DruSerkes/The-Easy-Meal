@@ -87,14 +87,16 @@ async function handleUserUpdate(evt) {
 	evt.preventDefault();
 	const id = $(this).data('id');
 	const email = $('#email').val();
-	const imgUrl = $('#image-url').val();
+	const imgUrl = $('#img-url').val();
 	let response = await axios.patch(`/users/${id}`, (data = { id, email, imgUrl }));
 
-	if (response.status !== 200) {
+	if (response.data.errors) {
 		displayError(response);
 	} else {
-		$('#user-email').text(`Email: ${response.data.email}`);
-		$('#user-image').attr('src', `${response.data.img_url}`);
+		$('#user-email').text(`Email: ${response.data.user.email}`);
+		$('#user-image').attr('src', `${response.data.user.img_url}`);
+		$('#user-profile').attr('src', `${response.data.user.img_url}`);
+		// Resize the navbar img
 		// Display an alert for user feedback
 	}
 }
@@ -107,7 +109,7 @@ function showUpdateForm() {
 	const id = $(this).data('id');
 	const modalHTML = generateUpdateModalHTML(id);
 	addShowModal(modalHTML);
-	$('#submit-update').on('click', handleUserUpdate(evt));
+	$('#submit-update').on('click', handleUserUpdate);
 }
 
 function toggleFavorite(response) {
@@ -121,9 +123,10 @@ function toggleFavorite(response) {
 }
 
 function displayError(response) {
-	const alertHTML = generateAlertHTML(response.data.errors, 'danger');
+	console.log(response.data.errors);
+	const alertHTML = generateAlertHTML('Something went wrong, please try again', 'danger');
 	$('body').append(alertHTML).alert();
-	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(2000);
+	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
 }
 
 function displaySuccess(response) {
