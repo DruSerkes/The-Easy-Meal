@@ -92,8 +92,10 @@ async function handleUserUpdate(evt) {
 
 	if (response.status !== 200) {
 		displayError(response);
-	} else{
-		
+	} else {
+		$('#user-email').text(`Email: ${response.data.email}`);
+		$('#user-image').attr('src', `${response.data.img_url}`);
+		// Display an alert for user feedback
 	}
 }
 
