@@ -19,20 +19,26 @@ $('#send-email').on('click', sendEmail);
 $('#clear-list').on('click', clearList);
 $('#favorite-form').on('click', '.fa-heart', handleFavorite);
 $('#update').on('click', showUpdateForm);
-
+$('#search-form').on('submit', handleSearch);
 /* 
 // AJAX
 */
 
 /* TODO 
-1. LISTEN FOR SUBMIT FROM search-form 
-2. GRAB VAL: IF IT'S AN EMPTY STRING, DO NOTHING
-3. OTHERWISE: AJAX GET TO BACKEND ROUTE /search WITH PARAM OF query = VAL
-4. BACKEND: MAKE API REQUEST WITH query = VAL 
-5. RETURN JSON FROM API TO FRONTEND 
 6. FRONTEND: EMPTY MAIN, ADD BACK IN THE EASY MEALS H1 AND A RECIPE CONTAINER ROW
 7. FOR EACH RESULT, GENERATE RECIPE CARD HTML AND APPEND TO MAIN
 */
+
+async function handleSearch(evt) {
+	evt.preventDefault();
+	const id = $(this).data('id');
+	const query = $('#search-value').val();
+	if (query === '') {
+		doNothingOnSubmit();
+	}
+
+	const response = axios.get('/search', { params: { query, id } });
+}
 
 async function addIngredientsToGroceryList(evt) {
 	const id = $(this).data('id');

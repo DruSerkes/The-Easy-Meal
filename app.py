@@ -131,13 +131,16 @@ def logout():
 
 
 ########################
-#       Routes         #
+#     Search Routes    #
 ########################
 
 
 @app.route('/')
 def home_page():
     """ Home Page """
+    if not g.user:
+        return redirect(url_for('signup'))
+
     response = requests.get(f'{API_BASE_URL}/recipes/search',
                             params={'apiKey': api_key, 'number': 12})
     data = response.json()
@@ -145,9 +148,26 @@ def home_page():
     return render_template('index.html', data=data, recipes=recipes)
 
 
+@app.route('/search')
+def search_recipes():
+    """ Search for a recipe based on user input """
+    if not g.user:
+        return abort(401)
+    if request.json['id'] != id:
+        return (jsonify(errors="You don't have permission to do that!"), 401)
+
+    query = request.json['query']
+    response = requests.get(f'{API_BASE_URL}/recipes/search',
+                            params={'apiKey': api_key, 'number': 12, 'query': query})
+    data = response.json()
+    print(data)
+    return (data, 200)
+
+
 ########################
 #      User Routes     #
 ########################
+
 
 @app.route('/users/<int:id>')
 def view_user(id):
