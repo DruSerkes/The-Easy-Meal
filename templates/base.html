@@ -11,7 +11,7 @@
 <body>
 
     <!-- Begin Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary mb-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary mb-4" style="max-height: 200px;">
         <a class="navbar-brand text-dark" href="{{ url_for('home_page') }}">Easy Meals</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -45,7 +45,7 @@
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Search</button>
-            <a href="{{ url_for('view_user', id=g.user.id) }}"><img id="user-profile" src="{{g.user.img_url}}" alt="{{g.user.username}}" class="img border-0 rounded-circle z-depth-2"></a>
+            <a class="" href="{{ url_for('view_user', id=g.user.id) }}"><img id="user-profile" src="{{g.user.img_url}}" alt="{{g.user.username}}" class="img img-fluid border-0 rounded-circle z-depth-2"></a>
           </form>
           <a class="nav-link btn btn-sm btn-outline-warning my-1 text-dark" href="{{ url_for('logout') }}">Logout</a>
             {% else %} 

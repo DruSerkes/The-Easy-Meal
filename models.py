@@ -54,6 +54,10 @@ class User(db.Model):
         else:
             return False
 
+    @classmethod
+    def default_image(cls):
+        return '/static/images/icons8-kawaii-cupcake-64.png'
+
     def serialize(self):
         """ Serialize User instance for JSON """
         return {
