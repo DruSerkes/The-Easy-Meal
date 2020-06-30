@@ -48,7 +48,9 @@ async function handleSearch(evt) {
 }
 
 function displayResults(response) {
-	$('main').children().fadeOut(500).remove();
+	$('main').children().fadeOut('slow').promise().done(function() {
+		$('main').children().remove();
+	});
 	setTimeout(() => {
 		const $h1 = makeH1();
 		const $row = makeRow();
@@ -57,7 +59,7 @@ function displayResults(response) {
 		response.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data);
 		});
-	}, 500);
+	}, 1200);
 }
 
 function showRecipeCard(recipe, data) {
