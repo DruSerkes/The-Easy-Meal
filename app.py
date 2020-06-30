@@ -33,7 +33,7 @@ connect_db(app)
 db.create_all()
 
 CURR_USER_KEY = "user_id"
-BASE_URL = "https://api.spoonacular.com"
+API_BASE_URL = "https://api.spoonacular.com"
 
 #####################################
 #     User Signup/Login/Logout      #
@@ -138,8 +138,11 @@ def logout():
 @app.route('/')
 def home_page():
     """ Home Page """
-    recipes = Recipe.query.all()
-    return render_template('index.html', recipes=recipes)
+    response = requests.get(f'{API_BASE_URL}/recipes/search',
+                            params={'apiKey': api_key, 'number': 12})
+    data = response.json()
+    recipes = data['results']
+    return render_template('index.html', data=data, recipes=recipes)
 
 
 ########################
