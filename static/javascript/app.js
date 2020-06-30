@@ -48,16 +48,16 @@ async function handleSearch(evt) {
 }
 
 function displayResults(response) {
-	$('main').children().fadeOut(500);
-
-	const $h1 = makeH1();
-	const $row = makeRow();
-	$('main').append($h1).hide().delay(300).fadeIn(500);
-	$('h1').after($row);
-
-	response.data.results.forEach((recipe) => {
-		showRecipeCard(recipe, response.data);
-	});
+	$('main').children().fadeOut(500).remove();
+	setTimeout(() => {
+		const $h1 = makeH1();
+		const $row = makeRow();
+		$('main').append($h1).fadeIn(500);
+		$('h1').after($row);
+		response.data.results.forEach((recipe) => {
+			showRecipeCard(recipe, response.data);
+		});
+	}, 500);
 }
 
 function showRecipeCard(recipe, data) {
