@@ -5,7 +5,8 @@ from forms import SignupForm, LoginForm, GroceryListForm
 from helpers import generate_login_data, generate_user_data
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
-from secrets import app_password
+from secrets import app_password, api_key
+import requests
 import os
 
 app = Flask(__name__)
