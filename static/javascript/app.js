@@ -59,14 +59,9 @@ async function clearList() {
 	response = await axios.delete(`/groceries/${id}`);
 
 	if (response.status !== 200) {
-		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
-		$('body').append(alertHTML).alert();
-		$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(2000);
+		displayErrorAlert(response);
 	} else {
-		const alertHTML = generateAlertHTML(response.data.message, 'success');
-		$('body').append(alertHTML).alert();
-		$('.feedback').hide().fadeIn(1500).delay(1000).fadeOut(2200);
-		$('#list').empty();
+		displaySuccessAlert(response);
 	}
 }
 

@@ -6,7 +6,7 @@
 <h1 class="display-2 mt-4 mb-5 text-center">Shopping List</h1>
 
 {% if grocery_list.ingredients %}
-  <div class="container w-50 mx-auto">
+  <div class="container w-50 mx-auto" id="list-container">
     <ul class="list-group border rounded" data-id="{{ grocery_list.id }}" id="list">
       <li class="list-group-item text-center">
         <button id="send-email" data-id="{{ grocery_list.id }}" class="btn btn-sm btn-primary">Email Me My List</button>
