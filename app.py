@@ -23,7 +23,7 @@ app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_DEBUG'] = True  # Set to false once in production
 app.config['MAIL_MAX_EMAILS'] = 1
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SQLALCHEMY_ECHO"] = True
+app.config["SQLALCHEMY_ECHO"] = False
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', "easysecretmeal")
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 
@@ -153,14 +153,13 @@ def search_recipes():
     """ Search for a recipe based on user input """
     if not g.user:
         return abort(401)
-    if request.json['id'] != id:
+    if int(request.args['id']) != g.user.id:
         return (jsonify(errors="You don't have permission to do that!"), 401)
 
-    query = request.json['query']
+    query = request.args['query']
     response = requests.get(f'{API_BASE_URL}/recipes/search',
                             params={'apiKey': api_key, 'number': 12, 'query': query})
     data = response.json()
-    print(data)
     return (data, 200)
 
 

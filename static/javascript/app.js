@@ -1,5 +1,16 @@
+/* TODO MAYBE WISE TO REFACTOR INTO OOP
+0. Create api-classes.js and include in base.html before ui.js 
+1. Create User class
+2. User attributes: id, email, favorite recipes, diet, cuisine, (intolerances?)
+3. Move appropriate methods onto user (handleSearch, sendEmail, etc)
+4. Repeat for GroceryList class...
+5. GroceryList attributes: id, ingredients,
+6. Repeat for Recipe class... 
+7. Recipe attributes: id, title, imgUrl, sourceName, sourceUrl, description, readyIn, servings, ingredients(list) 
+*/
+
 /* 
-// ANIMATIONS
+// ANIMATION ON LOAD 
 */
 
 $(document).ready(function() {
@@ -10,7 +21,7 @@ $(document).ready(function() {
 });
 
 /* 
-// LISTENERS
+// EVENT LISTENERS
 */
 
 $('#add-ingredients').on('click', addIngredientsToGroceryList);
@@ -24,11 +35,6 @@ $('#search-form').on('submit', handleSearch);
 // AJAX
 */
 
-/* TODO 
-6. FRONTEND: EMPTY MAIN, ADD BACK IN THE EASY MEALS H1 AND A RECIPE CONTAINER ROW
-7. FOR EACH RESULT, GENERATE RECIPE CARD HTML AND APPEND TO MAIN
-*/
-
 async function handleSearch(evt) {
 	evt.preventDefault();
 	const id = $(this).data('id');
@@ -37,17 +43,16 @@ async function handleSearch(evt) {
 		doNothingOnSubmit();
 	}
 
-	const response = axios.get('/search', { params: { query, id } });
-	console.log(response);
+	const response = await axios.get('/search', { params: { query, id } });
 	displayResults(response);
 }
 
 function displayResults(response) {
-	$('main').children().fadeOut(1500);
+	$('main').children().fadeOut(500);
 
 	const $h1 = makeH1();
 	const $row = makeRow();
-	$('main').append($h1);
+	$('main').append($h1).hide().delay(300).fadeIn(500);
 	$('h1').after($row);
 
 	response.data.results.forEach((recipe) => {
@@ -57,10 +62,10 @@ function displayResults(response) {
 
 function showRecipeCard(recipe, data) {
 	const recipeHTML = generateRecipeCardHTML(recipe, data);
-	$('#recipe-container').append(recipeHTML);
+	$('#recipe-container').append(recipeHTML).hide().fadeIn(500);
 }
 
-// TODO JINJA elements might need attention
+// TODO JINJA elements need attention
 function generateRecipeCardHTML(recipe, data) {
 	return `<div class="card col-sm-10 col-md-5 col-lg-4 col-xl-3 border border-secondary p-2 rounded text-center my-3">
 	<img src="${data.baseUri}${recipe.image}" class="card-img-top img-fluid" alt="Photo of ${recipe.title}">
