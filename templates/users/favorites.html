@@ -10,7 +10,7 @@
 <div class="row justify-content-center my-5">
   {% for recipe in g.user.recipes %}
     <div class="card col-4 border border-secondary p-0 rounded text-center" style="width: 100%;">
-      <img src="{{recipe.img_url}}" class="card-img-top img-fluid" alt="Photo of {{recipe.title}}">
+      <img src="{{recipe.image}}" class="card-img-top img-fluid" alt="Photo of {{recipe.title}}">
       <div class="card-body py-2">
         <h5 class="card-title d-inline">{{ recipe.title }} </h5>
         <form id="favorite-form" class="d-inline">
@@ -20,7 +20,7 @@
           <button data-id=" {{ recipe.id }} " class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
           {% endif %}
         </form>
-        <p class="small">By {{ recipe.source_name }} </p>
+        <p><a href="{{ recipe.sourceUrl }}" class="small">By {{ recipe.sourceName }} </a></p>
         <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-info">See more</a>
       </div>
     </div>
