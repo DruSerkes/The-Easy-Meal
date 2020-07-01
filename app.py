@@ -270,9 +270,9 @@ def remove_favorite(id):
     except Exception as e:
         return jsonify(errors=str(e))
 
-# TODO
 
-
+# TODO rework template to display data
+# Favoriting gets the same recipe and saves the recipe data, steps, ingredients, and their associations to one-another
 @ app.route('/recipes/<int:id>')
 def view_recipe_details(id):
     """ View recipe in detail """
@@ -280,8 +280,10 @@ def view_recipe_details(id):
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
 
-    recipe = Recipe.query.get_or_404(id)
-    return render_template('recipes/details.html', recipe=recipe)
+    response = requests.request(
+        'GET', f"{API_BASE_URL}/recipes/{id}/information", data={'apiKey': student_key, 'id': id})
+    data = response.json()
+    return render_template('recipes/details.html', recipe=data)
 
 
 ########################
