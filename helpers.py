@@ -45,10 +45,10 @@ def generate_headers():
 def generate_search_params(query, cuisine=None, diet=None, offset=0):
     """ 
     Returns a querystring object for recipe search
-    query: The (natural language) recipe search query
-    cuisine (optional): The cuisine(s) of the recipes. One or more (comma separated) of the following: african, chinese, japanese, korean, vietnamese, thai, indian, british, irish, french, italian, mexican, spanish, middle eastern, jewish, american, cajun, southern, greek, german, nordic, eastern european, caribbean, or latin american.
-    diet (optional): The diet to which the recipes must be compliant. Possible values are: pescetarian, lacto vegetarian, ovo vegetarian, vegan, and vegetarian.
-    offset (optional): The number of results to skip (between 0 and 900).
+    query (str): The (natural language) recipe search query
+    cuisine (str - optional): The cuisine(s) of the recipes. One or more (comma separated) of the following: african, chinese, japanese, korean, vietnamese, thai, indian, british, irish, french, italian, mexican, spanish, middle eastern, jewish, american, cajun, southern, greek, german, nordic, eastern european, caribbean, or latin american.
+    diet (str - optional): The diet to which the recipes must be compliant. Possible values are: pescetarian, lacto vegetarian, ovo vegetarian, vegan, and vegetarian.
+    offset (int - optional): The number of results to skip (between 0 and 900).
     """
     if not query or not isinstance(query, str):
         return "Invalid or missing query"
@@ -65,8 +65,8 @@ def generate_search_params(query, cuisine=None, diet=None, offset=0):
     else:
         return {
             "query": query,
-            "diet": diet,
-            "cuisine": cuisine,
+            "diet": diet.lower(),
+            "cuisine": cuisine.lower(),
             "offset": offset,
             "number": "12",
         }

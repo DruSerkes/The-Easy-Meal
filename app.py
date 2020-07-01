@@ -65,6 +65,22 @@ def do_logout():
         del session[CURR_USER_KEY]
 
 
+def do_search(request):
+    """ Get recipes for user """
+    query = request.json.get('query', "food")
+    cuisine = request.json.get('cuisine', None)
+    diet = request.json.get('diet', None)
+    offset = request.json.get('offset', 0)
+
+    headers = generate_headers()
+    querystring = generate_search_params(query, cuisine, diet, offset)
+
+    response = requests.request(
+        "GET", url, headers=headers, params=querystring)
+
+    return response
+
+
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
     """
@@ -135,9 +151,6 @@ def logout():
 #     Search Routes    #
 ########################
 
-def get_recipes():
-    """ Get recipes for user """
-
 
 @app.route('/')
 def home_page():
@@ -161,8 +174,6 @@ def search_recipes():
         return (jsonify(errors="You don't have permission to do that!"), 401)
 
     query = request.args.get('query', None)
-
-    
 
     response = requests.get(f'{API_BASE_URL}/recipes/search', headers=generate_headers(),
                             params={'apiKey': api_key, 'number': 12, 'query': query})
