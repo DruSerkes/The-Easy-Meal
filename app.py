@@ -161,10 +161,9 @@ def home_page():
         return redirect(url_for('signup'))
 
     response = do_search(request)
-    # response = requests.get(f'{API_BASE_URL}/recipes/search',
-    #                         params={'apiKey': student_key, 'number': 12})
     data = response.json()
     recipes = data['results']
+
     return render_template('index.html', data=data, recipes=recipes)
 
 
@@ -176,13 +175,9 @@ def search_recipes():
     if int(request.args['id']) != g.user.id:
         return (jsonify(errors="You don't have permission to do that!"), 401)
 
-    # query = request.args.get('query', None)
-    # response = requests.get(f'{API_BASE_URL}/recipes/search', headers=generate_headers(),
-    #                         params={'apiKey': api_key, 'number': 12, 'query': query})
     response = do_search(request)
     data = response.json()
-    print('**************************')
-    print(data)
+
     return (data, 200)
 
 
