@@ -42,7 +42,7 @@ def generate_headers():
     }
 
 
-def generate_search_params(query, cuisine=None, diet=None, offset=0):
+def generate_search_params(query, cuisine='', diet='', offset=0):
     """ 
     Returns a querystring object for recipe search
     query (str): The (natural language) recipe search query
@@ -58,15 +58,16 @@ def generate_search_params(query, cuisine=None, diet=None, offset=0):
     valid_diets = ['pescetarian', 'lacto vegetarian',
                    'ovo vegetarian', 'vegan', 'vegetarian']
 
-    if cuisine and cuisine.lower() not in valid_cuisines:
+    if cuisine and cuisine not in valid_cuisines:
         return "Invalid cuisine"
-    elif diet and diet.lower() not in valid_diets:
+    elif diet and diet not in valid_diets:
         return "Invalid diet"
     else:
         return {
+            "apiKey": student_key,
             "query": query,
-            "diet": diet.lower(),
-            "cuisine": cuisine.lower(),
+            "diet": diet,
+            "cuisine": cuisine,
             "offset": offset,
             "number": "12",
         }

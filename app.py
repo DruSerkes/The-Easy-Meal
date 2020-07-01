@@ -33,7 +33,8 @@ connect_db(app)
 db.create_all()
 
 CURR_USER_KEY = "user_id"
-API_BASE_URL = "https://api.spoonacular.com"
+# API_BASE_URL = "https://api.spoonacular.com"
+API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 API_KEY = student_key
 
 #####################################
@@ -66,25 +67,24 @@ def do_logout():
 
 
 def do_search(request):
-    """ 
-    Get recipes from user request from Spoonacular API  
-    Returns a response 
     """
-    query = request.json.get('query', "food")
-    cuisine = request.json.get('cuisine', None)
-    diet = request.json.get('diet', None)
-    offset = request.json.get('offset', 0)
+    Get recipes from user request from Spoonacular API
+    Returns a response
+    """
+    query = request.args.get('query', "food")
+    cuisine = request.args.get('cuisine', None)
+    diet = request.args.get('diet', None)
+    offset = request.args.get('offset', 0)
 
     headers = generate_headers()
     querystring = generate_search_params(query, cuisine, diet, offset)
-
     response = requests.request(
         "GET", f"{API_BASE_URL}/recipes/search", headers=headers, params=querystring)
 
     return response
 
 
-@app.route('/signup', methods=["GET", "POST"])
+@ app.route('/signup', methods=["GET", "POST"])
 def signup():
     """
     Handles user signup.
@@ -120,7 +120,7 @@ def signup():
         return render_template('users/signup.html', form=form)
 
 
-@app.route('/login', methods=["GET", "POST"])
+@ app.route('/login', methods=["GET", "POST"])
 def login():
     """Handle user login."""
 
@@ -140,7 +140,7 @@ def login():
     return render_template('users/login.html', form=form)
 
 
-@app.route('/logout')
+@ app.route('/logout')
 def logout():
     """Handle logout of user."""
 
@@ -154,12 +154,12 @@ def logout():
 ########################
 
 
-@app.route('/')
+@ app.route('/')
 def home_page():
     """ Home Page """
     if not g.user:
         return redirect(url_for('signup'))
-    
+
     response = requests.get(f'{API_BASE_URL}/recipes/search',
                             params={'apiKey': api_key, 'number': 12})
     data = response.json()
@@ -167,7 +167,7 @@ def home_page():
     return render_template('index.html', data=data, recipes=recipes)
 
 
-@app.route('/search')
+@ app.route('/search')
 def search_recipes():
     """ Search for a recipe based on user input """
     if not g.user:
@@ -180,6 +180,8 @@ def search_recipes():
     #                         params={'apiKey': api_key, 'number': 12, 'query': query})
     response = do_search(request)
     data = response.json()
+    print('**************************')
+    print(data)
     return (data, 200)
 
 
@@ -188,7 +190,7 @@ def search_recipes():
 ########################
 
 
-@app.route('/users/<int:id>')
+@ app.route('/users/<int:id>')
 def view_user(id):
     """ Dispay user profile """
     if not g.user:
@@ -198,7 +200,7 @@ def view_user(id):
     return render_template('users/profile.html')
 
 
-@app.route('/users/<int:id>', methods=['PATCH'])
+@ app.route('/users/<int:id>', methods=['PATCH'])
 def update_user(id):
     """ Update user info """
     if not g.user:
@@ -222,7 +224,7 @@ def update_user(id):
         return jsonify(errors=str(e))
 
 
-@app.route('/favorites/')
+@ app.route('/favorites/')
 def view_saved_recipes():
     """ Route to view saved recipes """
     if not g.user:
@@ -232,7 +234,7 @@ def view_saved_recipes():
     return render_template('users/favorites.html')
 
 
-@app.route('/favorites/<int:id>', methods=['POST'])
+@ app.route('/favorites/<int:id>', methods=['POST'])
 def add_favorite(id):
     """ Favorite a recipe """
     if not g.user:
@@ -249,7 +251,7 @@ def add_favorite(id):
         return jsonify(errors=str(e))
 
 
-@app.route('/favorites/<int:id>', methods=['DELETE'])
+@ app.route('/favorites/<int:id>', methods=['DELETE'])
 def remove_favorite(id):
     """ Unfavorite a recipe """
     if not g.user:
