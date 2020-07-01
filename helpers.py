@@ -1,5 +1,5 @@
 """ Helper functions to keep views clean """
-from models import User
+from models import User, db
 from secrets import student_key
 
 
@@ -70,3 +70,13 @@ def generate_search_params(query, cuisine=None, diet=None, offset=0):
             "offset": offset,
             "number": "12",
         }
+
+
+def add_and_commit(obj):
+    """ 
+    Add and commit an obj to the db 
+    Returns obj
+    """
+    db.session.add(obj)
+    db.session.commit()
+    return obj
