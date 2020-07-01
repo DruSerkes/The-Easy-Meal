@@ -1,6 +1,12 @@
 """ Helper functions to keep views clean """
-from models import User, db
 from secrets import student_key
+from models import User, db
+from flask import request
+import requests
+
+
+API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+API_KEY = student_key
 
 
 def generate_user_data(form):
@@ -79,3 +85,33 @@ def add_and_commit(obj):
     db.session.add(obj)
     db.session.commit()
     return obj
+
+
+def do_search(request):
+    """
+    Get recipes from user request from Spoonacular API
+    Returns a response
+    """
+    query = request.args.get('query', "")
+    cuisine = request.args.get('cuisine', "")
+    diet = request.args.get('diet', "")
+    offset = request.args.get('offset', 0)
+
+    headers = generate_headers()
+    querystring = generate_search_params(query, cuisine, diet, offset)
+    response = requests.request(
+        "GET", f"{API_BASE_URL}/recipes/search", headers=headers, params=querystring)
+
+    return response
+
+
+def get_recipe(id):
+    """ 
+    Get recipe information from API
+    Returns a recipe object  
+    """
+    headers = generate_headers()
+    response = requests.request(
+        'GET', f"{API_BASE_URL}/recipes/{id}/information", headers=headers, data={'apiKey': student_key, 'id': id})
+
+    return response

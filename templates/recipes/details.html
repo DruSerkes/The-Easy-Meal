@@ -5,130 +5,79 @@
 
 {% block content %} 
 
-<h1 class="display-3 text-center">Recipe Details</h1>
+<!-- <h1 class="display-2 text-center mb-2">Recipe Details</h1> -->
 
-<div class="jumbotron">
+<div class="jumbotron pt-4" style="opacity: 0.9;">
     <div class="container-fluid">
-      <div class="row mb-1">
+        <!-- TOP ROW  -->
+        <div class="row mb-1">
 
-        <div class="col-sm-12 col-md-6 text-center">
-          <h1 class="display-4">{{ recipe.title }}</h1>
-          <p class="lead">{{ recipe.description }}</p>
-          <hr class="my-2">
-          <p class="lead my-1">Ready in: {{ recipe.ready_in }} minutes</p>
-          <p class="lead my-1">Serves: {{ recipe.servings }}</p>
+            <div class="col-sm-12 col-md-6 text-center">
+                <h1 class="display-4">{{ recipe.title }}</h1>
+                <p class="lead">{{ recipe.description }}</p>
+                <hr class="my-2">
+                <p class="lead my-1">Ready in: {{ recipe.ready_in }} minutes</p>
+                <p class="lead my-1">Serves: {{ recipe.servings }}</p>
+            </div>
+        
+            <div class="col-sm-12 col-md-6 mr-0">
+                <img src="{{ recipe.image }}" class="img img-fluid img-thumbnail" alt="Photo of {{ recipe.title }}">
+                <br>
+                <span class="text-center">
+                    <small class="small"><a href="{{ recipe.sourceUrl }}" class="text-muted mx-auto">Originally from {{ recipe.sourceName }}</a></small>
+                    <form id="favorite-form" class="d-inline">
+                        {% if recipe in g.user.recipes %}
+                        <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
+                        {% else %}
+                        <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
+                        {% endif %}
+                      </form>
+                </span>
+                </p>
+            </div>
         </div>
-  
-        <div class="col-sm-12 col-md-6 mr-0">
-          <img src="{{recipe.img_url}}" class="img img-fluid img-thumbnail" alt="Photo of {{recipe.title}}">
-          <p class="lead text-center">By {{ recipe.source_name }}
-            <br>
-            <small class="small"><a href="{{ recipe.source_url }}" class="text-muted">View the original recipe here</a></small>
-          </p>
-        </div>
-      </div>
+        <!-- END TOP ROW -->
+
       <hr class="my-4">
 
-      <div class="row">
+        <!-- BOTTOM ROW -->
+        <div class="row p-0 m-0">
           <!-- left column for directions  -->
-            <div class="col-sm-12 col-md-6 text-center">
-                <h5 class="card-title">Instructions</h5>
+            <div class="col-sm-12 col-md-5 mx-1 mb-2 text-center">
+                <h5 class="h5">Instructions</h5>
                 {% if recipe.steps %}
                 <ul class="list-group list-group-flush text-center">
                     {% for step in recipe.steps %}
                     <li class="list-group-item">{{ step.show_step() }}</li>
                     {% endfor %}
                 </ul>
+                {% elif recipe.instructions %}
+                <p class="">{{recipe.instructions}}</p>
                 {% else %}
-                <p class="card-text">Sorry!</p>
-                <p class="card-text">We can't find any instructions for this recipe!</p>
+                <p class="">Sorry!</p>
+                <p class="">We can't find any instructions for this recipe!</p>
                 {% endif %}
             </div>
 
             <!-- right column for ingredients  -->
-            <div class="col-sm-12 col-md-6 text-center">
-                <h5 class="card-title">Ingredients</h5>
-                {% if recipe.ingredients %}
-                <ul class="list-group list-group-flush text-center mb-3">
-                    {% for measurement in recipe.measurements %}
-                    <li class="list-group-item">{{ measurement.show_measurement() }}</li>
-                    {% endfor %}
-                </ul>
+            <div class="col-sm-12 col-md-4 col-lg mx-1 text-center">
+                <h5 class="h5">Ingredients</h5>
+                {% if recipe.extendedIngredients %}
+                <!-- <ul class="list-group list-group-flush text-center mb-3"> -->
+                {% for ingredient in recipe.extendedIngredients %}
+                <p class="ingredient" data-id="{{ ingredient.id }}">{{ ingredient.originalString }}</p>
+                {% endfor %}
+                <!-- </ul> -->
                 <button id='add-ingredients' data-id="{{ recipe.id }}" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Add to Shopping List</button>
                 {% else %}
-                <p class="card-text">Sorry!</p>
-                <p class="card-text">We can't find the ingredients for this recipe!</p>
+                <p class="">Sorry!</p>
+                <p class="">We can't find the ingredients for this recipe!</p>
                 {% endif %}
             </div>
-      </div>
+        </div>
+        <!-- END BOTTOM ROW -->
+
     </div>
-  </div>
-
-
-
-  <!-- <div class="container-fluid mt-5">
-    <div class="row"> -->
-        <!-- Recipe overview column -->
-        <!-- <div class="col-sm-12 col-md-4">
-            <div class="card" style="width: 100%">
-                <img src="{{recipe.img_url}}" class="card-img-top" alt="Photo of {{recipe.title}}">
-                <div class="card-body text-center">
-                  <h5 class="card-title">{{ recipe.title }}</h5>
-                  <p class="card-text">{{ recipe.description }}</p>
-                </div>
-                <ul class="list-group list-group-flush text-center">
-                  <li class="list-group-item">Ready in: {{ recipe.ready_in }} minutes</li>
-                  <li class="list-group-item">Serves: {{ recipe.servings }}</li>
-                  <li class="list-group-item">By {{ recipe.source_name }}
-                      <br>
-                      <small class="small"><a href="{{ recipe.source_url }}" class="text-muted">View the original recipe here</a></small>
-                  </li>
-                </ul>
-            </div>
-        </div> -->
-        <!-- End recipe overview  -->
-
-        <!-- Recipe ingredients column -->
-        <!-- <div class="col">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Ingredients</h5>
-                    {% if recipe.ingredients %}
-                    <ul class="list-group list-group-flush text-center">
-                        {% for measurement in recipe.measurements %}
-                        <li class="list-group-item">{{ measurement.show_measurement() }}</li>
-                        {% endfor %}
-                    </ul>
-                    <button id='add-ingredients' data-id="{{ recipe.id }}" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Add to Shopping List</button>
-                    {% else %}
-                    <p class="card-text">Sorry!</p>
-                    <p class="card-text">We can't find the ingredients for this recipe!</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div> -->
-        <!-- End recipe ingredients  -->
-
-        <!-- Recipe directions column -->
-        <!-- <div class="col">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Instructions</h5>
-                    {% if recipe.steps %}
-                    <ul class="list-group list-group-flush text-center">
-                        {% for step in recipe.steps %}
-                        <li class="list-group-item">{{ step.show_step() }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p class="card-text">Sorry!</p>
-                    <p class="card-text">We can't find any instructions for this recipe!</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div> -->
-        <!-- End recipe directions -->
-    <!-- </div>
-</div> -->
+</div>
 
 {% endblock %}

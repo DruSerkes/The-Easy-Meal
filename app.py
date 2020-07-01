@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, session, request, flash, jso
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step
 from forms import SignupForm, LoginForm, GroceryListForm
-from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit
+from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
 from secrets import app_password, api_key, student_key
@@ -66,22 +66,34 @@ def do_logout():
         del session[CURR_USER_KEY]
 
 
-def do_search(request):
-    """
-    Get recipes from user request from Spoonacular API
-    Returns a response
-    """
-    query = request.args.get('query', "")
-    cuisine = request.args.get('cuisine', "")
-    diet = request.args.get('diet', "")
-    offset = request.args.get('offset', 0)
+# def do_search(request):
+#     """
+#     Get recipes from user request from Spoonacular API
+#     Returns a response
+#     """
+#     query = request.args.get('query', "")
+#     cuisine = request.args.get('cuisine', "")
+#     diet = request.args.get('diet', "")
+#     offset = request.args.get('offset', 0)
 
-    headers = generate_headers()
-    querystring = generate_search_params(query, cuisine, diet, offset)
-    response = requests.request(
-        "GET", f"{API_BASE_URL}/recipes/search", headers=headers, params=querystring)
+#     headers = generate_headers()
+#     querystring = generate_search_params(query, cuisine, diet, offset)
+#     response = requests.request(
+#         "GET", f"{API_BASE_URL}/recipes/search", headers=headers, params=querystring)
 
-    return response
+#     return response
+
+
+# def get_recipe(id):
+#     """
+#     Get recipe information from API
+#     Returns a recipe object
+#     """
+#     headers = generate_headers()
+#     response = requests.request(
+#         'GET', f"{API_BASE_URL}/recipes/{id}/information", headers=headers, data={'apiKey': student_key, 'id': id})
+
+#     return response
 
 
 @ app.route('/signup', methods=["GET", "POST"])
@@ -281,8 +293,7 @@ def view_recipe_details(id):
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
 
-    response = requests.request(
-        'GET', f"{API_BASE_URL}/recipes/{id}/information", data={'apiKey': student_key, 'id': id})
+    response = get_recipe(id)
     data = response.json()
     return render_template('recipes/details.html', recipe=data)
 
@@ -290,6 +301,7 @@ def view_recipe_details(id):
 ########################
 # Grocery List Routes  #
 ########################
+
 
 @ app.route('/groceries')
 def view_grocery_list():
@@ -433,4 +445,3 @@ def display_401(error):
 def display_500(error):
     """ Displays a custom error page when returning a 500 error"""
     return render_template('errors/error500.html'), 500
-
