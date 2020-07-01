@@ -298,7 +298,8 @@ def view_recipe_details(id):
         response = get_recipe(id)
         data = response.json()
         # Recipe data from API
-        return render_template('recipes/details.html', recipe=data) # OR!!!! Reformat model to match API ******
+        # OR!!!! Reformat model to match API (update seed.py as well)******
+        return render_template('recipes/details.html', recipe=data)
     else:
         # Create a seperate template for Recipe data from a DB (vs recipe from API)
 

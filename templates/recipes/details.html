@@ -62,12 +62,18 @@
             <!-- right column for ingredients  -->
             <div class="col-sm-12 col-md-4 col-lg mx-1 text-center">
                 <h5 class="h5">Ingredients</h5>
-                {% if recipe.extendedIngredients %}
-                <!-- <ul class="list-group list-group-flush text-center mb-3"> -->
+                {% if recipe.ingredients %}
+
+                {% for ingredient in recipe.ingredients %}
+                <p class="ingredient" data-id="{{ ingredient.id }}">{{ ingredient.measurements.amount }} {{ ingredient.measurements.unit }} {{ ingredient.name }}</p>
+                {% endfor %}
+
+                {% elif recipe.extendedIngredients %}
+               
                 {% for ingredient in recipe.extendedIngredients %}
                 <p class="ingredient" data-id="{{ ingredient.id }}">{{ ingredient.originalString }}</p>
                 {% endfor %}
-                <!-- </ul> -->
+
                 <button id='add-ingredients' data-id="{{ recipe.id }}" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Add to Shopping List</button>
                 {% else %}
                 <p class="">Sorry!</p>
