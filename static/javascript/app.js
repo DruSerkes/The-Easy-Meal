@@ -225,13 +225,13 @@ function toggleFavorite(response) {
 function displayErrorAlert(response) {
 	console.log(`Error details: ${response.data.errors}`);
 	const alertHTML = generateAlertHTML('Something went wrong, please try again', 'danger');
-	$('body').append(alertHTML).alert();
+	$('main').prepend(alertHTML).alert();
 	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
 }
 
 function displaySuccessAlert(response) {
 	const alertHTML = generateAlertHTML(response.data.message, 'success');
-	$('main').append(alertHTML).alert();
+	$('main').prepend(alertHTML).alert();
 	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
 }
 
@@ -306,7 +306,7 @@ function generateAlertHTML(message, category) {
 }
 
 function addShowModal(modalHTML) {
-	$('body > .container').append(modalHTML);
+	$('main').append(modalHTML);
 	$('#myModal').modal('show');
 }
 

@@ -41,7 +41,7 @@ main {
 	left: 0;
 	right: 0;
 	margin: 5% auto;
-	z-index: 10;
+	z-index: 100;
 	width: 18rem;
 }
 
