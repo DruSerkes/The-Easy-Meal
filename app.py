@@ -220,16 +220,7 @@ def update_user(id):
         return jsonify(errors=str(e))
 
 
-@ app.route('/favorites/')
-def view_saved_recipes():
-    """ Route to view saved recipes """
-    if not g.user:
-        flash('You must be logged in to do that', 'warning')
-        return redirect(url_for('login'))
-
-    return render_template('users/favorites.html')
-
-
+# TODO INTEGRATE WITH API
 @ app.route('/favorites/<int:id>', methods=['POST'])
 def add_favorite(id):
     """ Favorite a recipe """
@@ -267,6 +258,20 @@ def remove_favorite(id):
         return jsonify(errors=str(e))
 
 
+########################
+#    Recipe Routes     #
+########################
+
+@ app.route('/favorites/')
+def view_saved_recipes():
+    """ Route to view saved recipes """
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
+
+    return render_template('users/favorites.html')
+
+
 # TODO rework template to display data
 # Favoriting gets the same recipe and saves the recipe data, steps, ingredients, and their associations to one-another
 @ app.route('/recipes/<int:id>')
@@ -296,17 +301,6 @@ def view_grocery_list():
     grocery_list = GroceryList.query.filter(
         GroceryList.user_id == g.user.id).first()
     return render_template('groceries/list.html', grocery_list=grocery_list)
-
-
-# TODO
-@ app.route('/groceries/history')
-def view_list_history():
-    """ View grocery lists """
-    if not g.user:
-        flash('You must be logged in to do that', 'warning')
-        return redirect(url_for('login'))
-
-    return render_template('')
 
 
 @ app.route('/groceries', methods=['POST'])
@@ -406,6 +400,17 @@ def mail_grocery_list(list_id):
         return jsonify(errors=str(e))
 
 
+# TODO?
+@ app.route('/groceries/history')
+def view_list_history():
+    """ View grocery lists """
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
+
+    return render_template('')
+
+
 ########################
 #     Custom Errors    #
 ########################
@@ -429,22 +434,3 @@ def display_500(error):
     """ Displays a custom error page when returning a 500 error"""
     return render_template('errors/error500.html'), 500
 
-
-@ app.route('/email/kang')
-def email_kang():
-    """ Email a sweet TG to Kang """
-    try:
-        msg = Message(subject="Dru Serkes Capstone Project", recipients=[
-            'daniel8kang@gmail.com'], bcc=['andrewserkes@gmail.com'])
-        msg.body = f"Todd Goldman \n (This message was sent by Dru's Capstone App)"
-        msg.html = render_template('tg.html')
-
-        with app.open_resource("static/images/tg.jpeg") as fp:
-            msg.attach("static/images/tg.jpeg", "image/jpeg", fp.read())
-
-        mail.send(msg)
-
-        response_json = jsonify(message=f'Message sent to {g.user.email}')
-        return (response_json, 200)
-    except Exception as e:
-        return jsonify(errors=str(e))
