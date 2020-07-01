@@ -2,10 +2,10 @@ from flask import Flask, render_template, redirect, session, request, flash, jso
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step
 from forms import SignupForm, LoginForm, GroceryListForm
-from helpers import generate_login_data, generate_user_data
+from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
-from secrets import app_password, api_key
+from secrets import app_password, api_key, student_key
 import requests
 import os
 
@@ -34,6 +34,7 @@ db.create_all()
 
 CURR_USER_KEY = "user_id"
 API_BASE_URL = "https://api.spoonacular.com"
+API_KEY = student_key
 
 #####################################
 #     User Signup/Login/Logout      #
@@ -134,6 +135,9 @@ def logout():
 #     Search Routes    #
 ########################
 
+def get_recipes():
+    """ Get recipes for user """
+
 
 @app.route('/')
 def home_page():
@@ -156,8 +160,11 @@ def search_recipes():
     if int(request.args['id']) != g.user.id:
         return (jsonify(errors="You don't have permission to do that!"), 401)
 
-    query = request.args['query']
-    response = requests.get(f'{API_BASE_URL}/recipes/search',
+    query = request.args.get('query', None)
+
+    
+
+    response = requests.get(f'{API_BASE_URL}/recipes/search', headers=generate_headers(),
                             params={'apiKey': api_key, 'number': 12, 'query': query})
     data = response.json()
     return (data, 200)
@@ -249,6 +256,7 @@ def remove_favorite(id):
         return jsonify(errors=str(e))
 
 # TODO
+
 
 @ app.route('/recipes/<int:id>')
 def view_recipe_details(id):
