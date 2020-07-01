@@ -58,9 +58,9 @@ def generate_search_params(query, cuisine=None, diet=None, offset=0):
     valid_diets = ['pescetarian', 'lacto vegetarian',
                    'ovo vegetarian', 'vegan', 'vegetarian']
 
-    if cuisine not None and cuisine.lower() not in valid_cuisines:
+    if cuisine and cuisine.lower() not in valid_cuisines:
         return "Invalid cuisine"
-    elif diet not None and diet.lower() not in valid_diets:
+    elif diet and diet.lower() not in valid_diets:
         return "Invalid diet"
     else:
         return {
