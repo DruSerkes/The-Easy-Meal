@@ -293,14 +293,18 @@ def view_recipe_details(id):
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
 
-    response = get_recipe(id)
-    data = response.json()
-    return render_template('recipes/details.html', recipe=data)
+    recipe = Recipe.query.filter_by(id=id).first()
+    if not recipe:
+        response = get_recipe(id)
+        data = response.json()
+        # Recipe data from API
+        return render_template('recipes/details.html', recipe=data) # OR!!!! Reformat model to match API ******
+    else:
+        # Create a seperate template for Recipe data from a DB (vs recipe from API)
 
-
-########################
-# Grocery List Routes  #
-########################
+        ########################
+        # Grocery List Routes  #
+        ########################
 
 
 @ app.route('/groceries')
