@@ -71,9 +71,9 @@ def do_search(request):
     Get recipes from user request from Spoonacular API
     Returns a response
     """
-    query = request.args.get('query', "food")
-    cuisine = request.args.get('cuisine', None)
-    diet = request.args.get('diet', None)
+    query = request.args.get('query', "")
+    cuisine = request.args.get('cuisine', "")
+    diet = request.args.get('diet', "")
     offset = request.args.get('offset', 0)
 
     headers = generate_headers()
@@ -160,8 +160,9 @@ def home_page():
     if not g.user:
         return redirect(url_for('signup'))
 
-    response = requests.get(f'{API_BASE_URL}/recipes/search',
-                            params={'apiKey': api_key, 'number': 12})
+    response = do_search(request)
+    # response = requests.get(f'{API_BASE_URL}/recipes/search',
+    #                         params={'apiKey': student_key, 'number': 12})
     data = response.json()
     recipes = data['results']
     return render_template('index.html', data=data, recipes=recipes)
