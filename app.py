@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, session, request, flash, jso
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step
 from forms import SignupForm, LoginForm, GroceryListForm
-from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params
+from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
 from secrets import app_password, api_key, student_key
@@ -66,7 +66,10 @@ def do_logout():
 
 
 def do_search(request):
-    """ Get recipes for user """
+    """ 
+    Get recipes from user request from Spoonacular API  
+    Returns a response 
+    """
     query = request.json.get('query', "food")
     cuisine = request.json.get('cuisine', None)
     diet = request.json.get('diet', None)
@@ -76,7 +79,7 @@ def do_search(request):
     querystring = generate_search_params(query, cuisine, diet, offset)
 
     response = requests.request(
-        "GET", url, headers=headers, params=querystring)
+        "GET", f"{API_BASE_URL}/recipes/search", headers=headers, params=querystring)
 
     return response
 
@@ -93,13 +96,12 @@ def signup():
 
     if form.validate_on_submit():
         user_data = generate_user_data(form)
+
         try:
             user = User.signup(user_data)
-            db.session.add(user)
-            db.session.commit()
+            add_and_commit(user)
             grocery_list = GroceryList.create(user.id)
-            db.session.add(grocery_list)
-            db.session.commit()
+            add_and_commit(grocery_list)
 
         except IntegrityError as error:
             db.session.rollback()
