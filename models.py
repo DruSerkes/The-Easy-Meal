@@ -88,13 +88,13 @@ class Recipe(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String, nullable=False)
-    img_url = db.Column(db.String, nullable=False)
+    image = db.Column(db.String, nullable=False)
     sourceName = db.Column(db.String)
     sourceUrl = db.Column(db.String)
     description = db.Column(db.String)
     ready_in = db.Column(db.Integer)
     servings = db.Column(db.Integer)
-    instructions = db.Column(db.string)
+    instructions = db.Column(db.String)
     ingredients = db.relationship(
         "Ingredient", secondary="measurements", backref="recipes")
     steps = db.relationship("Step", backref='recipe')

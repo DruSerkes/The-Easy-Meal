@@ -67,6 +67,7 @@
                 {% for ingredient in recipe.ingredients %}
                 <p class="ingredient" data-id="{{ ingredient.id }}">{{ ingredient.measurements.amount }} {{ ingredient.measurements.unit }} {{ ingredient.name }}</p>
                 {% endfor %}
+                <button id='add-ingredients' data-id="{{ recipe.id }}" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Add to Shopping List</button>
 
                 {% elif recipe.extendedIngredients %}
                

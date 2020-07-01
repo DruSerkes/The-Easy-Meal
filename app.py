@@ -284,8 +284,7 @@ def view_saved_recipes():
     return render_template('users/favorites.html')
 
 
-# TODO rework template to display data
-# Favoriting gets the same recipe and saves the recipe data, steps, ingredients, and their associations to one-another
+# TODO Favoriting gets the same recipe and saves the recipe data, steps, ingredients, and their associations to one-another
 @ app.route('/recipes/<int:id>')
 def view_recipe_details(id):
     """ View recipe in detail """
@@ -297,16 +296,14 @@ def view_recipe_details(id):
     if not recipe:
         response = get_recipe(id)
         data = response.json()
-        # Recipe data from API
-        # OR!!!! Reformat model to match API (update seed.py as well)******
         return render_template('recipes/details.html', recipe=data)
     else:
-        # Create a seperate template for Recipe data from a DB (vs recipe from API)
+        return render_template('recipes/details.html', recipe=recipe)
 
-        ########################
-        # Grocery List Routes  #
-        ########################
 
+########################
+# Grocery List Routes  #
+########################
 
 @ app.route('/groceries')
 def view_grocery_list():
