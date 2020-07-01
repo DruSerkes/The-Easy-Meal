@@ -5,7 +5,8 @@
 {% block content %} 
 <!-- TODO STYLE RESPONSIVE SO CARDS CAN BE WIDER AS VW GETS SMALLER (FLEXBOX INSTEAD OF BOOTSTRAP GRID?!) -->
 
-<h1 class="display-1 text-center">Easy Meals</h1>
+<h1 class="display-2 text-center">Easy Meals</h1>
+<hr>
 <!-- <div class="container-fluid m-0 p-0" id="recipe-container"> -->
   <div class="row p-0 m-0" id="recipe-container">
     {% for recipe in recipes %}
@@ -13,7 +14,7 @@
     <div class="card col-sm-10 col-md-5 col-lg-4 col-xl-3 border border-secondary p-2 rounded text-center my-3" style="opacity: 0.9;">
         <img src="{{ data.baseUri }}{{ recipe.image }}" class="card-img-top img-fluid" alt="Photo of {{ recipe.title }}">
         <div class="card-body py-2">
-          <h5 class="card-title d-inline">{{ recipe.title }} </h5>
+          <h5 class="card-title d-inline">{{ recipe.title }}</h5>
           <form id="favorite-form" class="d-inline">
             {% if recipe in g.user.recipes %}
             <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
@@ -21,8 +22,8 @@
             <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
             {% endif %}
           </form>
-          <p class="lead mb-0">Ready In: {{ recipe.readyInMinutes}}</p>
-          <p class="lead">Servings: {{ recipe.servings}}</p>
+          <p class="lead mb-0">Ready In: {{ recipe.readyInMinutes }} minutes</p>
+          <p class="lead">Servings: {{ recipe.servings }}</p>
           <a class="small text-muted" href="{{ recipe.sourceUrl }}">View original</a>
           <br>
           <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-primary">See more</a>

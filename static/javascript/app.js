@@ -181,7 +181,7 @@ function generateRecipeCardHTML(recipe, data) {
 	<img src="${data.baseUri}${recipe.image}" class="card-img-top img-fluid" alt="Photo of ${recipe.title}">
 	<div class="card-body py-2">
 	  <h5 class="card-title d-inline">${recipe.title}</h5>
-	  <p class="lead mb-0">Ready In: ${recipe.readyInMinutes}</p>
+	  <p class="lead mb-0">Ready In: ${recipe.readyInMinutes} minutes</p>
 	  <p class="lead">Servings: ${recipe.servings}</p>
 	  <a class="small text-muted" href="${recipe.sourceUrl}">View original</a>
 	  <br>
