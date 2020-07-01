@@ -10,15 +10,36 @@
 */
 
 /* 
-// ANIMATION ON LOAD 
+// GLOBAL VARIABLES
 */
 
-$(document).ready(function() {
-	// Flashed messages fade in and out
-	$('#flash').hide().delay(300).fadeIn(500).delay(3000).fadeOut(800);
-	// Enable Tooltips
-	// $('[data-toggle="tooltip"]').tooltip();
-});
+const cuisines = [
+	'african',
+	'chinese',
+	'japanese',
+	'korean',
+	'vietnamese',
+	'thai',
+	'indian',
+	'british',
+	'irish',
+	'french',
+	'italian',
+	'mexican',
+	'spanish',
+	'middle eastern',
+	'jewish',
+	'american',
+	'cajun',
+	'southern',
+	'greek',
+	'german',
+	'nordic',
+	'eastern european',
+	'caribbean',
+	'latin american'
+];
+const diets = [ 'pescetarian', 'lacto vegetarian', 'ovo vegetarian', 'vegan', 'vegetarian' ];
 
 /* 
 // EVENT LISTENERS
@@ -31,6 +52,18 @@ $('#clear-list').on('click', clearList);
 $('#favorite-form').on('click', '.fa-heart', handleFavorite);
 $('#update').on('click', showUpdateForm);
 $('#search-form').on('submit', handleSearch);
+
+/* 
+// ANIMATION ON LOAD 
+*/
+
+$(document).ready(function() {
+	// Flashed messages fade in and out
+	$('#flash').hide().delay(300).fadeIn(500).delay(3000).fadeOut(800);
+	// Enable Tooltips
+	// $('[data-toggle="tooltip"]').tooltip();
+});
+
 /* 
 // AJAX
 */
@@ -45,50 +78,6 @@ async function handleSearch(evt) {
 
 	const response = await axios.get('/search', { params: { query, id } });
 	displayResults(response);
-}
-// TODO animation makes the background shrink/expand all weird
-function displayResults(response) {
-	$('main').children().slideUp('slow', function() {
-		$(this).remove();
-	});
-
-	setTimeout(() => {
-		const $h1 = makeH1();
-		const $row = makeRow();
-		$('main').prepend($h1).hide().slideDown('slow');
-		$('h1').after($row);
-		response.data.results.forEach((recipe) => {
-			showRecipeCard(recipe, response.data);
-		});
-	}, 800);
-}
-
-function showRecipeCard(recipe, data) {
-	const recipeHTML = generateRecipeCardHTML(recipe, data);
-	$('#recipe-container').append(recipeHTML).hide().slideDown(800);
-}
-
-function generateRecipeCardHTML(recipe, data) {
-	return `<div class="card col-sm-10 col-md-5 col-lg-4 col-xl-3 border border-secondary p-2 rounded text-center my-3">
-	<img src="${data.baseUri}${recipe.image}" class="card-img-top img-fluid" alt="Photo of ${recipe.title}">
-	<div class="card-body py-2">
-	  <h5 class="card-title d-inline">${recipe.title}</h5>
-	  <p class="lead mb-0">Ready In: ${recipe.readyInMinutes}</p>
-	  <p class="lead">Servings: ${recipe.servings}</p>
-	  <a class="small text-muted" href="${recipe.sourceUrl}">View original</a>
-	  <br>
-	  <a href="/recipes/${recipe.id}" class="btn btn-outline-primary">See more</a>
-	</div>
-</div>`;
-}
-
-function makeH1(text = 'Easy Meals') {
-	let $newH1 = $('<h1>').text(text).addClass('display-2 text-center');
-	return $newH1;
-}
-function makeRow() {
-	let $newRow = $('<div>').addClass('row p-0 m-0').attr('id', 'recipe-container');
-	return $newRow;
 }
 
 async function addIngredientsToGroceryList(evt) {
@@ -164,6 +153,51 @@ async function handleUserUpdate(evt) {
 /* 
 // HELPERS
 */
+
+// TODO animation makes the background shrink/expand all weird
+function displayResults(response) {
+	$('main').children().slideUp('slow', function() {
+		$(this).remove();
+	});
+
+	setTimeout(() => {
+		const $h1 = makeH1();
+		const $row = makeRow();
+		$('main').prepend($h1).hide().slideDown('slow');
+		$('h1').after($row);
+		response.data.results.forEach((recipe) => {
+			showRecipeCard(recipe, response.data);
+		});
+	}, 800);
+}
+
+function showRecipeCard(recipe, data) {
+	const recipeHTML = generateRecipeCardHTML(recipe, data);
+	$('#recipe-container').append(recipeHTML).hide().slideDown(800);
+}
+
+function generateRecipeCardHTML(recipe, data) {
+	return `<div class="card col-sm-10 col-md-5 col-lg-4 col-xl-3 border border-secondary p-2 rounded text-center my-3">
+	<img src="${data.baseUri}${recipe.image}" class="card-img-top img-fluid" alt="Photo of ${recipe.title}">
+	<div class="card-body py-2">
+	  <h5 class="card-title d-inline">${recipe.title}</h5>
+	  <p class="lead mb-0">Ready In: ${recipe.readyInMinutes}</p>
+	  <p class="lead">Servings: ${recipe.servings}</p>
+	  <a class="small text-muted" href="${recipe.sourceUrl}">View original</a>
+	  <br>
+	  <a href="/recipes/${recipe.id}" class="btn btn-outline-primary">See more</a>
+	</div>
+</div>`;
+}
+
+function makeH1(text = 'Easy Meals') {
+	let $newH1 = $('<h1>').text(text).addClass('display-2 text-center');
+	return $newH1;
+}
+function makeRow() {
+	let $newRow = $('<div>').addClass('row p-0 m-0').attr('id', 'recipe-container');
+	return $newRow;
+}
 
 function showUpdateForm() {
 	const id = $(this).data('id');
