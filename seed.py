@@ -32,7 +32,7 @@ db.session.add_all([john, phil, will, darby])
 
 # Add Recipe
 cookies = Recipe(title="chocolate chip cookies", image="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F4540234.jpg&w=595&h=398&c=sc&poi=face&q=85", sourceName="All-Recipes",
-                 sourceUrl="https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/", description="Warm, gooey chocolate chip cookies - so savory so yummy - you can't resist. Warm and comfy and all that good stuff", ready_in=25, servings=12)
+                 sourceUrl="https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/", description="Warm, gooey chocolate chip cookies - so savory so yummy - you can't resist. Warm and comfy and all that good stuff", readyInMinutes=25, servings=12)
 db.session.add(cookies)
 
 

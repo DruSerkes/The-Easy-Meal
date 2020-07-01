@@ -92,7 +92,7 @@ class Recipe(db.Model):
     sourceName = db.Column(db.String)
     sourceUrl = db.Column(db.String)
     description = db.Column(db.String)
-    ready_in = db.Column(db.Integer)
+    readyInMinutes = db.Column(db.Integer)
     servings = db.Column(db.Integer)
     instructions = db.Column(db.String)
     ingredients = db.relationship(
