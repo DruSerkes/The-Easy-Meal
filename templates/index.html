@@ -7,7 +7,7 @@
 
 <h1 class="display-2 text-center">Easy Meals</h1>
 <hr>
-  <div class="row p-0 m-0" id="recipe-container">
+  <div class="row p-0 m-0 mb-3" id="recipe-container">
     {% for recipe in recipes %}
   <!-- Begin Recipe Card Column -->
     <div class="card col-sm-10 col-md-5 col-lg-4 col-xl-3 border border-secondary p-2 rounded text-center my-3" style="opacity: 0.9;">
@@ -30,6 +30,11 @@
     </div>
     {% endfor %}
     <!-- End Recipe Card Column  -->
+
+    <!-- Add sentinel for loading more conent -->
+    <div class="d-flex justify-content-center mb-3" id="sentinel">
+      <div class="spinner-border" role="status"></div>
+    </div>
   </div>
 <!-- </div> -->
 

@@ -81,6 +81,9 @@ $(document).on('click', '.allow-focus', function(e) {
 // AJAX
 */
 
+// Add a function that works with IntersectionObserver
+// calls handleSearch, increments offset by +12 
+
 async function handleSearch(evt) {
 	evt.preventDefault();
 	const id = $(this).data('id');
@@ -99,7 +102,7 @@ async function handleSearch(evt) {
 		doNothingOnSubmit.bind();
 	}
 
-	const response = await axios.get('/search', { params: { id, query, diet, cuisine } });
+	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
 	displayResults(response);
 }
 
