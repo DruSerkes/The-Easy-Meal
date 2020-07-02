@@ -28,6 +28,7 @@ darby = User.signup(darby_data)
 
 # Add new objects to session, so they'll persist
 db.session.add_all([john, phil, will, darby])
+db.session.commit()
 
 
 # Add Recipe
