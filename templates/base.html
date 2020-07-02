@@ -31,16 +31,24 @@
             </li>
           </ul>
           <form data-id="{{ g.user.id }}" class="form-inline my-2 my-lg-0" id="search-form">
-
-            {% for diet in diets %}
             <div class="input-group">
-              <select class="custom-select" id="inputGroupSelect04">
-                <option selected>Diet</option>
+              <select class="custom-select mr-1 rounded p-1" id="diet">
+                <option value="" selected>Choose diet...</option>
+            {% for diet in diets %}
                 <option value="{{diet}}">{{ diet.capitalize() }}</option>
-              </select>
             {% endfor %}
+              </select>
+            </div>
+
+            <!-- {% for cuisine in cuisines %}
+            <div class="input-group">
+              <select class="custom-select" id="cuisine">
+                <option selected>Cuisine</option>
+                <option value="{{cuisine}}">{{ cuisine.capitalize() }}</option>
+              </select>
+            {% endfor %} -->
             
-            <input data-id="{{ g.user.id }}" class="form-control mr-sm-2" type="search" id="search-value" placeholder="Search" aria-label="Search">
+            <input data-id="{{ g.user.id }}" class="form-control mr-sm-2 rounded" type="search" id="search-value" placeholder="Search" aria-label="Search">
             <button data-id="{{ g.user.id }}" class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Search</button>
           </form>
           <!-- TODO FIGURE OUT USER IMG URL AS SMALL CIRCLE IMG IN NAVBAR -->
