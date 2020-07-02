@@ -82,12 +82,14 @@ async function handleSearch(evt) {
 	const id = $(this).data('id');
 	const query = $('#search-value').val();
 	const diet = $('#diet').val();
-	const cuisines = [];
-	const cuisineChoices = document.querySelectorAll('input:checked');
-	cuisineChoices.forEach(function(choice) {
-		cuisines.push(choice.value);
-	});
-	cuisine = cuisines.join(', ');
+	const cuisine = $('#cuisine').val();
+	// TODO Reach out to API re: string vals comma separated returns no results
+	// const cuisines = [];
+	// const cuisineChoices = document.querySelectorAll('input:checked');
+	// cuisineChoices.forEach(function(choice) {
+	// 	cuisines.push(choice.value);
+	// });
+	// cuisine = cuisines.join(', ');
 
 	if (query === '') {
 		doNothingOnSubmit.bind();
