@@ -1,6 +1,6 @@
 """ Helper functions to keep views clean """
 from secrets import student_key
-from models import User, db
+from models import User, db, Recipe, Ingredient, Measurement, Step
 from flask import request
 import requests
 
@@ -11,8 +11,8 @@ API_KEY = student_key
 
 def generate_user_data(form):
     """
-    Access form for user data 
-    Returns a user_data object 
+    Access form for user data
+    Returns a user_data object
     """
     username = form.username.data
     password = form.password.data
@@ -29,7 +29,7 @@ def generate_user_data(form):
 def generate_login_data(form):
     """
     Access form data for user login credentials
-    Returns a login_data object 
+    Returns a login_data object
     """
     username = form.username.data
     password = form.password.data
@@ -49,7 +49,7 @@ def generate_headers():
 
 
 def generate_search_params(query=None, cuisine=None, diet=None, offset=0):
-    """ 
+    """
     Returns a querystring object for recipe search
     query (str): The (natural language) recipe search query
     cuisine (str - optional): The cuisine(s) of the recipes. One or more (comma separated) of the following: african, chinese, japanese, korean, vietnamese, thai, indian, british, irish, french, italian, mexican, spanish, middle eastern, jewish, american, cajun, southern, greek, german, nordic, eastern european, caribbean, or latin american.
@@ -78,8 +78,8 @@ def generate_search_params(query=None, cuisine=None, diet=None, offset=0):
 
 
 def add_and_commit(obj):
-    """ 
-    Add and commit an obj to the db 
+    """
+    Add and commit an obj to the db
     Returns obj
     """
     db.session.add(obj)
@@ -106,12 +106,89 @@ def do_search(request):
 
 
 def get_recipe(id):
-    """ 
+    """
     Get recipe information from API
-    Returns a recipe object  
+    Returns a recipe object
     """
     headers = generate_headers()
     response = requests.request(
         'GET', f"{API_BASE_URL}/recipes/{id}/information", headers=headers, data={'apiKey': student_key, 'id': id})
 
     return response
+
+
+def add_ingredients_to_db(recipe_data):
+    """ 
+    Add ingredients and measurements to the db
+    recipe_data (obj): recipe data from the Spoonacular API with extendedIngredients - a list of ingredient objects 
+    Returns a list of SQLAlchemy ingredient objects
+    """
+    ingredients = []
+    for ingredient in recipe_data.extendedIngredients:
+        try:
+            id = ingredient.get('id', None)
+            name = ingredient.get('name', None)
+
+            new_ingredient = Ingredient(id=id, name=name)
+            add_and_commit(new_ingredient)
+
+            add_measurement_for_ingredient(recipe_data, new_ingredient)
+            ingredients.append(new_ingredient)
+        except Exception:
+            db.session.rollback()
+            print(Exception)
+            continue
+    return ingredients
+
+
+def add_measurement_for_ingredient(recipe_data, ingredient):
+    """
+    Add measurements for corresponding ingredients in a recipe to the db 
+    recipe_data (obj): recipe data from the Spoonacular API 
+    ingredient (obj): ingredient data 
+    Returns the recipe from the db 
+    """
+    try:
+        ingredient_id = ingredient.get('id', None)
+        recipe_id = recipe_data.get('id', None)
+        amount = i.get('amount', None)
+        unit = i.get('unit', None)
+
+        new_measurement = Measurement(
+            ingredient_id=ingredient_id, recipe_id=recipe_id, amont=amount, unit=unit)
+        add_and_commit(new_measurement)
+    except Exception:
+        db.session.rollback()
+        print(Exception)
+
+    return recipe_data
+
+
+def add_recipe_to_db(recipe_data):
+    """
+    Add a recipe to the db
+    recipe_data (obj): recipe data from the Spoonacular API
+    Returns the recipe from the db
+    """
+    id = recipe_data.get('id', None)
+    title = recipe_data.get('title', None)
+    image = recipe_data.get('image', None)
+    sourceName = recipe_data.get('sourceName', None)
+    sourceUrl = recipe_data.get('sourceUrl', None)
+    description = recipe_data.get('description', None)
+    readyInMinutes = recipe_data.get('readyInMinutes', None)
+    servings = recipe_data.get('servings', None)
+    instructions = recipe_data.get('instructions', None)
+    recipe = Recipe(id=id, title=title, image=image, sourceName=sourceName, sourceUrl=sourceUrl,
+                    description=description, readyInMinutes=readyInMinutes, servings=servings, instructions=instructions)
+
+    add_and_commit(recipe)
+
+
+def add_steps_to_db(analyzed_recipe):
+    """ 
+    Add all the steps for a recipe to the db 
+    analyzed_recipe (obj): analyzed recipe from the Spoonacular API 
+    returns the analyzed_recipe 
+    """
+    # TODO
