@@ -24,9 +24,9 @@
           </form>
           <p class="lead mb-0">Ready In: {{ recipe.readyInMinutes }} minutes</p>
           <p class="lead">Servings: {{ recipe.servings }}</p>
-          <a class="small text-muted" href="{{ recipe.sourceUrl }}">View original</a>
+          <a class="small text-muted" href="{{ recipe.sourceUrl }}" target="_blank">View original</a>
           <br>
-          <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-primary">See more</a>
+          <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-primary" >See more</a>
         </div>
     </div>
     {% endfor %}

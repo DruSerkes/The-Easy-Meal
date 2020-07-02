@@ -259,7 +259,6 @@ def view_saved_recipes():
     return render_template('users/favorites.html')
 
 
-# TODO Favoriting gets the same recipe and saves the recipe data, steps, ingredients, and their associations to one-another
 @ app.route('/recipes/<int:id>')
 def view_recipe_details(id):
     """ View recipe in detail """
