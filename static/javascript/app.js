@@ -182,9 +182,10 @@ function displayResults(response) {
 
 	setTimeout(() => {
 		const $h1 = makeH1();
+		const $hr = makeHr();
 		const $row = makeRow();
 		$('main').prepend($h1).hide().slideDown('slow');
-		$('h1').after($row);
+		$('h1').after($hr).after($row);
 		response.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data);
 		});
