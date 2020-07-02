@@ -40,7 +40,7 @@ const cuisines = [
 	'latin american'
 ];
 const diets = [ 'pescetarian', 'lacto vegetarian', 'ovo vegetarian', 'vegan', 'vegetarian' ];
-
+let offset;
 /* 
 // EVENT LISTENERS
 */
@@ -61,6 +61,10 @@ $('#search-form').on('submit', handleSearch);
 $(document).ready(function() {
 	// Flashed messages fade in and out
 	$('#flash').hide().delay(300).fadeIn(500).delay(3000).fadeOut(800);
+
+	// Reset offset to 0
+	offset = 0;
+
 	// Enable Tooltips
 	// $('[data-toggle="tooltip"]').tooltip();
 });
