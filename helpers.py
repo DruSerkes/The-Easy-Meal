@@ -189,10 +189,17 @@ def add_recipe_to_db(recipe_data):
     readyInMinutes = recipe_data.get('readyInMinutes', None)
     servings = recipe_data.get('servings', None)
     instructions = recipe_data.get('instructions', None)
-    # TODO UPDATE TO MATCH MODEL UPDATES 
+    # TODO UPDATE TO MATCH MODEL UPDATES
+    vegetarian = recipe_data.get('vegetarian', None)
+    vegan = recipe_data.get('vegan', None)
+    glutenFree = recipe_data.get('glutenFree', None)
+    dairyFree = recipe_data.get('dairyFree', None)
+    sustainable = recipe_data.get('sustainable', None)
+    ketogenic = recipe_data.get('ketogenic', None)
+    whole30 = recipe_data.get('whole30', None)
 
     recipe = Recipe(id=id, title=title, image=image, sourceName=sourceName, sourceUrl=sourceUrl,
-                    readyInMinutes=readyInMinutes, servings=servings, instructions=instructions)
+                    readyInMinutes=readyInMinutes, servings=servings, instructions=instructions, vegetarian=vegetarian, vegan=vegan, glutenFree=glutenFree, dairyFree=dairyFree, sustainable=sustainable, ketogenic=ketogenic, whole30=whole30)
     try:
         add_and_commit(recipe)
     except Exception:
