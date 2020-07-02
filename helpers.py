@@ -54,7 +54,7 @@ def generate_headers():
     }
 
 
-def generate_search_params(query=None, cuisine=None, diet=None, offset=0):
+def generate_search_params(query=None, cuisine=None, diet=None, offset=0, number=12):
     """
     Returns a querystring object for recipe search
     query (str): The (natural language) recipe search query
@@ -79,7 +79,7 @@ def generate_search_params(query=None, cuisine=None, diet=None, offset=0):
         "diet": diet,
         "cuisine": cuisine,
         "offset": offset,
-        "number": "12",
+        "number": number
     }
 
 
@@ -101,12 +101,10 @@ def do_search(request):
     query = request.args.get('query', "")
     cuisine = request.args.get('cuisine', "")
     diet = request.args.get('diet', "")
-    offset = request.args.get('offset', 0)
+    offset = int(request.args.get('offset', 0))
 
     headers = generate_headers()
     querystring = generate_search_params(query, cuisine, diet, offset)
-
-    print(querystring)
 
     response = requests.request(
         "GET", f"{API_BASE_URL}/recipes/search", headers=headers, params=querystring)
@@ -189,7 +187,6 @@ def add_recipe_to_db(recipe_data):
     readyInMinutes = recipe_data.get('readyInMinutes', None)
     servings = recipe_data.get('servings', None)
     instructions = recipe_data.get('instructions', None)
-    # TODO UPDATE TO MATCH MODEL UPDATES
     vegetarian = recipe_data.get('vegetarian', None)
     vegan = recipe_data.get('vegan', None)
     glutenFree = recipe_data.get('glutenFree', None)

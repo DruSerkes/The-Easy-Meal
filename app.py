@@ -150,6 +150,30 @@ def home_page():
     return render_template('index.html', data=data, recipes=recipes, id_list=id_list, diets=valid_diets, cuisines=valid_cuisines)
 
 
+@app.route('/load')
+def load():
+    """ 
+    Load more results when user hits the end of the page 
+    Expects arg offset to query API for the next 12 results based on the search query information
+    Returns the api response data 
+    # TODO play with Animate css ?  
+    """
+    if request.args:
+        # might be able to get rid of this line
+        offset = int(request.args.get('offset'))
+
+        response = do_search(request)
+        data = response.json()
+        # maybe also this one
+        recipes = data['results']
+
+        if response.data['totalResults'] == 0:
+            print("No more!")
+            return (jsonify({}), 200)
+
+    return (data, 200)
+
+
 @ app.route('/search')
 def search_recipes():
     """ Search for a recipe based on user input """
@@ -160,6 +184,10 @@ def search_recipes():
 
     response = do_search(request)
     data = response.json()
+
+    if response.data['totalResults'] == 0:
+        print("No more!")
+        return (jsonify({}), 200)
 
     return (data, 200)
 
