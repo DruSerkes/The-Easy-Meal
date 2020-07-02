@@ -30,27 +30,50 @@
               <a class="nav-link" href="{{ url_for('view_grocery_list') }}">Grocery List</a>
             </li>
           </ul>
+          <!-- Begin Nav Search Form -->
+                <!-- Search by diet-->
           <form data-id="{{ g.user.id }}" class="form-inline my-2 my-lg-0" id="search-form">
             <div class="input-group">
-              <select class="custom-select mr-1 rounded p-1" id="diet">
-                <option value="" selected>Choose diet...</option>
+              <select class="custom-select mr-1 p-1 rounded" id="diet">
+                <option value="" selected> <span class="text-muted">Diets</span> </option>
             {% for diet in diets %}
                 <option value="{{diet}}">{{ diet.capitalize() }}</option>
             {% endfor %}
               </select>
             </div>
+              
+                <!-- Search by cuisine -->
+                <div class="input-group">
+                  <select class="custom-select mr-1 p-1 rounded" id="diet">
+                    <option value="" selected> <span class="text-muted">Cuisines</span> </option>
+                {% for cuisine in cuisines %}
+                    <option value="{{cuisine}}">{{ cuisine.capitalize() }}</option>
+                {% endfor %}
+                  </select>
+                </div>
 
-            <!-- {% for cuisine in cuisines %}
+
+            <!-- TODO REACH OUT TO API RE: SELECTING/SENDING MULTIPLE CUISINES (comma separated in a string doesn't work) -->
+<!-- 
             <div class="input-group">
-              <select class="custom-select" id="cuisine">
-                <option selected>Cuisine</option>
-                <option value="{{cuisine}}">{{ cuisine.capitalize() }}</option>
-              </select>
-            {% endfor %} -->
+              <button class="btn custom-select mr-1 rounded" data-toggle="dropdown" class="dropdown-toggle"> <span class="text-muted">Cuisines</span> </button>
+              <ul class="dropdown-menu checkbox-menu allow-focus">
+                {% for cuisine in cuisines %}
+                <li>
+                  <label>
+                    <input name="cuisine" type="checkbox" value="{{ cuisine }}"> {{ cuisine.capitalize() }}
+                  </label>
+                </li>
+                {% endfor %}
+              </ul>
+            </div> -->
             
             <input data-id="{{ g.user.id }}" class="form-control mr-sm-2 rounded" type="search" id="search-value" placeholder="Search" aria-label="Search">
             <button data-id="{{ g.user.id }}" class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Search</button>
           </form>
+          <!-- End Nav Search Form  -->
+
+
           <!-- TODO FIGURE OUT USER IMG URL AS SMALL CIRCLE IMG IN NAVBAR -->
           <a href="{{ url_for('view_user', id=g.user.id) }}" class="mx-2">Profile</a>
           <a class="nav-link btn btn-sm btn-outline-warning my-1 text-dark" href="{{ url_for('logout') }}">Logout</a>

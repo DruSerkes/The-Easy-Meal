@@ -68,19 +68,19 @@ def generate_search_params(query=None, cuisine=None, diet=None, offset=0):
     # valid_diets = ['pescetarian', 'lacto vegetarian',
     #                'ovo vegetarian', 'vegan', 'vegetarian']
 
-    if cuisine and cuisine not in valid_cuisines:
-        return "Invalid cuisine"
-    elif diet and diet not in valid_diets:
-        return "Invalid diet"
-    else:
-        return {
-            "apiKey": student_key,
-            "query": query,
-            "diet": diet,
-            "cuisine": cuisine,
-            "offset": offset,
-            "number": "12",
-        }
+    # if cuisine and cuisine not in valid_cuisines:
+    #     return "Invalid cuisine"
+    # elif diet and diet not in valid_diets:
+    #     return "Invalid diet"
+    # else:
+    return {
+        "apiKey": student_key,
+        "query": query,
+        "diet": diet,
+        "cuisine": cuisine,
+        "offset": offset,
+        "number": "12",
+    }
 
 
 def add_and_commit(obj):
@@ -105,6 +105,9 @@ def do_search(request):
 
     headers = generate_headers()
     querystring = generate_search_params(query, cuisine, diet, offset)
+
+    print(querystring)
+
     response = requests.request(
         "GET", f"{API_BASE_URL}/recipes/search", headers=headers, params=querystring)
 

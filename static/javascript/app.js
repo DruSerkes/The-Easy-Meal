@@ -65,6 +65,14 @@ $(document).ready(function() {
 	// $('[data-toggle="tooltip"]').tooltip();
 });
 
+$('.checkbox-menu').on('change', "input[type='checkbox']", function() {
+	$(this).closest('li').toggleClass('active', this.checked);
+});
+
+$(document).on('click', '.allow-focus', function(e) {
+	e.stopPropagation();
+});
+
 /* 
 // AJAX
 */
@@ -74,12 +82,18 @@ async function handleSearch(evt) {
 	const id = $(this).data('id');
 	const query = $('#search-value').val();
 	const diet = $('#diet').val();
+	const cuisines = [];
+	const cuisineChoices = document.querySelectorAll('input:checked');
+	cuisineChoices.forEach(function(choice) {
+		cuisines.push(choice.value);
+	});
+	cuisine = cuisines.join(', ');
 
 	if (query === '') {
-		doNothingOnSubmit();
+		doNothingOnSubmit.bind();
 	}
 
-	const response = await axios.get('/search', { params: { query, id, diet } });
+	const response = await axios.get('/search', { params: { id, query, diet, cuisine } });
 	displayResults(response);
 }
 
