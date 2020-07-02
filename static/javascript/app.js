@@ -49,7 +49,7 @@ $('#add-ingredients').on('click', addIngredientsToGroceryList);
 $('#remove').on('click', confirmRemove);
 $('#send-email').on('click', sendEmail);
 $('#clear-list').on('click', clearList);
-$('#favorite-form').on('click', '.fa-heart', handleFavorite);
+$('form').on('click', '.fa-heart', handleFavorite);
 $('#update').on('click', showUpdateForm);
 $('#search-form').on('submit', handleSearch);
 
@@ -117,6 +117,7 @@ async function clearList() {
 	if (response.status !== 200) {
 		displayErrorAlert(response);
 	} else {
+		updateListContainer();
 		displaySuccessAlert(response);
 	}
 }
@@ -174,6 +175,14 @@ function displayResults(response) {
 function showRecipeCard(recipe, data) {
 	const recipeHTML = generateRecipeCardHTML(recipe, data);
 	$('#recipe-container').append(recipeHTML).hide().slideDown(800);
+}
+
+function updateListContainer() {
+	$('#list-container')
+		.empty()
+		.html(
+			`<p class="text-center lead">Your list is empty!</p> <br> <a class="btn btn-outline-primary mx-auto" href="/favorites">View Favorites</a>`
+		);
 }
 
 function generateRecipeCardHTML(recipe, data) {

@@ -7,7 +7,6 @@
 
 <h1 class="display-2 text-center">Easy Meals</h1>
 <hr>
-<!-- <div class="container-fluid m-0 p-0" id="recipe-container"> -->
   <div class="row p-0 m-0" id="recipe-container">
     {% for recipe in recipes %}
   <!-- Begin Recipe Card Column -->
@@ -15,18 +14,18 @@
         <img src="{{ data.baseUri }}{{ recipe.image }}" class="card-img-top img-fluid" alt="Photo of {{ recipe.title }}">
         <div class="card-body py-2">
           <h5 class="card-title d-inline">{{ recipe.title }}</h5>
-          <form id="favorite-form" class="d-inline">
-            {% if recipe in g.user.recipes %}
-            <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
-            {% else %}
-            <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
-            {% endif %}
-          </form>
+            <form id="favorite-form" class="d-inline">
+              {% if recipe in g.user.recipes %}
+              <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
+              {% else %}
+              <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
+              {% endif %}
+            </form>
           <p class="lead mb-0">Ready In: {{ recipe.readyInMinutes }} minutes</p>
           <p class="lead">Servings: {{ recipe.servings }}</p>
           <a class="small text-muted" href="{{ recipe.sourceUrl }}" target="_blank">View original</a>
           <br>
-          <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-primary" >See more</a>
+          <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-primary">See more</a>
         </div>
     </div>
     {% endfor %}

@@ -110,7 +110,7 @@ class Recipe(db.Model):
             'img_url': self.image,
             'source_name': self.sourceName,
             'source_url': self.sourceUrl,
-            'description': self.description,
+            # 'description': self.description,
             'ready_in': self.readyInMinutes,
             'servings': self.servings,
             'instructions': self.instructions,
