@@ -145,8 +145,9 @@ def home_page():
     response = do_search(request)
     data = response.json()
     recipes = data['results']
+    id_list = [recipe.id for recipe in g.user.recipes]
 
-    return render_template('index.html', data=data, recipes=recipes)
+    return render_template('index.html', data=data, recipes=recipes, id_list=id_list)
 
 
 @ app.route('/search')

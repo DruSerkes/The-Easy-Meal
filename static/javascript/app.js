@@ -50,6 +50,7 @@ $('#remove').on('click', confirmRemove);
 $('#send-email').on('click', sendEmail);
 $('#clear-list').on('click', clearList);
 $('form').on('click', '.fa-heart', handleFavorite);
+$('.favorite-form').on('click', '.fa-heart', handleFavorite);
 $('#update').on('click', showUpdateForm);
 $('#search-form').on('submit', handleSearch);
 

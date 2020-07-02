@@ -14,8 +14,8 @@
         <img src="{{ data.baseUri }}{{ recipe.image }}" class="card-img-top img-fluid" alt="Photo of {{ recipe.title }}">
         <div class="card-body py-2">
           <h5 class="card-title d-inline">{{ recipe.title }}</h5>
-            <form id="favorite-form" class="d-inline">
-              {% if recipe in g.user.recipes %}
+            <form id="favorite-form" class="favorite-form d-inline">
+              {% if recipe.id in id_list %}
               <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
               {% else %}
               <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
