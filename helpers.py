@@ -179,16 +179,23 @@ def add_recipe_to_db(recipe_data):
     readyInMinutes = recipe_data.get('readyInMinutes', None)
     servings = recipe_data.get('servings', None)
     instructions = recipe_data.get('instructions', None)
+
     recipe = Recipe(id=id, title=title, image=image, sourceName=sourceName, sourceUrl=sourceUrl,
                     description=description, readyInMinutes=readyInMinutes, servings=servings, instructions=instructions)
-
     add_and_commit(recipe)
+    add_ingredients_to_db(recipe_data)
+
+    return recipe
 
 
-def add_steps_to_db(analyzed_recipe):
-    """ 
-    Add all the steps for a recipe to the db 
-    analyzed_recipe (obj): analyzed recipe from the Spoonacular API 
-    returns the analyzed_recipe 
-    """
-    # TODO
+# def add_steps_to_db(analyzed_recipe):
+#     """
+#     Add all the steps for a recipe to the db
+#     analyzed_recipe (obj): analyzed recipe from the Spoonacular API
+#     returns the analyzed_recipe
+#     """
+#     # TODO
+
+# OR!!!!!
+# JUST RENDER THE RECIPE.INSTRUCTIONS
+# FOR AESTHETICS, HAVE SOME LOGIC THAT PARSES THE STRING AND ADDS A NEW LINE AFTER EVERY PERIOD
