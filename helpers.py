@@ -189,6 +189,7 @@ def add_recipe_to_db(recipe_data):
     readyInMinutes = recipe_data.get('readyInMinutes', None)
     servings = recipe_data.get('servings', None)
     instructions = recipe_data.get('instructions', None)
+    # TODO UPDATE TO MATCH MODEL UPDATES 
 
     recipe = Recipe(id=id, title=title, image=image, sourceName=sourceName, sourceUrl=sourceUrl,
                     readyInMinutes=readyInMinutes, servings=servings, instructions=instructions)

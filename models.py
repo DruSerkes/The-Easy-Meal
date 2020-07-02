@@ -95,6 +95,13 @@ class Recipe(db.Model):
     readyInMinutes = db.Column(db.Integer)
     servings = db.Column(db.Integer)
     instructions = db.Column(db.String)
+    vegetarian = db.Column(db.Boolean, default=False)
+    vegan = db.Column(db.Boolean, default=False)
+    glutenFree = db.Column(db.Boolean, default=False)
+    dairyFree = db.Column(db.Boolean, default=False)
+    sustainable = db.Column(db.Boolean, default=False)
+    ketogenic = db.Column(db.Boolean, default=False)
+    whole30 = db.Column(db.Boolean, default=False)
     ingredients = db.relationship(
         "Ingredient", secondary="measurements", backref="recipes")
     steps = db.relationship("Step", backref='recipe')
