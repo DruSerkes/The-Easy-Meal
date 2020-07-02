@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, session, request, flash, jso
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step, Measurement
 from forms import SignupForm, LoginForm, GroceryListForm
-from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db
+from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db, valid_cuisines, valid_diets
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
 from secrets import app_password, api_key, student_key
@@ -147,7 +147,7 @@ def home_page():
     recipes = data['results']
     id_list = [recipe.id for recipe in g.user.recipes]
 
-    return render_template('index.html', data=data, recipes=recipes, id_list=id_list)
+    return render_template('index.html', data=data, recipes=recipes, id_list=id_list, diets=valid_diets, cuisines=valid_cuisines)
 
 
 @ app.route('/search')

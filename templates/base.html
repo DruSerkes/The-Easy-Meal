@@ -31,6 +31,15 @@
             </li>
           </ul>
           <form data-id="{{ g.user.id }}" class="form-inline my-2 my-lg-0" id="search-form">
+
+            {% for diet in diets %}
+            <div class="input-group">
+              <select class="custom-select" id="inputGroupSelect04">
+                <option selected>Diet</option>
+                <option value="{{diet}}">{{ diet.capitalize() }}</option>
+              </select>
+            {% endfor %}
+            
             <input data-id="{{ g.user.id }}" class="form-control mr-sm-2" type="search" id="search-value" placeholder="Search" aria-label="Search">
             <button data-id="{{ g.user.id }}" class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Search</button>
           </form>

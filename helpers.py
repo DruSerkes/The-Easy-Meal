@@ -9,6 +9,12 @@ API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 API_KEY = student_key
 
 
+valid_cuisines = ['african', 'chinese', 'japanese', 'korean', 'vietnamese', 'thai', 'indian', 'british', 'irish', 'french', 'italian', 'mexican',
+                  'spanish', 'middle eastern', 'jewish', 'american', 'cajun', 'southern', 'greek', 'german', 'nordic', 'eastern european', 'caribbean', 'latin american']
+valid_diets = ['pescetarian', 'lacto vegetarian',
+               'ovo vegetarian', 'vegan', 'vegetarian']
+
+
 def generate_user_data(form):
     """
     Access form for user data
@@ -57,10 +63,10 @@ def generate_search_params(query=None, cuisine=None, diet=None, offset=0):
     offset (int - optional): The number of results to skip (between 0 and 900).
     """
 
-    valid_cuisines = ['african', 'chinese', 'japanese', 'korean', 'vietnamese', 'thai', 'indian', 'british', 'irish', 'french', 'italian', 'mexican',
-                      'spanish', 'middle eastern', 'jewish', 'american', 'cajun', 'southern', 'greek', 'german', 'nordic', 'eastern european', 'caribbean', 'latin american']
-    valid_diets = ['pescetarian', 'lacto vegetarian',
-                   'ovo vegetarian', 'vegan', 'vegetarian']
+    # valid_cuisines = ['african', 'chinese', 'japanese', 'korean', 'vietnamese', 'thai', 'indian', 'british', 'irish', 'french', 'italian', 'mexican',
+    #                   'spanish', 'middle eastern', 'jewish', 'american', 'cajun', 'southern', 'greek', 'german', 'nordic', 'eastern european', 'caribbean', 'latin american']
+    # valid_diets = ['pescetarian', 'lacto vegetarian',
+    #                'ovo vegetarian', 'vegan', 'vegetarian']
 
     if cuisine and cuisine not in valid_cuisines:
         return "Invalid cuisine"
