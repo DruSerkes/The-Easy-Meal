@@ -107,12 +107,13 @@ class Recipe(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'img_url': self.img_url,
-            'source_name': self.source_name,
-            'source_url': self.source_url,
+            'img_url': self.imgUrl,
+            'source_name': self.sourceName,
+            'source_url': self.sourceUrl,
             'description': self.description,
-            'ready_in': self.ready_in,
+            'ready_in': self.readyInMinutes,
             'servings': self.servings,
+            'instructions': self.instructions,
             'ingredients': [ingredient.serialize() for ingredient in self.ingredients],
             'steps': [step.serialize() for step in self.steps]
         }

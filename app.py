@@ -238,29 +238,22 @@ def add_favorite(id):
     """ Favorite a recipe """
     if not g.user:
         return abort(401)
-
-        # * Check DB for recipe
-        # * Add it if True
-        # * Otherwise
-        #     * Call API
-        #     * Save recipe/ingredients/steps data to DB
-        #     * Add recipe to users favs
-
     recipe = Recipe.query.filter_by(id=id).first()
-    if not recipe:
-        recipe = get_recipe(id)
 
-        # Call API
-        # Make a function that ...
-        # Saves recipe, ingredients, steps data to DB, then returns recipe
-        # Add recipe to user favs
+    if not recipe:
+        response = get_recipe(id)
+        data = response.json()
+
+        recipe = add_recipe_to_db(data)
+        g.user.recipes.append(recipe)
+        db.session.commit()
     else:
         g.user.recipes.append(recipe)
         db.session.commit()
 
-        response_json = jsonify(
-            recipe=recipe.serialize(), message="Recipe Added!")
-        return (response_json, 200)
+    response_json = jsonify(
+        recipe=recipe.serialize(), message="Recipe Added!")
+    return (response_json, 200)
 
 
 @ app.route('/favorites/<int:id>', methods=['DELETE'])

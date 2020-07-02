@@ -124,7 +124,7 @@ def add_ingredients_to_db(recipe_data):
     Returns a list of SQLAlchemy ingredient objects
     """
     ingredients = []
-    for ingredient in recipe_data.extendedIngredients:
+    for ingredient in recipe_data['extendedIngredients']:
         try:
             id = ingredient.get('id', None)
             name = ingredient.get('name', None)
