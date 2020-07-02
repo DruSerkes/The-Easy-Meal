@@ -176,13 +176,13 @@ def add_recipe_to_db(recipe_data):
     image = recipe_data.get('image', None)
     sourceName = recipe_data.get('sourceName', None)
     sourceUrl = recipe_data.get('sourceUrl', None)
-    description = recipe_data.get('description', None)
+    # description = recipe_data.get('description', None)
     readyInMinutes = recipe_data.get('readyInMinutes', None)
     servings = recipe_data.get('servings', None)
     instructions = recipe_data.get('instructions', None)
 
     recipe = Recipe(id=id, title=title, image=image, sourceName=sourceName, sourceUrl=sourceUrl,
-                    description=description, readyInMinutes=readyInMinutes, servings=servings, instructions=instructions)
+                    readyInMinutes=readyInMinutes, servings=servings, instructions=instructions)
     try:
         add_and_commit(recipe)
     except Exception:

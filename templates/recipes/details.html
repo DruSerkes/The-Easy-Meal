@@ -23,7 +23,7 @@
                 <img src="{{ recipe.image }}" class="img img-fluid img-thumbnail" alt="Photo of {{ recipe.title }}">
                 <br>
                 <span class="text-center">
-                    <small class="small"><a href="{{ recipe.sourceUrl }}" class="text-muted mx-auto">Originally from {{ recipe.sourceName }}</a></small>
+                    <small class="small"><a href="{{ recipe.sourceUrl }}" class="text-muted mx-auto" target="_blank">Originally from {{ recipe.sourceName }}</a></small>
                     <form id="favorite-form" class="d-inline">
                         {% if recipe in g.user.recipes %}
                         <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
