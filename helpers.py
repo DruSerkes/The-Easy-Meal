@@ -182,7 +182,13 @@ def add_recipe_to_db(recipe_data):
 
     recipe = Recipe(id=id, title=title, image=image, sourceName=sourceName, sourceUrl=sourceUrl,
                     description=description, readyInMinutes=readyInMinutes, servings=servings, instructions=instructions)
-    add_and_commit(recipe)
+    try:
+        add_and_commit(recipe)
+    except Exception:
+        db.session.rollback()
+        print(Exception)
+        return "Recipe couldn't be saved. Please try again."
+
     add_ingredients_to_db(recipe_data)
 
     return recipe
