@@ -232,7 +232,6 @@ def update_user(id):
         return jsonify(errors=str(e))
 
 
-# TODO INTEGRATE WITH API
 @ app.route('/favorites/<int:id>', methods=['POST'])
 def add_favorite(id):
     """ Favorite a recipe """

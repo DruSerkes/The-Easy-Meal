@@ -86,7 +86,7 @@ class Recipe(db.Model):
     """ Recipe Model """
     __tablename__ = 'recipes'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     image = db.Column(db.String, nullable=False)
     sourceName = db.Column(db.String)
