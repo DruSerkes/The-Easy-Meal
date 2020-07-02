@@ -46,7 +46,7 @@ const diets = [ 'pescetarian', 'lacto vegetarian', 'ovo vegetarian', 'vegan', 'v
 */
 
 $('#add-ingredients').on('click', addIngredientsToGroceryList);
-$('#remove').on('click', confirmRemove);
+$('.remove').on('click', confirmRemove);
 $('#send-email').on('click', sendEmail);
 $('#clear-list').on('click', clearList);
 $('form').on('click', '.fa-heart', handleFavorite);
