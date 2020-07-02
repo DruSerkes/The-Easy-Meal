@@ -222,6 +222,11 @@ function makeH1(text = 'Easy Meals') {
 	let $newH1 = $('<h1>').text(text).addClass('display-2 text-center');
 	return $newH1;
 }
+
+function makeHr() {
+	let $newHr = $('<hr>');
+	return $newHr;
+}
 function makeRow() {
 	let $newRow = $('<div>').addClass('row p-0 m-0').attr('id', 'recipe-container');
 	return $newRow;
