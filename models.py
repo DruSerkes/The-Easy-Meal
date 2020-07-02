@@ -91,7 +91,7 @@ class Recipe(db.Model):
     image = db.Column(db.String, nullable=False)
     sourceName = db.Column(db.String)
     sourceUrl = db.Column(db.String)
-    description = db.Column(db.String)
+    # description = db.Column(db.String)
     readyInMinutes = db.Column(db.Integer)
     servings = db.Column(db.Integer)
     instructions = db.Column(db.String)
@@ -107,7 +107,7 @@ class Recipe(db.Model):
         return {
             'id': self.id,
             'title': self.title,
-            'img_url': self.imgUrl,
+            'img_url': self.image,
             'source_name': self.sourceName,
             'source_url': self.sourceUrl,
             'description': self.description,

@@ -133,6 +133,7 @@ def add_ingredients_to_db(recipe_data):
             add_and_commit(new_ingredient)
 
             add_measurement_for_ingredient(recipe_data, new_ingredient)
+
             ingredients.append(new_ingredient)
         except Exception:
             db.session.rollback()
@@ -189,7 +190,10 @@ def add_recipe_to_db(recipe_data):
         print(Exception)
         return "Recipe couldn't be saved. Please try again."
 
-    add_ingredients_to_db(recipe_data)
+    ingredients = add_ingredients_to_db(recipe_data)
+    for ingredient in ingredients:
+        recipe.ingredients.append(ingredient)
+        db.session.commit()
 
     return recipe
 

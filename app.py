@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, session, request, flash, jsonify, url_for, abort, g
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step
+from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step, Measurement
 from forms import SignupForm, LoginForm, GroceryListForm
 from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db
 from flask_mail import Mail, Message
