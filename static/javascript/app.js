@@ -182,7 +182,7 @@ function updateListContainer() {
 	$('#list-container')
 		.empty()
 		.html(
-			`<p class="text-center lead">Your list is empty!</p> <br> <a class="btn btn-outline-primary mx-auto" href="/favorites">View Favorites</a>`
+			`<p class="text-center lead">Your list is empty!</p> <br> <a class="btn btn-outline-primary" href="/favorites">View Favorites</a>`
 		);
 }
 
