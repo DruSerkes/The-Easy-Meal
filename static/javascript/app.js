@@ -73,11 +73,13 @@ async function handleSearch(evt) {
 	evt.preventDefault();
 	const id = $(this).data('id');
 	const query = $('#search-value').val();
+	const diet = $('#diet').val();
+
 	if (query === '') {
 		doNothingOnSubmit();
 	}
 
-	const response = await axios.get('/search', { params: { query, id } });
+	const response = await axios.get('/search', { params: { query, id, diet } });
 	displayResults(response);
 }
 
