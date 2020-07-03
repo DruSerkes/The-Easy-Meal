@@ -156,19 +156,18 @@ def load():
     # TODO play with Animate css ?
     """
     if request.args:
-        # might be able to get rid of this line
-        # offset = int(request.args.get('offset'))
-
         response = do_search(request)
         data = response.json()
-        # maybe also this one
-        # recipes = data['results']
 
         if data['totalResults'] == 0:
             print("No more!")
             return (jsonify({}), 200)
 
-    return (data, 200)
+        user_favorites = [f.id for f in g.user.recipes]
+        favorites = [r['id'] for r in data['results'] if r['id'] in user_favorites]
+        response_json = jsonify(data=data, favorites=favorites)
+
+    return (response_json, 200)
 
 
 @ app.route('/search')
@@ -185,8 +184,11 @@ def search_recipes():
     if data['totalResults'] == 0:
         print("No more!")
         return (jsonify({}), 200)
+    user_favorites = [f.id for f in g.user.recipes]
+    favorites = [r['id'] for r in data['results'] if r['id'] in user_favorites]
+    response_json = jsonify(data=data, favorites=favorites)
 
-    return (data, 200)
+    return (response_json, 200)
 
 
 ########################

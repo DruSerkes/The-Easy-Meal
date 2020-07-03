@@ -98,12 +98,13 @@ async function loadItems() {
 	const cuisine = $('#cuisine').val();
 
 	const response = await axios.get('/load', { params: { id, query, diet, cuisine, offset } });
+	console.log(response);
 
-	if (!response.data.results.length) {
+	if (!response.data.data.results.length) {
 		sentinel.innerHTML = 'No more recipes found!';
 	} else {
-		response.data.results.forEach((recipe) => {
-			showRecipeCard(recipe, response.data);
+		response.data.data.results.forEach((recipe) => {
+			showRecipeCard(recipe, response.data.data, response.data.favorites);
 		});
 		offset += 12;
 	}
@@ -220,11 +221,12 @@ function displayResults(response) {
 		response.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data);
 		});
+		$('form').on('click', '.fa-heart', handleFavorite);
 	}, 800);
 }
 
-function showRecipeCard(recipe, data) {
-	const recipeHTML = generateRecipeCardHTML(recipe, data);
+function showRecipeCard(recipe, data, favorites) {
+	const recipeHTML = generateRecipeCardHTML(recipe, data, favorites);
 	// TODO try animating these with Animate css (OR ADD BACK IN .hide().fadeIn(800)
 	$('#recipe-container').append(recipeHTML);
 }
@@ -236,12 +238,29 @@ function updateListContainer() {
 			`<p class="text-center lead">Your list is empty!</p> <br> <a class="btn btn-outline-primary" href="/favorites">View Favorites</a>`
 		);
 }
+// <form id="favorite-form" class="favorite-form d-inline">
+// {% if recipe.id in id_list %}
+// <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
+// {% else %}
+// <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
+// {% endif %}
+// </form>
+function generateRecipeCardHTML(recipe, data, favorites) {
+	let favButton;
 
-function generateRecipeCardHTML(recipe, data) {
+	if (favorites.includes(recipe.id)) {
+		favButton = `<button data-id="${recipe.id}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>`;
+	} else {
+		favButton = `<button data-id="${recipe.id}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>`;
+	}
+
 	return `<div class="card border mb-4 mx-auto p-2 rounded text-center">
 	<img src="${data.baseUri}${recipe.image}" class="card-img-top img-fluid" alt="Photo of ${recipe.title}">
 	<div class="card-body py-2">
 	  <h5 class="card-title d-inline">${recipe.title}</h5>
+	  <form id="favorite-form" class="favorite-form d-inline">
+		${favButton}
+	  </form>
 	  <p class="lead mb-0">Ready In: ${recipe.readyInMinutes} minutes</p>
 	  <p class="lead">Servings: ${recipe.servings}</p>
 	  <a class="small text-muted" href="${recipe.sourceUrl}">View original</a>
