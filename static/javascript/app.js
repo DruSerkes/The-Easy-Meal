@@ -42,6 +42,12 @@ const cuisines = [
 const diets = [ 'pescetarian', 'lacto vegetarian', 'ovo vegetarian', 'vegan', 'vegetarian' ];
 const sentinel = document.querySelector('#sentinel');
 let offset;
+const intersectionObserver = new IntersectionObserver((entries) => {
+	if (entries[0].intersectionRatio <= 0) {
+		return;
+	}
+	loadItems();
+});
 
 /* 
 // EVENT LISTENERS
@@ -55,6 +61,7 @@ $('form').on('click', '.fa-heart', handleFavorite);
 $('.favorite-form').on('click', '.fa-heart', handleFavorite);
 $('#update').on('click', showUpdateForm);
 $('#search-form').on('submit', handleSearch);
+if (sentinel !== null) intersectionObserver.observe(sentinel);
 
 /* 
 // ANIMATION ON LOAD 
@@ -64,8 +71,9 @@ $(document).ready(function() {
 	// Flashed messages fade in and out
 	$('#flash').hide().delay(300).fadeIn(500).delay(3000).fadeOut(800);
 
-	// Reset offset to 0
+	// Reset offset to 0 unless you already have results
 	offset = 0;
+	if ($('#recipe-container').length) offset += 12;
 
 	// Enable Tooltips
 	// $('[data-toggle="tooltip"]').tooltip();
@@ -83,9 +91,6 @@ $(document).on('click', '.allow-focus', function(e) {
 /*	 	AJAX	 */
 /*****************/
 
-// MIGHT NEED A FUNCTION THAT STARTS WITH OFFSET AT 12 FOR INDEX.HTML
-// OTHERWISE THIS WORKS FOR
-
 async function loadItems() {
 	const id = $(this).data('id');
 	const query = $('#search-value').val();
@@ -99,24 +104,15 @@ async function loadItems() {
 	} else {
 		response.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data);
-			offset += 12;
 		});
+		if ($('#sentinel').length <= 0) {
+			setTimeout(() => {
+				$(createSentinelDivHTML()).insertAfter('main');
+				intersectionObserver.observe(document.querySelector('#sentinel'));
+			}, 1000);
+		}
+		offset += 12;
 	}
-}
-
-const intersectionObserver = new IntersectionObserver((entries) => {
-	if (entries[0].intersectionRatio <= 0) {
-		return;
-	}
-	loadItems();
-});
-intersectionObserver.observe(sentinel);
-
-// put this after a recipe
-function createSentinelDivHTML() {
-	return `<div class="d-flex justify-content-center mb-3" id="sentinel">
-      <div class="spinner-border" role="status"></div>
-    </div>`;
 }
 
 async function handleSearch(evt) {
@@ -125,18 +121,6 @@ async function handleSearch(evt) {
 	const query = $('#search-value').val();
 	const diet = $('#diet').val();
 	const cuisine = $('#cuisine').val();
-	// TODO Reach out to API re: string vals comma separated returns no results
-	// const cuisines = [];
-	// const cuisineChoices = document.querySelectorAll('input:checked');
-	// cuisineChoices.forEach(function(choice) {
-	// 	cuisines.push(choice.value);
-	// });
-	// cuisine = cuisines.join(', ');
-
-	// Maybe get rid of this one?
-	if (query === '') {
-		doNothingOnSubmit.bind();
-	}
 
 	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
 
@@ -238,8 +222,8 @@ function displayResults(response) {
 
 function showRecipeCard(recipe, data) {
 	const recipeHTML = generateRecipeCardHTML(recipe, data);
-	// TODO try animating these with Animate css
-	$('#recipe-container').append(recipeHTML).hide().fadeIn(800);
+	// TODO try animating these with Animate css (OR ADD BACK IN .hide().fadeIn(800)
+	$('#recipe-container').append(recipeHTML);
 }
 
 function updateListContainer() {
@@ -273,6 +257,7 @@ function makeHr() {
 	let $newHr = $('<hr>');
 	return $newHr;
 }
+
 function makeRow() {
 	let $newRow = $('<div>').addClass('row p-0 m-0').attr('id', 'recipe-container');
 	return $newRow;
@@ -423,4 +408,10 @@ function generateUpdateModalHTML(id) {
 	  </div>
 	</div>
   </div>`;
+}
+
+function createSentinelDivHTML() {
+	return `<div class="d-flex justify-content-center mb-3" id="sentinel">
+      <div class="spinner-border" role="status"></div>
+    </div>`;
 }
