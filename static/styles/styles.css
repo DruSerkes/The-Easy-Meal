@@ -61,10 +61,19 @@ footer {
 /*     CARDS     */
 /*****************/
 
+#recipe-container {
+	padding: 10px auto;
+}
+
+.card {
+	max-width: 18rem;
+	margin-right: auto;
+}
+
 .card:hover {
-	border: 8px solid black;
+	border: 5px solid black;
 	opacity: 100%;
-	box-shadow: 3px 8px #c0c0c0;
+	box-shadow: 5px 5px #dbdbdb;
 }
 
 .card-img-top {
