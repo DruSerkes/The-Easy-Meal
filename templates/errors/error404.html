@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'errors/error.html' %}
 
 {% block title %}404 Error{% endblock %}
 
@@ -6,8 +6,9 @@
 {% block content %} 
 
 
-<div class="container-fluid text-center">
-    <img src="/static/images/404-error-page-vector-15472762.jpg" alt="404 Error Image" class="img img-fluid">
+<div id="error-404" class="container-fluid text-center py-4">
+    <h1 class="h1 d-block">404 Error</h1>
+    <p class="lead d-block">Page not found!</p>
     <a href="{{ url_for('home_page') }}" class="btn btn-lg btn-primary my-2">Return Home</a>
 </div>
 

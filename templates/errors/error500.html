@@ -5,8 +5,9 @@
 
 {% block content %} 
 
-<div class="container-fluid text-center">
-    <img src="/static/images/vector-website-error-500.jpg" alt="500 Error Image" class="img img-fluid">
+<div id="error-500" class="container-fluid text-center py-4">
+    <h1 class="h1 d-block">500 Error</h1>
+    <p class="lead d-block">Something went wrong!</p>
     <a href="{{ url_for('home_page') }}" class="btn btn-lg btn-primary my-2">Return Home</a>
 </div>
 
