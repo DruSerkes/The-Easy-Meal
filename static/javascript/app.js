@@ -98,20 +98,13 @@ async function loadItems() {
 	const cuisine = $('#cuisine').val();
 
 	const response = await axios.get('/load', { params: { id, query, diet, cuisine, offset } });
+
 	if (!response.data.results.length) {
-		console.log(response.data, 'No more recipes!!!');
 		sentinel.innerHTML = 'No more recipes found!';
 	} else {
-		console.log("BUT WAIT THERE'S MORE!!");
 		response.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data);
 		});
-		// if ($('#sentinel').length <= 0) {
-		// 	setTimeout(() => {
-		// 		$(createSentinelDivHTML()).insertAfter('main');
-		// 		intersectionObserver.observe(document.querySelector('#sentinel'));
-		// 	}, 1000);
-		// }
 		offset += 12;
 	}
 }
