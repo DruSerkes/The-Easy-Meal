@@ -52,6 +52,15 @@ def add_user_to_g():
     else:
         g.user = None
 
+    g.valid_cuisines = [cuisine for cuisine in valid_cuisines]
+    g.valid_diets = [diet for diet in valid_diets]
+
+
+@app.context_processor
+def context_processor():
+    """ Process global context for jinja templates """
+    return dict(cuisines=valid_cuisines, diets=valid_diets)
+
 
 def do_login(user):
     """Log in user."""
@@ -147,16 +156,16 @@ def home_page():
     recipes = data['results']
     id_list = [recipe.id for recipe in g.user.recipes]
 
-    return render_template('index.html', data=data, recipes=recipes, id_list=id_list, diets=valid_diets, cuisines=valid_cuisines)
+    return render_template('index.html', data=data, recipes=recipes, id_list=id_list, diets=g.valid_diets, cuisines=g.valid_cuisines)
 
 
-@app.route('/load')
+@ app.route('/load')
 def load():
-    """ 
-    Load more results when user hits the end of the page 
+    """
+    Load more results when user hits the end of the page
     Expects arg offset to query API for the next 12 results based on the search query information
-    Returns the api response data 
-    # TODO play with Animate css ?  
+    Returns the api response data
+    # TODO play with Animate css ?
     """
     if request.args:
         # might be able to get rid of this line

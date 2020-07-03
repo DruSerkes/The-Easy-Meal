@@ -4,7 +4,7 @@
 
 {% block content %} 
 
-<h1 class="display-2 text-center">Favorites</h1>
+<h1 class="display-2 my-3 text-center">Favorites</h1>
 
 {% if g.user.recipes %}
 <div class="row justify-content-center my-5">
@@ -29,7 +29,7 @@
 
 
 {% else %}
-<p class="lead">You don't have any saved recipes yet!</p>
+<p class="mx-auto my-5 text-center">You don't have any saved recipes yet!</p>
 {% endif %}
 
 {% endblock %}
