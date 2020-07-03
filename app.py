@@ -283,8 +283,10 @@ def view_saved_recipes():
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
+    
+    id_list = [recipe.id for recipe in g.user.recipes]
 
-    return render_template('users/favorites.html')
+    return render_template('users/favorites.html', id_list=id_list)
 
 
 @ app.route('/recipes/<int:id>')
