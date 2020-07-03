@@ -157,12 +157,12 @@ def load():
     """
     if request.args:
         # might be able to get rid of this line
-        offset = int(request.args.get('offset'))
+        # offset = int(request.args.get('offset'))
 
         response = do_search(request)
         data = response.json()
         # maybe also this one
-        recipes = data['results']
+        # recipes = data['results']
 
         if data['totalResults'] == 0:
             print("No more!")

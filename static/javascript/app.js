@@ -120,6 +120,7 @@ async function handleSearch(evt) {
 	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
 
 	displayResults(response);
+
 	if (!$('#sentinel').length) addSetinel();
 	offset += 12;
 }
@@ -248,7 +249,10 @@ function generateRecipeCardHTML(recipe, data) {
 	</div>
 </div>`;
 }
-
+function makeTotalResults(data) {
+	const $newTotal = $('p').text(`Total results: ${data.totalResults}`).addClass('small text-center text-secondary');
+	return $newTotal;
+}
 function makeH1(text = 'Easy Meals') {
 	let $newH1 = $('<h1>').text(text).addClass('display-2 text-center');
 	return $newH1;
