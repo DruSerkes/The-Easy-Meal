@@ -238,7 +238,7 @@ function updateListContainer() {
 }
 
 function generateRecipeCardHTML(recipe, data) {
-	return `<div class="card col-sm-10 col-md-5 col-lg-4 col-xl-3 border border-secondary p-2 rounded text-center my-3" style="opacity:0.9;">
+	return `<div class="card border mb-4 mx-auto p-2 rounded text-center">
 	<img src="${data.baseUri}${recipe.image}" class="card-img-top img-fluid" alt="Photo of ${recipe.title}">
 	<div class="card-body py-2">
 	  <h5 class="card-title d-inline">${recipe.title}</h5>
