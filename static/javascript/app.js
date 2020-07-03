@@ -73,7 +73,7 @@ $(document).ready(function() {
 
 	// Reset offset to 0 unless you already have results
 	offset = 0;
-	if ($('#recipe-container').length) offset += 12;
+	if ($('#recipe-container').length) offset = 12;
 
 	// Enable Tooltips
 	// $('[data-toggle="tooltip"]').tooltip();
@@ -121,6 +121,7 @@ async function handleSearch(evt) {
 	const query = $('#search-value').val();
 	const diet = $('#diet').val();
 	const cuisine = $('#cuisine').val();
+	offset = 0;
 
 	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
 
