@@ -40,7 +40,9 @@ const cuisines = [
 	'latin american'
 ];
 const diets = [ 'pescetarian', 'lacto vegetarian', 'ovo vegetarian', 'vegan', 'vegetarian' ];
+const sentinel = document.querySelector('#sentinel');
 let offset;
+
 /* 
 // EVENT LISTENERS
 */
@@ -77,12 +79,45 @@ $(document).on('click', '.allow-focus', function(e) {
 	e.stopPropagation();
 });
 
-/* 
-// AJAX
-*/
+/*****************/
+/*	 	AJAX	 */
+/*****************/
 
-// Add a function that works with IntersectionObserver
-// calls handleSearch, increments offset by +12 
+// MIGHT NEED A FUNCTION THAT STARTS WITH OFFSET AT 12 FOR INDEX.HTML
+// OTHERWISE THIS WORKS FOR
+
+async function loadItems() {
+	const id = $(this).data('id');
+	const query = $('#search-value').val();
+	const diet = $('#diet').val();
+	const cuisine = $('#cuisine').val();
+
+	const response = await axios.get('/load', { params: { id, query, diet, cuisine, offset } });
+	if (!response.data.results.length) {
+		console.log(response.data);
+		sentinel.innerHTML = 'No more recipes found!';
+	} else {
+		response.data.results.forEach((recipe) => {
+			showRecipeCard(recipe, response.data);
+			offset += 12;
+		});
+	}
+}
+
+const intersectionObserver = new IntersectionObserver((entries) => {
+	if (entries[0].intersectionRatio <= 0) {
+		return;
+	}
+	loadItems();
+});
+intersectionObserver.observe(sentinel);
+
+// put this after a recipe
+function createSentinelDivHTML() {
+	return `<div class="d-flex justify-content-center mb-3" id="sentinel">
+      <div class="spinner-border" role="status"></div>
+    </div>`;
+}
 
 async function handleSearch(evt) {
 	evt.preventDefault();
@@ -98,11 +133,13 @@ async function handleSearch(evt) {
 	// });
 	// cuisine = cuisines.join(', ');
 
+	// Maybe get rid of this one?
 	if (query === '') {
 		doNothingOnSubmit.bind();
 	}
 
 	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
+
 	displayResults(response);
 }
 
@@ -201,7 +238,8 @@ function displayResults(response) {
 
 function showRecipeCard(recipe, data) {
 	const recipeHTML = generateRecipeCardHTML(recipe, data);
-	$('#recipe-container').append(recipeHTML).hide().slideDown(800);
+	// TODO try animating these with Animate css
+	$('#recipe-container').append(recipeHTML).hide().fadeIn(800);
 }
 
 function updateListContainer() {

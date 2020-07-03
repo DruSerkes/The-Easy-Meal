@@ -10,6 +10,7 @@
   <div class="row p-0 m-0 mb-3" id="recipe-container">
     {% for recipe in recipes %}
   <!-- Begin Recipe Card Column -->
+  <!-- TODO UPDATE FUNC TO REMOVE ELEMENTS WITH CLASS OF .card RATHER THAN EMPTYING RECIPE CONTAINER -->
     <div class="card col-sm-10 col-md-5 col-lg-4 col-xl-3 border border-secondary p-2 rounded text-center my-3" style="opacity: 0.9;">
         <img src="{{ data.baseUri }}{{ recipe.image }}" class="card-img-top img-fluid" alt="Photo of {{ recipe.title }}">
         <div class="card-body py-2">
@@ -30,12 +31,11 @@
     </div>
     {% endfor %}
     <!-- End Recipe Card Column  -->
-
-    <!-- Add sentinel for loading more conent -->
+  </div>
+  <!-- Add sentinel for loading more conent -->
+    <!-- TODO create a js helper func to create this html, then append it to the bottom after searching for and creating a new recipe-container -->
     <div class="d-flex justify-content-center mb-3" id="sentinel">
       <div class="spinner-border" role="status"></div>
     </div>
-  </div>
-<!-- </div> -->
 
 {% endblock %}

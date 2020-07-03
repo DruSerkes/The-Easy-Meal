@@ -167,7 +167,7 @@ def load():
         # maybe also this one
         recipes = data['results']
 
-        if response.data['totalResults'] == 0:
+        if data['totalResults'] == 0:
             print("No more!")
             return (jsonify({}), 200)
 
