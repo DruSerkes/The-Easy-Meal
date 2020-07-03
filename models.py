@@ -77,9 +77,9 @@ class UserRecipe(db.Model):
     __tablename__ = "users_recipes"
 #   TODO ADD IN ON-DELETE CASCADE ETC 
     user_id = db.Column(db.Integer, db.ForeignKey(
-        'users.id'), primary_key=True, ondelete='cascade')
+        'users.id', ondelete='CASCADE'), primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey(
-        'recipes.id'), primary_key=True, ondelete='cascade')
+        'recipes.id', ondelete='CASCADE'), primary_key=True)
 
 
 class Recipe(db.Model):
@@ -228,6 +228,6 @@ class ListIngredient(db.Model):
     __tablename__ = "lists_ingredients"
 
     ingredient_id = db.Column(db.Integer, db.ForeignKey(
-        'ingredients.id'), primary_key=True)
+        'ingredients.id', ondelete='CASCADE'), primary_key=True)
     list_id = db.Column(db.Integer, db.ForeignKey(
-        'grocery_lists.id'), primary_key=True)
+        'grocery_lists.id', ondelete='CASCADE'), primary_key=True)
