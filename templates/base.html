@@ -30,9 +30,11 @@
               <a class="nav-link" href="{{ url_for('view_grocery_list') }}">Grocery List</a>
             </li>
           </ul>
+
           <!-- Begin Nav Search Form -->
-                <!-- Search by diet-->
-          <form data-id="{{ g.user.id }}" class="form-inline my-2 justify-content-center flex-nowrap" id="search-form">
+          
+                <!-- SEARCH BY DIET-->
+          <form data-id="{{ g.user.id }}" class="form-inline my-2 justify-content-right flex-nowrap mx-auto" id="search-form">
             <div class="input-group">
               <select class="custom-select mr-1 p-1 rounded" id="diet">
                 <option value="" selected> <span class="text-muted">Diets</span> </option>
@@ -41,10 +43,11 @@
             {% endfor %}
               </select>
             </div>
-              
+              <!-- END SEARCH BY DIET  -->
+
                 <!-- SEARCH BY CUISINE -->
-                <div class="input-group">
-                  <select class="custom-select mr-1 p-1 rounded" id="cuisine">
+                <div class="input-group" id="cuisine-container">
+                  <select class="custom-select mr-1 p-1 rounded" id="cuisine" data-container="body">
                     <option value="" selected> <span class="text-muted">Cuisines</span> </option>
                 {% for cuisine in cuisines %}
                     <option value="{{cuisine}}">{{ cuisine.capitalize() }}</option>
@@ -53,22 +56,21 @@
                 </div>
                 <!-- END SEARCH BY CUISINE -->
         
-        
             <input data-id="{{ g.user.id }}" class="form-control mr-sm-2 rounded" type="search" id="search-value" placeholder="Search" aria-label="Search">
             <button data-id="{{ g.user.id }}" class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Search</button>
           </form>
           <!-- END NAV SEARCH FORM  -->
 
 
-          <!-- TODO FIGURE OUT USER IMG URL AS SMALL CIRCLE IMG IN NAVBAR -->
-          <!-- USER PROFILE AND LOGOUT -->
-          <div class="justify-content-center text-center flex-nowrap">
-            <a href="{{ url_for('view_user', id=g.user.id) }}" class="p-1">
-              <img src="{{g.user.image}}" alt="Profile" class="img imgfluid rounded-circle">
+          <!-- USER PROFILE -->
+            <a class="avatar-link px-2 ml-auto" id="profile-link" href="{{ url_for('view_user', id=g.user.id) }}">
+              <img src="{{ g.user.img_url }}" alt="Profile" class="avatar">
             </a>
-          </div>
+
+            <!-- LOGOUT BUTTON -->
+          <a class="nav-link btn btn-sm btn-outline-warning text-dark" href="{{ url_for('logout') }}">Logout</a>
+              
           
-          <a class="nav-link btn btn-sm btn-outline-warning my-1 text-dark" href="{{ url_for('logout') }}">Logout</a>
             {% else %} 
             <li class="nav-item mx-2">
                 <a class="nav-link" href="{{ url_for('login') }}">Login</a>
