@@ -185,7 +185,7 @@ def search_recipes():
     response = do_search(request)
     data = response.json()
 
-    if response.data['totalResults'] == 0:
+    if data['totalResults'] == 0:
         print("No more!")
         return (jsonify({}), 200)
 
