@@ -75,6 +75,15 @@ footer {
 	border: 5px solid black;
 	opacity: 100%;
 	box-shadow: 5px 5px #dbdbdb;
+	/* text-decoration: none; */
+}
+
+.card-link {
+	text-decoration: none;
+	color: black;
+	width: 100%;
+	height: auto;
+	margin: 0;
 }
 
 .card-img-top {

@@ -15,6 +15,7 @@
 
 <!-- Begin Recipe Card Column -->
   <div class="card border mb-4 mx-auto p-2 rounded text-center">
+    <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="card-link">
       <img src="{{recipe.image}}" class="card-img-top img-fluid" alt="Photo of {{recipe.title}}">
 
       <div class="card-body py-2">
@@ -32,8 +33,9 @@
         <p class="lead">Servings: {{ recipe.servings }}</p>
         <a class="small text-muted" href="{{ recipe.sourceUrl }}" target="_blank">View original</a>
         <br>
-        <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-primary">See more</a>
+        <!-- <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="btn btn-outline-primary">See more</a> -->
       </div>
+    </a>
   </div>
 
 {% endfor %}
