@@ -122,8 +122,10 @@ async function handleSearch(evt) {
 
 	displayResults(response);
 
-	if (!$('#sentinel').length) addSetinel();
-	offset += 12;
+	setTimeout(() => {
+		if (!$('#sentinel').length) addSetinel();
+		offset += 12;
+	}, 800);
 }
 
 async function addIngredientsToGroceryList(evt) {
@@ -170,6 +172,19 @@ async function clearList() {
 
 async function handleFavorite(evt) {
 	evt.preventDefault();
+
+	// if ($(this).is('button')) {
+	// 	const id = $(this).data('id');
+
+	// 	if ($(this)..hasClass('fas')) {
+	// 		let response = await axios.delete(`/favorites/${id}`);
+	// 		toggleFavorite.call(this, response);
+	// 	} else {
+	// 		let response = await axios.post(`/favorites/${id}`, (data = { id }));
+	// 		toggleFavorite.call(this, response);
+	// 	}
+	// }
+
 	const id = $(this).closest('button').data('id');
 
 	if ($(this).hasClass('fas')) {
@@ -202,7 +217,7 @@ async function handleUserUpdate(evt) {
 */
 
 function addSetinel() {
-	$(createSentinelDivHTML()).insertAfter('main');
+	$(createSentinelDivHTML()).insertAfter('#recipe-container');
 	intersectionObserver.observe(document.querySelector('#sentinel'));
 }
 
