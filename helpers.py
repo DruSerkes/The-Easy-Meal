@@ -63,16 +63,6 @@ def generate_search_params(query=None, cuisine=None, diet=None, offset=0, number
     offset (int - optional): The number of results to skip (between 0 and 900).
     """
 
-    # valid_cuisines = ['african', 'chinese', 'japanese', 'korean', 'vietnamese', 'thai', 'indian', 'british', 'irish', 'french', 'italian', 'mexican',
-    #                   'spanish', 'middle eastern', 'jewish', 'american', 'cajun', 'southern', 'greek', 'german', 'nordic', 'eastern european', 'caribbean', 'latin american']
-    # valid_diets = ['pescetarian', 'lacto vegetarian',
-    #                'ovo vegetarian', 'vegan', 'vegetarian']
-
-    # if cuisine and cuisine not in valid_cuisines:
-    #     return "Invalid cuisine"
-    # elif diet and diet not in valid_diets:
-    #     return "Invalid diet"
-    # else:
     return {
         "apiKey": student_key,
         "query": query,
@@ -183,7 +173,6 @@ def add_recipe_to_db(recipe_data):
     image = recipe_data.get('image', None)
     sourceName = recipe_data.get('sourceName', None)
     sourceUrl = recipe_data.get('sourceUrl', None)
-    # description = recipe_data.get('description', None)
     readyInMinutes = recipe_data.get('readyInMinutes', None)
     servings = recipe_data.get('servings', None)
     instructions = recipe_data.get('instructions', None)
