@@ -1,10 +1,11 @@
 """ Helper functions to keep views clean """
 from secrets import student_key
 from models import User, db, Recipe, Ingredient, Measurement, Step
-from flask import request
+from flask import request, session
 import requests
 
 
+CURR_USER_KEY = "user_id"
 API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 API_KEY = student_key
 
@@ -13,6 +14,19 @@ valid_cuisines = ['african', 'chinese', 'japanese', 'korean', 'vietnamese', 'tha
                   'spanish', 'middle eastern', 'jewish', 'american', 'cajun', 'southern', 'greek', 'german', 'nordic', 'eastern european', 'caribbean', 'latin american']
 valid_diets = ['pescetarian', 'lacto vegetarian',
                'ovo vegetarian', 'vegan', 'vegetarian']
+
+
+def do_login(user):
+    """Log in user."""
+
+    session[CURR_USER_KEY] = user.id
+
+
+def do_logout():
+    """Logout user."""
+
+    if CURR_USER_KEY in session:
+        del session[CURR_USER_KEY]
 
 
 def generate_user_data(form):

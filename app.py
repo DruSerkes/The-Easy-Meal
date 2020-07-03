@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, session, request, flash, jso
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step, Measurement
 from forms import SignupForm, LoginForm, GroceryListForm
-from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db, valid_cuisines, valid_diets
+from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db, valid_cuisines, valid_diets, do_logout, do_login
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
 from secrets import app_password, api_key, student_key
@@ -35,6 +35,7 @@ db.create_all()
 CURR_USER_KEY = "user_id"
 # API_BASE_URL = "https://api.spoonacular.com"
 API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+# API_KEY = api_key
 API_KEY = student_key
 
 #####################################
@@ -60,19 +61,6 @@ def add_user_to_g():
 def context_processor():
     """ Process global context for jinja templates """
     return dict(cuisines=valid_cuisines, diets=valid_diets)
-
-
-def do_login(user):
-    """Log in user."""
-
-    session[CURR_USER_KEY] = user.id
-
-
-def do_logout():
-    """Logout user."""
-
-    if CURR_USER_KEY in session:
-        del session[CURR_USER_KEY]
 
 
 @ app.route('/signup', methods=["GET", "POST"])
