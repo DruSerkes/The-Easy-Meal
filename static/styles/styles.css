@@ -84,6 +84,7 @@ footer {
 	width: 100%;
 	height: auto;
 	margin: 0;
+	cursor: default;
 }
 
 .card-img-top {
