@@ -99,18 +99,19 @@ async function loadItems() {
 
 	const response = await axios.get('/load', { params: { id, query, diet, cuisine, offset } });
 	if (!response.data.results.length) {
-		console.log(response.data);
+		console.log(response.data, 'No more recipes!!!');
 		sentinel.innerHTML = 'No more recipes found!';
 	} else {
+		console.log("BUT WAIT THERE'S MORE!!");
 		response.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data);
 		});
-		if ($('#sentinel').length <= 0) {
-			setTimeout(() => {
-				$(createSentinelDivHTML()).insertAfter('main');
-				intersectionObserver.observe(document.querySelector('#sentinel'));
-			}, 1000);
-		}
+		// if ($('#sentinel').length <= 0) {
+		// 	setTimeout(() => {
+		// 		$(createSentinelDivHTML()).insertAfter('main');
+		// 		intersectionObserver.observe(document.querySelector('#sentinel'));
+		// 	}, 1000);
+		// }
 		offset += 12;
 	}
 }
@@ -126,6 +127,8 @@ async function handleSearch(evt) {
 	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
 
 	displayResults(response);
+	if (!$('#sentinel').length) addSetinel();
+	offset += 12;
 }
 
 async function addIngredientsToGroceryList(evt) {
@@ -203,7 +206,11 @@ async function handleUserUpdate(evt) {
 // HELPERS
 */
 
-// TODO animation makes the background shrink/expand all weird
+function addSetinel() {
+	$(createSentinelDivHTML()).insertAfter('main');
+	intersectionObserver.observe(document.querySelector('#sentinel'));
+}
+
 function displayResults(response) {
 	$('main').children().slideUp('slow', function() {
 		$(this).remove();
