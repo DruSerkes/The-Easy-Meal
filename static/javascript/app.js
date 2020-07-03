@@ -214,12 +214,12 @@ function displayResults(response) {
 	setTimeout(() => {
 		const $h1 = makeH1();
 		const $hr = makeHr();
-		const $total = makeTotalResults(response.data);
+		const $total = makeTotalResults(response.data.data);
 		const $row = makeRow();
 		$('main').prepend($h1).hide().slideDown('slow');
 		$('h1').after($row).after($hr).after($total);
-		response.data.results.forEach((recipe) => {
-			showRecipeCard(recipe, response.data);
+		response.data.data.results.forEach((recipe) => {
+			showRecipeCard(recipe, response.data.data, response.data.favorites);
 		});
 		$('form').on('click', '.fa-heart', handleFavorite);
 	}, 800);
@@ -238,13 +238,7 @@ function updateListContainer() {
 			`<p class="text-center lead">Your list is empty!</p> <br> <a class="btn btn-outline-primary" href="/favorites">View Favorites</a>`
 		);
 }
-// <form id="favorite-form" class="favorite-form d-inline">
-// {% if recipe.id in id_list %}
-// <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>
-// {% else %}
-// <button data-id="{{ recipe.id }}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>
-// {% endif %}
-// </form>
+
 function generateRecipeCardHTML(recipe, data, favorites) {
 	let favButton;
 
@@ -255,6 +249,7 @@ function generateRecipeCardHTML(recipe, data, favorites) {
 	}
 
 	return `<div class="card border mb-4 mx-auto p-2 rounded text-center">
+	<a href="/recipes/${recipe.id}" class="card-link">
 	<img src="${data.baseUri}${recipe.image}" class="card-img-top img-fluid" alt="Photo of ${recipe.title}">
 	<div class="card-body py-2">
 	  <h5 class="card-title d-inline">${recipe.title}</h5>
@@ -265,7 +260,7 @@ function generateRecipeCardHTML(recipe, data, favorites) {
 	  <p class="lead">Servings: ${recipe.servings}</p>
 	  <a class="small text-muted" href="${recipe.sourceUrl}">View original</a>
 	  <br>
-	  <a href="/recipes/${recipe.id}" class="btn btn-outline-primary">See more</a>
+	  </a>
 	</div>
 </div>`;
 }
