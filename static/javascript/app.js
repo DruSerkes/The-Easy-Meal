@@ -173,18 +173,6 @@ async function clearList() {
 async function handleFavorite(evt) {
 	evt.preventDefault();
 
-	// if ($(this).is('button')) {
-	// 	const id = $(this).data('id');
-
-	// 	if ($(this)..hasClass('fas')) {
-	// 		let response = await axios.delete(`/favorites/${id}`);
-	// 		toggleFavorite.call(this, response);
-	// 	} else {
-	// 		let response = await axios.post(`/favorites/${id}`, (data = { id }));
-	// 		toggleFavorite.call(this, response);
-	// 	}
-	// }
-
 	const id = $(this).closest('button').data('id');
 
 	if ($(this).hasClass('fas')) {
@@ -317,6 +305,7 @@ function toggleFavorite(response) {
 	} else {
 		$(this).toggleClass('fas fa-heart');
 		$(this).toggleClass('far fa-heart');
+		// TODO change this from a modal to a success alert
 		displaySuccessModal(response);
 	}
 }

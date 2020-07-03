@@ -1,4 +1,4 @@
-""" SQLAlchemy Models for Easy Meal """
+""" SQLAlchemy Models for Easy Meals """
 
 from datetime import datetime
 
@@ -75,11 +75,11 @@ class User(db.Model):
 class UserRecipe(db.Model):
     """ Many to Many Users to Recipes """
     __tablename__ = "users_recipes"
-
+#   TODO ADD IN ON-DELETE CASCADE ETC 
     user_id = db.Column(db.Integer, db.ForeignKey(
-        'users.id'), primary_key=True)
+        'users.id'), primary_key=True, ondelete='cascade')
     recipe_id = db.Column(db.Integer, db.ForeignKey(
-        'recipes.id'), primary_key=True)
+        'recipes.id'), primary_key=True, ondelete='cascade')
 
 
 class Recipe(db.Model):
@@ -91,7 +91,6 @@ class Recipe(db.Model):
     image = db.Column(db.String, nullable=False)
     sourceName = db.Column(db.String)
     sourceUrl = db.Column(db.String)
-    # description = db.Column(db.String)
     readyInMinutes = db.Column(db.Integer)
     servings = db.Column(db.Integer)
     instructions = db.Column(db.String)
@@ -117,7 +116,6 @@ class Recipe(db.Model):
             'img_url': self.image,
             'source_name': self.sourceName,
             'source_url': self.sourceUrl,
-            # 'description': self.description,
             'ready_in': self.readyInMinutes,
             'servings': self.servings,
             'instructions': self.instructions,
