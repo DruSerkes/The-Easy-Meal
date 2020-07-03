@@ -213,9 +213,10 @@ function displayResults(response) {
 	setTimeout(() => {
 		const $h1 = makeH1();
 		const $hr = makeHr();
+		const $total = makeTotalResults(response.data);
 		const $row = makeRow();
 		$('main').prepend($h1).hide().slideDown('slow');
-		$('h1').after($hr).after($row);
+		$('h1').after($row).after($hr).after($total);
 		response.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data);
 		});
@@ -250,7 +251,7 @@ function generateRecipeCardHTML(recipe, data) {
 </div>`;
 }
 function makeTotalResults(data) {
-	const $newTotal = $('p').text(`Total results: ${data.totalResults}`).addClass('small text-center text-secondary');
+	let $newTotal = $('<p>').text(`${data.totalResults} total results`).addClass('small text-center text-dark');
 	return $newTotal;
 }
 function makeH1(text = 'Easy Meals') {
