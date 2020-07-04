@@ -28,11 +28,11 @@ main {
 }
 
 h1 {
-	color: rgb(35, 102, 43);
+	color: #355e3b;
 }
 
 .navbar-brand {
-	color: rgb(35, 102, 43) !important;
+	color: #355e3b !important;
 }
 
 .list-body {
