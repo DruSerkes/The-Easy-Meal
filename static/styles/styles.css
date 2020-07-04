@@ -215,6 +215,16 @@ footer {
 		flex-direction: column;
 	}
 
+	footer {
+		min-width: 100%;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	h1 {
+		color: rgb(5, 34, 3);
+	}
+
 	body {
 		background-image: url('/static/images/rustic.jpeg');
 		background-position: left;
@@ -222,9 +232,5 @@ footer {
 		background-repeat: repeat-y;
 		min-width: 100%;
 		height: auto;
-	}
-
-	footer {
-		min-width: 100%;
 	}
 }
