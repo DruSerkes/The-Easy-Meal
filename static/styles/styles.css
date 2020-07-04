@@ -82,12 +82,13 @@ footer {
 	white-space: pre-wrap;
 }
 
+.profile-info {
+	color: rgb(87, 20, 26);
+}
+
 /*****************/
 /*     CARDS     */
 /*****************/
-
-#recipe-container {
-}
 
 .card {
 	max-width: 18rem;
@@ -208,6 +209,10 @@ footer {
 	}
 	.card {
 		opacity: 0.9;
+	}
+
+	.profile-li {
+		flex-direction: column;
 	}
 
 	body {
