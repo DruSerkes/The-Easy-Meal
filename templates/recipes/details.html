@@ -32,7 +32,35 @@
                         {% endif %}
                       </form>
                 </span>
-                <!-- TODO ADD LOGIC TO SHOW SMALL PRIMARY "VEGAN" "WHOLE30" ETC IF ANY EVALUATE TO TRUE  -->
+                <!-- BEGIN DIET SECTION  -->
+                {% if recipe.vegetarian %}
+                <small class="text-primary">Vegetarian!</small>
+                {% endif %}
+                
+                {% if recipe.vegan %}
+                <small class="text-primary">Vegan!</small>
+                {% endif %}
+
+                {% if recipe.glutenFree %}
+                <small class="text-primary">Gluten free!</small>
+                {% endif %}
+
+                {% if recipe.dairyFree %}
+                <small class="text-primary">Dairy free!</small>
+                {% endif %}
+                
+                {% if recipe.sustainable %}
+                <small class="text-primary">Sustainable!</small>
+                {% endif %}
+
+                {% if recipe.ketogenic %}
+                <small class="text-primary">Ketogenic!</small>
+                {% endif %}
+
+                {% if recipe.whole30 %}
+                <small class="text-primary">Whole30!</small>
+                {% endif %}
+                <!-- END DIETS -->
             </div>
         </div>
         <!-- END TOP ROW -->
