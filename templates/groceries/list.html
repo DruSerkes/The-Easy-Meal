@@ -10,13 +10,13 @@
   <div class="container w-50 mx-auto justify-content-center text-center" id="list-container">
     <ul class="list-group border rounded" data-id="{{ grocery_list.id }}" id="list">
       <li class="list-group-item text-center">
-        <button id="send-email" data-id="{{ grocery_list.id }}" class="btn btn-sm btn-primary mb-1">Email Me My List</button>
-        <button id="clear-list" data-id="{{ grocery_list.id }}" class="btn btn-sm btn-outline-warning mb-1">Clear My List</button>
+        <button id="send-email" data-id="{{ grocery_list.id }}" class="btn btn-sm btn-primary mb-1">Email List</button>
+        <button id="clear-list" data-id="{{ grocery_list.id }}" class="btn btn-sm btn-outline-danger mb-1">Clear List</button>
       </li>
       {% for ingredient in grocery_list.ingredients %}
       <li class='list-group-item text-center py-1 mb-0'>{{ingredient.name}}<span class="btn"><i data-id="{{ ingredient.id }}" class="far fa-trash-alt remove"></i></span></li>
       {% endfor %}
-      <li class='list-group-item pt-0 pb-1 text-center'><button id="add-ingredient" class='btn btn-sm btn-outline-dark my-0 px-2 py-0'><span><i class="fas fa-plus"></i></span></button></li>
+      <li class='list-group-item pt-0 py-1 text-center'><button id="show-add-ingredient" class='btn btn-sm btn-outline-dark my-0 px-2 py-0'><span><i class="fas fa-plus"></i></span></button></li>
     </ul> 
   </div>
   
