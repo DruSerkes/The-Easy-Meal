@@ -260,18 +260,9 @@ def remove_favorite(id):
     if not g.user:
         return abort(401)
     try:
-        # r_to_remove = Recipe.query.filter_by(id=id).first()
-        # for recipe in g.user.recipes:
-        #     if recipe.id == r_to_remove.id:
-        #         g.user.recipes.remove(recipe)
-        #         db.session.commit()
-        #         break
         recipe = Recipe.query.filter_by(id=id).first()
         UserRecipe.query.filter(
-            UserRecipe.user_id == g.user.id and UserRecipe.recipe_id == recipe.id).delete()
-        print(recipe)
-        print('Removed From ****************')
-        print(g.user.recipes)
+            UserRecipe.user_id == g.user.id, UserRecipe.recipe_id == recipe.id).delete()
         db.session.commit()
         response_json = jsonify(recipe=recipe.serialize(),
                                 message="Recipe removed!")
