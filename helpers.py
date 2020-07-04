@@ -204,7 +204,7 @@ def add_recipe_to_db(recipe_data):
         add_and_commit(recipe)
     except Exception:
         db.session.rollback()
-        print(Exception)
+        print(str(Exception))
         return "Recipe couldn't be saved. Please try again."
 
     ingredients = add_ingredients_to_db(recipe_data)

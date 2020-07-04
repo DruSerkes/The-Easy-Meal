@@ -118,7 +118,6 @@ async function handleSearch(evt) {
 	offset = 0;
 
 	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
-	console.log(response);
 	if (response.data !== {}) {
 		displayResults(response);
 	} else {
@@ -180,11 +179,9 @@ async function handleFavorite(evt) {
 
 	if ($(this).hasClass('fas')) {
 		let response = await axios.delete(`/favorites/${id}`);
-		console.log(response);
 		toggleFavorite.call(this, response);
 	} else {
 		let response = await axios.post(`/favorites/${id}`, (data = { id }));
-		console.log(response);
 		toggleFavorite.call(this, response);
 	}
 }
@@ -372,7 +369,6 @@ function generateGroceryModalHTML(data) {
 }
 
 function generateRecipeModalHTML(data) {
-	console.log(data);
 	return `<div id="myModal" class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
 	<div class="modal-content">

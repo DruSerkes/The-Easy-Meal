@@ -271,7 +271,7 @@ def remove_favorite(id):
                                 message="Recipe removed!")
         return (response_json, 200)
     except Exception as e:
-        print(e)
+        print(str(e))
         return jsonify(errors=str(e))
 
 
