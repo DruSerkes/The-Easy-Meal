@@ -162,7 +162,8 @@ def load():
             return (jsonify(data=data), 200)
 
         user_favorites = [f.id for f in g.user.recipes]
-        favorites = [r['id'] for r in data['results'] if r['id'] in user_favorites]
+        favorites = [r['id']
+                     for r in data['results'] if r['id'] in user_favorites]
         response_json = jsonify(data=data, favorites=favorites)
 
     return (response_json, 200)
@@ -178,7 +179,7 @@ def search_recipes():
     data = response.json()
 
     if len(data['results']) == 0:
-            return (jsonify(data=data), 200)
+        return (jsonify(data=data), 200)
 
     user_favorites = [f.id for f in g.user.recipes]
     favorites = [r['id'] for r in data['results'] if r['id'] in user_favorites]
@@ -213,9 +214,11 @@ def update_user(id):
     try:
         user = User.query.get_or_404(id)
         new_email = request.json.get('email', user.email)
-        new_img_url = request.json.get('imgUrl', User.default_image())
-        user.email = new_email
-        user.img_url = new_img_url
+        new_img_url = request.json.get('imgUrl', user.img_url)
+        if new_email:
+            user.email = new_email
+        if new_img_url:
+            user.img_url = new_img_url
 
         db.session.commit()
 
@@ -238,7 +241,7 @@ def add_favorite(id):
         response = get_recipe(id)
         data = response.json()
 
-        # TODO take another look at this series of callback helpers 
+        # TODO take another look at this series of callback helpers
         recipe = add_recipe_to_db(data)
         g.user.recipes.append(recipe)
         db.session.commit()
@@ -264,7 +267,8 @@ def remove_favorite(id):
         #         db.session.commit()
         #         break
         recipe = Recipe.query.filter_by(id=id).first()
-        UserRecipe.query.filter(UserRecipe.user_id == g.user.id and UserRecipe.recipe_id == recipe.id).delete()
+        UserRecipe.query.filter(
+            UserRecipe.user_id == g.user.id and UserRecipe.recipe_id == recipe.id).delete()
         print(recipe)
         print('Removed From ****************')
         print(g.user.recipes)
@@ -273,7 +277,8 @@ def remove_favorite(id):
                                 message="Recipe removed!")
         return (response_json, 200)
     except Exception as e:
-        import pdb; pdb.set_trace()
+        import pdb
+        pdb.set_trace()
         print(str(e))
         return jsonify(errors=str(e))
 
@@ -289,7 +294,7 @@ def view_saved_recipes():
     if not g.user:
         flash('You must be logged in to do that', 'warning')
         return redirect(url_for('login'))
-    
+
     id_list = [recipe.id for recipe in g.user.recipes]
 
     return render_template('users/favorites.html', id_list=id_list)
@@ -423,7 +428,6 @@ def mail_grocery_list(list_id):
         return (response_json, 200)
     except Exception as e:
         return jsonify(errors=str(e))
-
 
 
 ########################

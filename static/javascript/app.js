@@ -192,7 +192,7 @@ async function handleUserUpdate(evt) {
 	const id = $(this).data('id');
 	const email = $('#email').val();
 	const imgUrl = $('#img-url').val();
-	let response = await axios.patch(`/users/${id}`, (data = { id, email, imgUrl }));
+	const response = await axios.patch(`/users/${id}`, (data = { id, email, imgUrl }));
 
 	if (response.data.errors) {
 		displayErrorAlert(response);
@@ -301,7 +301,8 @@ function showUpdateForm() {
 function updateProfile(response) {
 	$('#user-email').text(`Email: ${response.data.user.email}`);
 	$('#user-image').attr('src', `${response.data.user.img_url}`);
-	$('#user-profile').attr('src', `${response.data.user.img_url}`);
+	// $('#user-profile').attr('src', `${response.data.user.img_url}`);
+	$('.avatar').attr('src', `${response.data.user.img_url}`);
 }
 
 function toggleFavorite(response) {
