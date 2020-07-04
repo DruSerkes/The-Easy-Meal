@@ -159,9 +159,8 @@ def load():
         response = do_search(request)
         data = response.json()
 
-        if data['totalResults'] == 0:
-            print("No more!")
-            return (jsonify({}), 200)
+        if len(data['results']) == 0:
+            return (jsonify(data=data), 200)
 
         user_favorites = [f.id for f in g.user.recipes]
         favorites = [r['id'] for r in data['results'] if r['id'] in user_favorites]
@@ -175,15 +174,13 @@ def search_recipes():
     """ Search for a recipe based on user input """
     if not g.user:
         return abort(401)
-    if int(request.args['id']) != g.user.id:
-        return (jsonify(errors="You don't have permission to do that!"), 401)
 
     response = do_search(request)
     data = response.json()
 
-    if data['totalResults'] == 0:
-        print("No more!")
-        return (jsonify({}), 200)
+    if len(data['results']) == 0:
+            return (jsonify(data=data), 200)
+
     user_favorites = [f.id for f in g.user.recipes]
     favorites = [r['id'] for r in data['results'] if r['id'] in user_favorites]
     response_json = jsonify(data=data, favorites=favorites)

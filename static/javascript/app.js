@@ -98,10 +98,9 @@ async function loadItems() {
 	const cuisine = $('#cuisine').val();
 
 	const response = await axios.get('/load', { params: { id, query, diet, cuisine, offset } });
-	console.log(response);
 
-	if (!response.data.data.results.length) {
-		sentinel.innerHTML = 'No more recipes found!';
+	if (response.data.data.results.length === 0) {
+		$('#sentinel').html('No more recipes found!');
 	} else {
 		response.data.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data.data, response.data.favorites);
@@ -119,8 +118,12 @@ async function handleSearch(evt) {
 	offset = 0;
 
 	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
-
-	displayResults(response);
+	console.log(response);
+	if (response.data !== {}) {
+		displayResults(response);
+	} else {
+		console.log('needs logic!');
+	}
 
 	setTimeout(() => {
 		if (!$('#sentinel').length) addSetinel();
