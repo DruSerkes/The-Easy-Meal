@@ -268,8 +268,6 @@ def remove_favorite(id):
                                 message="Recipe removed!")
         return (response_json, 200)
     except Exception as e:
-        import pdb
-        pdb.set_trace()
         print(str(e))
         return jsonify(errors=str(e))
 
