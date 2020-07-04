@@ -353,6 +353,24 @@ def add_ingredients_to_list():
     return (response_json, 200)
 
 
+@app.route('/groceries/<int:list_id>', methods=['POST'])
+def add_one_ingredient_to_list(list_id):
+    """ Add a single ingredient to users grocery list """
+    if not g.user:
+        return abort(401)
+    grocery_list = GroceryList.query.get_or_404(list_id)
+    ingredient = request.json.get('ingredient', None)
+
+    if ingredient:
+        ingredients = session.get('ingredients', [])
+        ingredients.append(ingredient)
+        session['ingredients'] = ingredients
+
+    response_json = jsonify(ingredient=ingredient)
+    return (response_json, 201)
+
+
+# TODO remove item checks session for ingredient and if so removes it
 @ app.route('/groceries/<int:list_id>', methods=['PATCH'])
 def remove_ingredient_from_list(list_id):
     """
@@ -365,6 +383,16 @@ def remove_ingredient_from_list(list_id):
         return abort(401)
 
     grocery_list = GroceryList.query.get_or_404(list_id)
+
+    if not request.json['id']:
+        ingredients = session.get('ingredients', [])
+        i_to_remove = request.json['ingredient']
+        ingredients.remove(i_to_remove)
+        session['ingredients'] = ingredients
+        response_json = jsonify(
+            grocery_list=grocery_list.serialize(), message="List updated!")
+        return (response_json, 200)
+
     i_to_remove = Ingredient.query.get_or_404(request.json['id'])
 
     for ingredient in grocery_list.ingredients:
@@ -384,11 +412,12 @@ def empty_list(list_id):
     # Check if authorized
     if not g.user:
         return abort(401)
-
     try:
         grocery_list = GroceryList.query.get_or_404(list_id)
         grocery_list.ingredients = []
         db.session.commit()
+
+        session['ingredients'] = []
 
         response_json = jsonify(message="Your list has been cleared!")
         return (response_json, 200)

@@ -139,7 +139,8 @@ async function addIngredientsToGroceryList(evt) {
 async function removeIngredientFromGroceryList(evt) {
 	const id = $(this).data('id');
 	const listId = $(this).closest('ul').data('id');
-	const response = await axios.patch(`/groceries/${listId}`, (data = { id }));
+	const ingredient = $(this).closest('li').text();
+	const response = await axios.patch(`/groceries/${listId}`, (data = { id, ingredient }));
 
 	displayAndRemove.call(this, response.data);
 }
@@ -445,4 +446,58 @@ function createSentinelDivHTML() {
 	return `<div class="d-flex justify-content-center mb-3" id="sentinel">
       <div class="spinner-border" role="status"></div>
     </div>`;
+}
+
+/*
+* 
+*/
+
+$('#show-add-ingredient').on('click', showAddIngredient);
+
+function showAddIngredient() {
+	if ($('.add-ingredient').length !== 0) {
+		return;
+	}
+
+	const newAddIngredient = makeAddIngredient();
+	$(this).closest('li').prepend(newAddIngredient);
+	$('.add-ingredient').on('submit', handleAddIngredient);
+}
+
+async function handleAddIngredient(evt) {
+	evt.preventDefault();
+	const id = $(this).closest('ul').data('id');
+	const ingredient = $('#user-add-ingredient').val();
+
+	const response = await axios.post(`/groceries/${id}`, (data = { ingredient }));
+
+	console.log(response);
+
+	if (response.status === 201) {
+		const newItem = generateIngredientHTML(response.data.ingredient);
+		$(this).closest('li').html(newItem);
+	} else {
+		const data = { message: `Couldn't add ${ingredient}. Refresh and try again` };
+		displayAndRemove(data);
+	}
+}
+
+function generateIngredientHTML(ingredient) {
+	return `
+	${ingredient}
+	<span class="btn" data-ingredient="${ingredient}">
+	<i class="far fa-trash-alt remove"></i>
+	</span>`;
+}
+
+function makeAddIngredient() {
+	return `<li class='list-group-item mb-1 text-center'>
+	<form class="add-ingredient form-inline d-inline">
+	<input class="form-control" id="user-add-ingredient" type="text" placeholder="Add new ingredient..." required>
+	<button type="submit" id="show-add-ingredient" class='btn btn-sm btn-outline-primary'>
+	Add
+	</button>
+	</form>
+	</li>
+	`;
 }
