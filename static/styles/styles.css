@@ -31,9 +31,14 @@ h1,
 .brandname {
 	color: #355e3b;
 }
-/* .brandname {
-	color: #355e3b;
-} */
+
+.welcome-container {
+	opacity: 0.75;
+}
+
+.welcome-list {
+	list-style-type: none;
+}
 
 .navbar-brand {
 	color: #355e3b !important;
