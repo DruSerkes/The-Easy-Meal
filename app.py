@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, session, request, flash, jsonify, url_for, abort, g
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step, Measurement
+from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step, Measurement, UserRecipe
 from forms import SignupForm, LoginForm, GroceryListForm
 from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db, valid_cuisines, valid_diets, do_logout, do_login
 from flask_mail import Mail, Message
@@ -153,7 +153,6 @@ def load():
     Load more results when user hits the end of the page
     Expects arg offset to query API for the next 12 results based on the search query information
     Returns the api response data
-    # TODO play with Animate css ?
     """
     if request.args:
         response = do_search(request)
@@ -256,23 +255,30 @@ def remove_favorite(id):
     if not g.user:
         return abort(401)
     try:
-        r_to_remove = Recipe.query.get_or_404(id)
-        for recipe in g.user.recipes:
-            if recipe == r_to_remove:
-                g.user.recipes.remove(recipe)
-                break
+        # r_to_remove = Recipe.query.filter_by(id=id).first()
+        # for recipe in g.user.recipes:
+        #     if recipe.id == r_to_remove.id:
+        #         g.user.recipes.remove(recipe)
+        #         db.session.commit()
+        #         break
+        recipe = Recipe.query.filter_by(id=id).first()
+        UserRecipe.query.filter(UserRecipe.user_id == g.user.id and UserRecipe.recipe_id == recipe.id).delete()
+        print(recipe)
+        print('Removed From ****************')
+        print(g.user.recipes)
         db.session.commit()
-
-        response_json = jsonify(recipe=r_to_remove.serialize(),
+        response_json = jsonify(recipe=recipe.serialize(),
                                 message="Recipe removed!")
         return (response_json, 200)
     except Exception as e:
+        print(e)
         return jsonify(errors=str(e))
 
 
 ########################
 #    Recipe Routes     #
 ########################
+
 
 @ app.route('/favorites/')
 def view_saved_recipes():
@@ -305,6 +311,7 @@ def view_recipe_details(id):
 ########################
 # Grocery List Routes  #
 ########################
+
 
 @ app.route('/groceries')
 def view_grocery_list():
@@ -415,20 +422,11 @@ def mail_grocery_list(list_id):
         return jsonify(errors=str(e))
 
 
-# TODO?
-@ app.route('/groceries/history')
-def view_list_history():
-    """ View grocery lists """
-    if not g.user:
-        flash('You must be logged in to do that', 'warning')
-        return redirect(url_for('login'))
-
-    return render_template('')
-
 
 ########################
 #     Custom Errors    #
 ########################
+
 # CUSTOM 404 PAGE
 @ app.errorhandler(404)
 def display_404(error):

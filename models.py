@@ -75,7 +75,8 @@ class User(db.Model):
 class UserRecipe(db.Model):
     """ Many to Many Users to Recipes """
     __tablename__ = "users_recipes"
-#   TODO ADD IN ON-DELETE CASCADE ETC 
+
+    # id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.id', ondelete='CASCADE'), primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey(
