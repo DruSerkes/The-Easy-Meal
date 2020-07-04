@@ -27,9 +27,13 @@ main {
 	margin: 0;
 }
 
-h1 {
+h1,
+.brandname {
 	color: #355e3b;
 }
+/* .brandname {
+	color: #355e3b;
+} */
 
 .navbar-brand {
 	color: #355e3b !important;

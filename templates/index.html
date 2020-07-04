@@ -7,13 +7,54 @@
 <h1 class="display-2 text-center">Easy Meals</h1>
 <hr>
 
+<div class="container text-center bg-light rounded py-4 welcome-container">
+  <h2 class="h2">
+    Welcome to <span class="brandname">Easy Meals</span> 
+  </h2>
+  <p>We really love food.</p>
+  <p>So much in fact <br> we have <em>over 380,000</em> recipes from the web <br> ready for you to make!</p>
 
+  <h3 class="h3">Here you can</h3>
+  <ul class="list-group">
+    <li>
+      Search for the meals you want!
+    </li>
+    <li>
+      Filter by diet or cuisine!
+    </li>
+    <li>
+      Save your favorites!
+    </li>
+    <li>
+      Add ingredients to your shopping list!
+    </li>
+    <li>
+      Email yourself your shopping list whenever you’re ready!
+    </li>
+  </ul>
+
+  <p>What are you waiting for?</p>
+  <p class="lead text-lg">Lets get cookin!</p>
+
+</div>
+
+
+
+
+
+
+ 
+
+
+
+
+<!-- 
 <div class="d-flex flex-wrap justify-content-around" id="recipe-container">
 
-  {% for recipe in recipes %}
+  {% for recipe in recipes %} -->
 
 <!-- Begin Recipe Card Column -->
-  <div class="card border mb-4 mx-auto p-2 rounded text-center">
+  <!-- <div class="card border mb-4 mx-auto p-2 rounded text-center">
     <a href="{{ url_for('view_recipe_details', id=recipe.id) }}" class="card-link">
       <img src="{{ data.baseUri }}{{ recipe.image }}" class="card-img-top img-fluid" alt="Photo of {{ recipe.title }}">
       <div class="card-body py-2">
@@ -33,17 +74,17 @@
         <br>
     </a>
       </div>
-  </div>
+  </div> -->
   <!-- End Recipe Card Column  -->
 
-  {% endfor %}
+  <!-- {% endfor %}
 
 </div>
 
-  </div>
+  </div> -->
   <!-- Add sentinel for loading more conent -->
-    <div class="d-flex justify-content-center mb-3" id="sentinel">
+    <!-- <div class="d-flex justify-content-center mb-3" id="sentinel">
       <div class="spinner-border" role="status"></div>
-    </div>
+    </div> -->
 
 {% endblock %}
