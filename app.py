@@ -389,7 +389,7 @@ def empty_list(list_id):
         grocery_list.ingredients = []
         db.session.commit()
 
-        response_json = jsonify(message="Shopping list cleared successfully!")
+        response_json = jsonify(message="Your list has been cleared!")
         return (response_json, 200)
     except Exception as e:
         db.session.rollback()

@@ -12,13 +12,12 @@ body {
 
 body {
 	background-image: url('/static/images/bg-img.jpeg');
+	/* background-image: url('/static/images/rustic.jpeg'); */
 	background-position: top;
 	background-size: auto;
 	background-repeat: repeat-y;
-	min-height: 100vh;
 	min-width: 100%;
-	padding: 0;
-	margin: 0;
+	height: auto;
 }
 main {
 	min-height: 100vh;
@@ -55,6 +54,19 @@ footer {
 	padding-bottom: 10px;
 	position: relative;
 	top: 0;
+}
+
+.footer-link {
+	color: whitesmoke;
+}
+
+.footer-link:hover {
+	color: rgb(176, 197, 197);
+}
+
+.jumbotron {
+	width: 72vw;
+	margin: 3% auto;
 }
 
 /*****************/
@@ -165,5 +177,19 @@ footer {
 		position: relative;
 		left: 50%;
 		transform: translateX(-50%);
+	}
+	.jumbotron {
+		width: 90vw;
+		margin: 3% auto;
+		opacity: 1;
+	}
+
+	footer {
+		background-image: url('/static/images/rustic.jpeg');
+		background-position: top;
+		background-size: auto;
+		background-repeat: repeat-y;
+		min-width: 100%;
+		height: auto;
 	}
 }
