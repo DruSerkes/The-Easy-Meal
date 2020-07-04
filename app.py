@@ -231,12 +231,14 @@ def add_favorite(id):
     """ Favorite a recipe """
     if not g.user:
         return abort(401)
+
     recipe = Recipe.query.filter_by(id=id).first()
 
     if not recipe:
         response = get_recipe(id)
         data = response.json()
 
+        # TODO take another look at this series of callback helpers 
         recipe = add_recipe_to_db(data)
         g.user.recipes.append(recipe)
         db.session.commit()
@@ -271,6 +273,7 @@ def remove_favorite(id):
                                 message="Recipe removed!")
         return (response_json, 200)
     except Exception as e:
+        import pdb; pdb.set_trace()
         print(str(e))
         return jsonify(errors=str(e))
 

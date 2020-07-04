@@ -234,6 +234,9 @@ function showRecipeCard(recipe, data, favorites) {
 	const recipeHTML = generateRecipeCardHTML(recipe, data, favorites);
 	// TODO try animating these with Animate css (OR ADD BACK IN .hide().fadeIn(800)
 	$('#recipe-container').append(recipeHTML);
+	$('form').on('submit', (e) => {
+		e.preventDefault();
+	});
 }
 
 function updateListContainer() {
