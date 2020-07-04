@@ -57,7 +57,6 @@ $('#add-ingredients').on('click', addIngredientsToGroceryList);
 $('.remove').on('click', confirmRemove);
 $('#send-email').on('click', sendEmail);
 $('#clear-list').on('click', clearList);
-$('form').on('click', '.fa-heart', handleFavorite);
 $('.favorite-form').on('click', '.fa-heart', handleFavorite);
 $('#update').on('click', showUpdateForm);
 $('#search-form').on('submit', handleSearch);
@@ -152,11 +151,11 @@ async function sendEmail() {
 	if (response.data.errors) {
 		const alertHTML = generateAlertHTML(response.data.errors, 'danger');
 		$('body').append(alertHTML).alert();
-		$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(2000);
+		$('.feedback').hide().fadeIn(800).delay(300).fadeOut(800);
 	} else {
 		const alertHTML = generateAlertHTML(response.data.message, 'success');
 		$('body').append(alertHTML).alert();
-		$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(2000);
+		$('.feedback').hide().fadeIn(800).delay(300).fadeOut(800);
 	}
 }
 
@@ -272,6 +271,7 @@ function generateRecipeCardHTML(recipe, data, favorites) {
 	</div>
 </div>`;
 }
+
 function makeTotalResults(data) {
 	let $newTotal = $('<p>').text(`${data.totalResults} total results`).addClass('small text-center text-dark');
 	return $newTotal;
@@ -312,22 +312,22 @@ function toggleFavorite(response) {
 		$(this).toggleClass('fas fa-heart');
 		$(this).toggleClass('far fa-heart');
 		displaySuccessAlert(response);
-		// displaySuccessModal(response);
 	}
 }
 
 function displayErrorAlert(response) {
 	console.log(`Error details: ${response.data.errors}`);
+	$('.feedback').remove();
 	const alertHTML = generateAlertHTML('Something went wrong, please try again', 'danger');
 	$('main').prepend(alertHTML).alert();
-	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
+	$('.feedback').hide().fadeIn('slow').delay(1000).fadeOut('slow');
 }
 
 function displaySuccessAlert(response) {
 	$('.feedback').remove();
 	const alertHTML = generateAlertHTML(response.data.message, 'success');
 	$('main').prepend(alertHTML).alert();
-	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
+	$('.feedback').hide().fadeIn('slow').delay(1000).fadeOut('slow');
 }
 
 function displaySuccessModal(response) {
@@ -390,7 +390,7 @@ function generateRecipeModalHTML(data) {
 }
 
 function generateAlertHTML(message, category) {
-	return `<div class="container w-75 mx-auto feedback">
+	return `<div class="container w-50 mx-auto feedback">
 	<div class="alert alert-${category} alert-dismissible fade show text-center" role="alert">
 	${message}
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
