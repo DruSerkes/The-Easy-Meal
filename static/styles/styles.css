@@ -12,12 +12,13 @@ body {
 
 body {
 	background-image: url('/static/images/bg-img.jpeg');
-	/* background-image: url('/static/images/rustic.jpeg'); */
 	background-position: top;
 	background-size: auto;
 	background-repeat: repeat-y;
 	min-width: 100%;
 	height: auto;
+	font-family: 'Avenir Light', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
+		sans-serif !important;
 }
 main {
 	min-height: 100vh;
@@ -27,7 +28,6 @@ main {
 }
 
 h1 {
-	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
 	color: rgb(35, 102, 43);
 }
 
