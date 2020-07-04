@@ -311,8 +311,8 @@ function toggleFavorite(response) {
 	} else {
 		$(this).toggleClass('fas fa-heart');
 		$(this).toggleClass('far fa-heart');
-		// TODO change this from a modal to a success alert
-		displaySuccessModal(response);
+		displaySuccessAlert(response);
+		// displaySuccessModal(response);
 	}
 }
 
@@ -324,6 +324,7 @@ function displayErrorAlert(response) {
 }
 
 function displaySuccessAlert(response) {
+	$('.feedback').remove();
 	const alertHTML = generateAlertHTML(response.data.message, 'success');
 	$('main').prepend(alertHTML).alert();
 	$('.feedback').hide().fadeIn(1500).delay(500).fadeOut(3000);
