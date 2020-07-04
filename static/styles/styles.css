@@ -168,7 +168,12 @@ footer {
 	form {
 		display: flex;
 		justify-content: center;
+		flex-wrap: wrap;
 	}
+	.input-group {
+		width: 100%;
+	}
+
 	.avatar-link {
 		max-width: 50px;
 		height: 50px;
@@ -182,18 +187,27 @@ footer {
 		left: 50%;
 		transform: translateX(-50%);
 	}
+	.card-img-top {
+		width: 100%;
+		height: auto;
+	}
+
 	.jumbotron {
 		width: 90vw;
 		margin: 3% auto;
 		opacity: 1;
 	}
 
-	footer {
+	body {
 		background-image: url('/static/images/rustic.jpeg');
 		background-position: top;
 		background-size: auto;
 		background-repeat: repeat-y;
 		min-width: 100%;
 		height: auto;
+	}
+
+	footer {
+		min-width: 100%;
 	}
 }
