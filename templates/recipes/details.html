@@ -51,7 +51,7 @@
                     {% endfor %}
                 </ul>
                 {% elif recipe.instructions %}
-                <p class="">{{recipe.instructions}}</p>
+                <p class="instructions">{{ recipe.instructions.replace('.', '. \n \n') }}</p>
                 {% else %}
                 <p class="">Sorry!</p>
                 <p class="">We can't find any instructions for this recipe!</p>

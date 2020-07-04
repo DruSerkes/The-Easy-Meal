@@ -213,16 +213,3 @@ def add_recipe_to_db(recipe_data):
         db.session.commit()
 
     return recipe
-
-
-# def add_steps_to_db(analyzed_recipe):
-#     """
-#     Add all the steps for a recipe to the db
-#     analyzed_recipe (obj): analyzed recipe from the Spoonacular API
-#     returns the analyzed_recipe
-#     """
-#     # TODO
-
-# OR!!!!!
-# JUST RENDER THE RECIPE.INSTRUCTIONS
-# FOR AESTHETICS, HAVE SOME LOGIC THAT PARSES THE STRING AND ADDS A NEW LINE AFTER EVERY PERIOD

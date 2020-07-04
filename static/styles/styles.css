@@ -69,6 +69,10 @@ footer {
 	margin: 3% auto;
 }
 
+.instructions {
+	white-space: pre-wrap;
+}
+
 /*****************/
 /*     CARDS     */
 /*****************/
