@@ -26,6 +26,15 @@ main {
 	margin: 0;
 }
 
+h1 {
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+	color: rgb(35, 102, 43);
+}
+
+.navbar-brand {
+	color: rgb(35, 102, 43) !important;
+}
+
 .list-body {
 	background-image: url('/static/images/groceries.jpeg');
 	background-position: center;
@@ -197,10 +206,13 @@ footer {
 		margin: 3% auto;
 		opacity: 1;
 	}
+	.card {
+		opacity: 0.9;
+	}
 
 	body {
 		background-image: url('/static/images/rustic.jpeg');
-		background-position: top;
+		background-position: left;
 		background-size: auto;
 		background-repeat: repeat-y;
 		min-width: 100%;
