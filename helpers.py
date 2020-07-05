@@ -65,7 +65,7 @@ def generate_headers():
     """ Returns headers """
     return {
         'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-        'x-rapidapi-key': student_key
+        'x-rapidapi-key': API_KEY
     }
 
 
@@ -79,7 +79,7 @@ def generate_search_params(query=None, cuisine=None, diet=None, offset=0, number
     """
 
     return {
-        "apiKey": student_key,
+        "apiKey": API_KEY,
         "query": query,
         "diet": diet,
         "cuisine": cuisine,
@@ -124,7 +124,7 @@ def get_recipe(id):
     """
     headers = generate_headers()
     response = requests.request(
-        'GET', f"{API_BASE_URL}/recipes/{id}/information", headers=headers, data={'apiKey': student_key, 'id': id})
+        'GET', f"{API_BASE_URL}/recipes/{id}/information", headers=headers, data={'apiKey': API_KEY, 'id': id})
 
     return response
 
