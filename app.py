@@ -335,6 +335,8 @@ def add_ingredients_to_list():
     # Check if authorized
     if not g.user:
         return abort(401)
+    # Grab id from request
+    id = request.json.get('id', None)
     # Make a grocery list if user doesn't already have one
     if not g.user.grocery_list:
         new_list = GroceryList(user_id=g.user.id)
@@ -343,7 +345,12 @@ def add_ingredients_to_list():
     # Grab most recent grocery list and recipe being added
     grocery_list = GroceryList.query.filter_by(user_id=g.user.id).order_by(
         GroceryList.date_created.desc()).first()
-    recipe = Recipe.query.get_or_404(request.json['id'])
+    recipe = Recipe.query.filter_by(id=id).first()
+    # If recipe hasn't been saved to db, call API for recipe data and save it
+    if not recipe:
+        response = get_recipe(id)
+        data = response.json()
+        recipe = add_recipe_to_db(data)
     # Add recipe ingredients to grocery list if they're not already there
     for ingredient in recipe.ingredients:
         if ingredient not in grocery_list.ingredients:
