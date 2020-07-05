@@ -78,13 +78,13 @@ $(document).ready(function() {
 	// $('[data-toggle="tooltip"]').tooltip();
 });
 
-$('.checkbox-menu').on('change', "input[type='checkbox']", function() {
-	$(this).closest('li').toggleClass('active', this.checked);
-});
+// $('.checkbox-menu').on('change', "input[type='checkbox']", function() {
+// 	$(this).closest('li').toggleClass('active', this.checked);
+// });
 
-$(document).on('click', '.allow-focus', function(e) {
-	e.stopPropagation();
-});
+// $(document).on('click', '.allow-focus', function(e) {
+// 	e.stopPropagation();
+// });
 
 /*****************/
 /*	 	AJAX	 */
@@ -103,6 +103,7 @@ async function loadItems() {
 	} else {
 		response.data.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data.data, response.data.favorites);
+			$('.favorite-form').on('click', '.fa-heart', handleFavorite);
 		});
 		offset += 12;
 	}
@@ -232,7 +233,6 @@ function displayResults(response) {
 
 function showRecipeCard(recipe, data, favorites) {
 	const recipeHTML = generateRecipeCardHTML(recipe, data, favorites);
-	// TODO try animating these with Animate css (OR ADD BACK IN .hide().fadeIn(800)
 	$('#recipe-container').append(recipeHTML);
 	$('form').on('submit', (e) => {
 		e.preventDefault();
@@ -251,9 +251,9 @@ function generateRecipeCardHTML(recipe, data, favorites) {
 	let favButton;
 
 	if (favorites.includes(recipe.id)) {
-		favButton = `<button data-id="${recipe.id}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>`;
+		favButton = `<button id="${recipe.id}" data-id="${recipe.id}" class='btn btn-sm'><span><i  class="fas fa-heart"></i></span></button>`;
 	} else {
-		favButton = `<button data-id="${recipe.id}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>`;
+		favButton = `<button id="${recipe.id}" data-id="${recipe.id}" class='btn btn-sm'><span><i class="far fa-heart"></i></span></button>`;
 	}
 
 	return `<div class="card border mb-4 mx-auto p-2 rounded text-center">
@@ -277,6 +277,7 @@ function makeTotalResults(data) {
 	let $newTotal = $('<p>').text(`${data.totalResults} total results`).addClass('small text-center text-dark');
 	return $newTotal;
 }
+
 function makeH1(text = 'Easy Meals') {
 	let $newH1 = $('<h1>').text(text).addClass('display-2 text-center');
 	return $newH1;
@@ -300,7 +301,7 @@ function showUpdateForm() {
 }
 
 function updateProfile(response) {
-	$('#user-email').text(`Email: ${response.data.user.email}`);
+	$('#user-email').text(`${response.data.user.email}`);
 	$('#user-image').attr('src', `${response.data.user.img_url}`);
 	// $('#user-profile').attr('src', `${response.data.user.img_url}`);
 	$('.avatar').attr('src', `${response.data.user.img_url}`);
@@ -448,8 +449,8 @@ function createSentinelDivHTML() {
     </div>`;
 }
 
-/*
-* 
+/* TODO
+*   ORGANIZE THIS !!!
 */
 
 $('#show-add-ingredient').on('click', showAddIngredient);
@@ -489,7 +490,6 @@ function generateIngredientHTML(ingredient) {
 	<i class="far fa-trash-alt remove"></i>
 	</span>`;
 }
-
 function makeAddIngredient() {
 	return `<li class='list-group-item mb-1 text-center'>
 	<form class="add-ingredient form-inline d-inline">

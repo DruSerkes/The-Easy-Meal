@@ -236,7 +236,7 @@ footer {
 
 	body {
 		background-image: url('/static/images/rustic.jpeg');
-		background-position: left;
+		background-position: center;
 		background-size: auto;
 		background-repeat: repeat-y;
 		min-width: 100%;

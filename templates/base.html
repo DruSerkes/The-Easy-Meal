@@ -19,9 +19,7 @@
       
         <div class="collapse navbar-collapse align-items-top" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto align-items-center text-dark">
-            <!-- <li class="nav-item mx-2">
-              <a class="nav-link" href="{{ url_for('home_page') }}">Home</a>
-            </li> -->
+
             {% if g.user %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('view_saved_recipes') }}">My Recipes</a>
@@ -65,11 +63,7 @@
           <!-- USER PROFILE -->
             <a class="avatar-link px-2 ml-auto" id="profile-link" href="{{ url_for('view_user', id=g.user.id) }}">
               <img src="{{ g.user.img_url }}" alt="Profile" class="avatar">
-            </a>
-
-            <!-- LOGOUT BUTTON -->
-          <a class="nav-link btn btn-sm btn-outline-warning text-dark" href="{{ url_for('logout') }}">Logout</a>
-              
+            </a>              
           
             {% else %} 
             <li class="nav-item mx-2">

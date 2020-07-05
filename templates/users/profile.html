@@ -13,11 +13,16 @@
         <div class="col-6 justify-content-right text-right"><img src="{{ g.user.img_url }}" alt="profile image" id="user-image" class="img img-thumbnail rounded-circle"></div>
         <div class="col-6 text-left mr-auto">
             <h2 class="h2">{{g.user.username}}</h2>
-            <button data-id="{{ g.user.id }}" id="update" class="btn btn-outline-primary badge my-2">Update Profile</button>
-
+            <div class="">
+            <!-- UPDATE BUTTON -->
+                <button data-id="{{ g.user.id }}" id="update" class="btn btn-outline-primary badge my-2">Update Profile</button>
+            <!-- LOGOUT BUTTON -->
+                <a class="nav-link btn btn-sm btn-outline-warning badge text-dark" href="{{ url_for('logout') }}">Logout</a>
+            </div>
+            <!-- USER INFO -->
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center profile-li">
-                   <p class="mb-0 profile-info">Email: </p><span class="badge badge-primary badge-pill">{{ g.user.email }}</span>
+                   <p class="mb-0 profile-info">Email: </p><span id="user-email" class="badge badge-primary badge-pill">{{ g.user.email }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center profile-li">
                     <a class="profile-info" href="{{ url_for('view_saved_recipes', id=g.user.id) }}">Recipes Saved:</a> <span class="badge badge-primary badge-pill">{{ g.user.recipes|length }}</span>
@@ -26,7 +31,6 @@
                     <a class="profile-info" href="{{ url_for('view_grocery_list', id=g.user.id) }}">Grocery List Items:</a> <span class="badge badge-primary badge-pill">{{ g.user.grocery_list.ingredients|length }}</span>
                 </li>
             </ul>
-            
         </div>        
     </div>
 
