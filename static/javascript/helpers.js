@@ -159,12 +159,12 @@ function showAddIngredient() {
 	}
 
 	const newAddIngredient = makeAddIngredient();
-	$(this).closest('li').prepend(newAddIngredient);
+	$(this).closest('li').before(newAddIngredient);
 	$('.add-ingredient').on('submit', handleAddIngredient);
 }
 
 function makeAddIngredient() {
-	return `<li class='list-group-item mb-1 text-center'>
+	return `<li class='list-group-item my-0 text-center'>
 	<form class="add-ingredient form-inline d-inline">
 	<input class="form-control" id="user-add-ingredient" type="text" placeholder="Add new ingredient..." required>
 	<button type="submit" id="show-add-ingredient" class='btn btn-sm btn-outline-primary'>
