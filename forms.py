@@ -3,7 +3,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.fields.html5 import URLField, EmailField
-from wtforms.validators import InputRequired, Email, Length, Optional
+from wtforms.validators import InputRequired, Email, Length, Optional, EqualTo
 
 
 class SignupForm(FlaskForm):
@@ -15,7 +15,10 @@ class SignupForm(FlaskForm):
         InputRequired(message="Email required"), Email(message="Invalid email")])
 
     password = PasswordField("Password", validators=[
-        InputRequired(message="Password required")])
+        InputRequired(message="Password required"), EqualTo('confirm', message='Passwords must match')])
+
+    confirm = PasswordField("Confirm Password", validators=[
+                            InputRequired(message="Password confirmation required")])
 
     img_url = URLField('Profile Image URL (optional)', validators=[Optional()])
 
