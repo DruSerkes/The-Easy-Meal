@@ -9,7 +9,7 @@ from models import db, User, Recipe
 import os
 
 # Use test database and don't clutter tests with SQL
-os.environ['DATABASE_URL'] = "postgresql:///easy_meals_test"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///easy_meals_test"
 app.config['SQLALCHEMY_ECHO'] = False
 
 # Make Flask errors be real errors, rather than HTML pages with error info

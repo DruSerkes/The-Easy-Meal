@@ -166,8 +166,8 @@ def add_measurement_for_ingredient(recipe_data, ingredient):
     try:
         ingredient_id = ingredient.get('id', None)
         recipe_id = recipe_data.get('id', None)
-        amount = i.get('amount', None)
-        unit = i.get('unit', None)
+        amount = ingredient.get('amount', None)
+        unit = ingredient.get('unit', None)
 
         new_measurement = Measurement(
             ingredient_id=ingredient_id, recipe_id=recipe_id, amont=amount, unit=unit)

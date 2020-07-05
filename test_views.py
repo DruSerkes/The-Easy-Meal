@@ -13,7 +13,7 @@ from flask import Flask
 connect_db(app)
 
 # Use test database and don't clutter tests with SQL
-os.environ['DATABASE_URL'] = "postgresql:///easy_meals_test"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///easy_meals_test"
 app.config['SQLALCHEMY_ECHO'] = False
 
 # Now we can import app
@@ -108,8 +108,6 @@ class ViewsTestCase(TestCase):
             resp = c.get('/login')
             html = resp.get_data(as_text=True)
             # check resp before login
-            import pdb
-            pdb.set_trace()
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Username', html)
             self.assertIn('</form>', html)
