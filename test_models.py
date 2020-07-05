@@ -18,12 +18,6 @@ app.config['TESTING'] = True
 db.drop_all()
 db.create_all()
 
-USER_DATA = {
-    'username': 'TEST USER',
-    'password': 'TEST PASSWORD',
-    'email': 'test@test.com',
-}
-
 
 class ModelsTestcase(TestCase):
     """ Unit tests for helper functions """
