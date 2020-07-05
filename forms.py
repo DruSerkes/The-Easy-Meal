@@ -1,10 +1,9 @@
 """ Form Models """
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField, DateField, BooleanField
+from wtforms import StringField, PasswordField
 from wtforms.fields.html5 import URLField, EmailField
 from wtforms.validators import InputRequired, Email, Length, Optional
-# import email_validator
 
 
 class SignupForm(FlaskForm):
@@ -12,7 +11,7 @@ class SignupForm(FlaskForm):
     username = StringField("Username", validators=[
         InputRequired(message="Username required")])
 
-    email = StringField("Email", validators=[
+    email = EmailField("Email", validators=[
         InputRequired(message="Email required"), Email(message="Invalid email")])
 
     password = PasswordField("Password", validators=[

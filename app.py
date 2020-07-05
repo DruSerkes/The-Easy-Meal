@@ -20,7 +20,7 @@ app.config['MAIL_PASSWORD'] = app_password
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_DEBUG'] = True  # Set to false once in production
+app.config['MAIL_DEBUG'] = False  # Set to false once in production
 app.config['MAIL_MAX_EMAILS'] = 1
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = False
@@ -241,7 +241,6 @@ def add_favorite(id):
         response = get_recipe(id)
         data = response.json()
 
-        # TODO take another look at this series of callback helpers
         recipe = add_recipe_to_db(data)
         g.user.recipes.append(recipe)
         db.session.commit()
@@ -370,7 +369,6 @@ def add_one_ingredient_to_list(list_id):
     return (response_json, 201)
 
 
-# TODO remove item checks session for ingredient and if so removes it
 @ app.route('/groceries/<int:list_id>', methods=['PATCH'])
 def remove_ingredient_from_list(list_id):
     """
@@ -378,7 +376,6 @@ def remove_ingredient_from_list(list_id):
     Removes ingredient from grocery list
     Returns JSON of update Grocery List and success message
     """
-    # Check if authorized
     if not g.user:
         return abort(401)
 
@@ -409,7 +406,6 @@ def remove_ingredient_from_list(list_id):
 @ app.route('/groceries/<int:list_id>', methods=['DELETE'])
 def empty_list(list_id):
     """ Remove all ingredients from a grocery list """
-    # Check if authorized
     if not g.user:
         return abort(401)
     try:
