@@ -10,6 +10,8 @@ import requests
 import os
 
 app = Flask(__name__)
+if __name__ == '__main__':
+    app.run()
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     'DATABASE_URL', "postgres:///easymeal")
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
