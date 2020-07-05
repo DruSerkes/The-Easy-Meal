@@ -29,6 +29,7 @@ app.config["SQLALCHEMY_ECHO"] = False
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY', "easysecretmeal")
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 
+
 toolbar = DebugToolbarExtension(app)
 mail = Mail(app)
 connect_db(app)
@@ -38,7 +39,7 @@ CURR_USER_KEY = "user_id"
 # API_BASE_URL = "https://api.spoonacular.com"
 API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 # API_KEY = api_key
-API_KEY = student_key
+API_KEY = os.environ['student_key']
 
 #####################################
 #     User Signup/Login/Logout      #
