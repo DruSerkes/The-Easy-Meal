@@ -14,6 +14,10 @@
         {% for ingredient in grocery_list.ingredients %}
         <li>{{ ingredient.name }}</li>
         {% endfor %}
+
+        {% for ingredient in session['ingredients'] %}
+        <li>{{ ingredient }}</li>
+        {% endfor %}
     </ol>
 
     <p>This email was send by {{g.user.username}} at EasyMeals.com</p>
