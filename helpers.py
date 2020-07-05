@@ -1,5 +1,5 @@
 """ Helper functions to keep views clean """
-# from secrets import student_key  # comment out for production
+from secrets import student_key  # comment out for production
 from models import User, db, Recipe, Ingredient, Measurement, Step
 from flask import request, session
 import requests
@@ -8,8 +8,9 @@ import os
 
 CURR_USER_KEY = "user_id"
 API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
-# API_KEY = os.environ.get('student_key', student_key)  # comment out for production
-API_KEY = os.environ['student_key']     # use this line for production
+# comment out for production
+API_KEY = os.environ.get('student_key', student_key)
+# API_KEY = os.environ['student_key']     # use this line for production
 
 
 valid_cuisines = ['african', 'chinese', 'japanese', 'korean', 'vietnamese', 'thai', 'indian', 'british', 'irish', 'french', 'italian', 'mexican',
