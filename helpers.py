@@ -1,5 +1,5 @@
 """ Helper functions to keep views clean """
-from secrets import student_key  # comment out for production
+# from secrets import student_key  # comment out for production
 from models import User, db, Recipe, Ingredient, Measurement, Step
 from flask import request, session
 import requests
