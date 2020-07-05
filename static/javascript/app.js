@@ -60,6 +60,7 @@ $('#clear-list').on('click', clearList);
 $('.favorite-form').on('click', '.fa-heart', handleFavorite);
 $('#update').on('click', showUpdateForm);
 $('#search-form').on('submit', handleSearch);
+$('#show-add-ingredient').on('click', showAddIngredient);
 if (sentinel !== null) intersectionObserver.observe(sentinel);
 
 /* 
@@ -103,8 +104,9 @@ async function loadItems() {
 	} else {
 		response.data.data.results.forEach((recipe) => {
 			showRecipeCard(recipe, response.data.data, response.data.favorites);
-			$('.favorite-form').on('click', '.fa-heart', handleFavorite);
 		});
+
+		$('.favorite-form').on('click', '.fa-heart', handleFavorite);
 		offset += 12;
 	}
 }
@@ -200,6 +202,22 @@ async function handleUserUpdate(evt) {
 	} else {
 		updateProfile(response);
 		displaySuccessAlert(response);
+	}
+}
+
+async function handleAddIngredient(evt) {
+	evt.preventDefault();
+	const id = $(this).closest('ul').data('id');
+	const ingredient = $('#user-add-ingredient').val();
+
+	const response = await axios.post(`/groceries/${id}`, (data = { ingredient }));
+
+	if (response.status === 201) {
+		const newItem = generateIngredientHTML(response.data.ingredient);
+		$(this).closest('li').html(newItem);
+	} else {
+		const data = { message: `Couldn't add ${ingredient}. Refresh and try again` };
+		displayAndRemove(data);
 	}
 }
 
@@ -303,7 +321,6 @@ function showUpdateForm() {
 function updateProfile(response) {
 	$('#user-email').text(`${response.data.user.email}`);
 	$('#user-image').attr('src', `${response.data.user.img_url}`);
-	// $('#user-profile').attr('src', `${response.data.user.img_url}`);
 	$('.avatar').attr('src', `${response.data.user.img_url}`);
 }
 
@@ -357,6 +374,36 @@ function confirmRemove() {
 		.tooltip()
 		.on('click', removeIngredientFromGroceryList)
 		.tooltip('hide');
+}
+
+function showAddIngredient() {
+	if ($('.add-ingredient').length !== 0) {
+		return;
+	}
+
+	const newAddIngredient = makeAddIngredient();
+	$(this).closest('li').prepend(newAddIngredient);
+	$('.add-ingredient').on('submit', handleAddIngredient);
+}
+
+function makeAddIngredient() {
+	return `<li class='list-group-item mb-1 text-center'>
+	<form class="add-ingredient form-inline d-inline">
+	<input class="form-control" id="user-add-ingredient" type="text" placeholder="Add new ingredient..." required>
+	<button type="submit" id="show-add-ingredient" class='btn btn-sm btn-outline-primary'>
+	Add
+	</button>
+	</form>
+	</li>
+	`;
+}
+
+function generateIngredientHTML(ingredient) {
+	return `
+	${ingredient}
+	<span class="btn" data-ingredient="${ingredient}">
+	<i class="far fa-trash-alt remove"></i>
+	</span>`;
 }
 
 function generateGroceryModalHTML(data) {
@@ -452,52 +499,3 @@ function createSentinelDivHTML() {
 /* TODO
 *   ORGANIZE THIS !!!
 */
-
-$('#show-add-ingredient').on('click', showAddIngredient);
-
-function showAddIngredient() {
-	if ($('.add-ingredient').length !== 0) {
-		return;
-	}
-
-	const newAddIngredient = makeAddIngredient();
-	$(this).closest('li').prepend(newAddIngredient);
-	$('.add-ingredient').on('submit', handleAddIngredient);
-}
-
-async function handleAddIngredient(evt) {
-	evt.preventDefault();
-	const id = $(this).closest('ul').data('id');
-	const ingredient = $('#user-add-ingredient').val();
-
-	const response = await axios.post(`/groceries/${id}`, (data = { ingredient }));
-
-	console.log(response);
-
-	if (response.status === 201) {
-		const newItem = generateIngredientHTML(response.data.ingredient);
-		$(this).closest('li').html(newItem);
-	} else {
-		const data = { message: `Couldn't add ${ingredient}. Refresh and try again` };
-		displayAndRemove(data);
-	}
-}
-
-function generateIngredientHTML(ingredient) {
-	return `
-	${ingredient}
-	<span class="btn" data-ingredient="${ingredient}">
-	<i class="far fa-trash-alt remove"></i>
-	</span>`;
-}
-function makeAddIngredient() {
-	return `<li class='list-group-item mb-1 text-center'>
-	<form class="add-ingredient form-inline d-inline">
-	<input class="form-control" id="user-add-ingredient" type="text" placeholder="Add new ingredient..." required>
-	<button type="submit" id="show-add-ingredient" class='btn btn-sm btn-outline-primary'>
-	Add
-	</button>
-	</form>
-	</li>
-	`;
-}
