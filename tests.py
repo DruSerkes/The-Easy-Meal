@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app import app
+from app import app, CURR_USER_KEY
 from models import db, User, Recipe,
 
 # Use test database and don't clutter tests with SQL

@@ -18,9 +18,10 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_DEFAULT_SENDER'] = (
     'Easy Meals', 'EasyMealsOfficial@gmail.com')
 app.config['MAIL_USERNAME'] = 'EasyMealsOfficial@gmail.com'
-# app.config['MAIL_PASSWORD'] = os.environ.get('app_password', app_password)    # Comment out for production
+app.config['MAIL_PASSWORD'] = os.environ.get(
+    'app_password', app_password)    # Comment out for production
 # Comment out for development
-app.config['MAIL_PASSWORD'] = os.environ['app_password']
+# app.config['MAIL_PASSWORD'] = os.environ['app_password']
 
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
