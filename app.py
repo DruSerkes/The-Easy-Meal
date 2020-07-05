@@ -18,7 +18,10 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_DEFAULT_SENDER'] = (
     'Easy Meals', 'EasyMealsOfficial@gmail.com')
 app.config['MAIL_USERNAME'] = 'EasyMealsOfficial@gmail.com'
-app.config['MAIL_PASSWORD'] = os.environ.get('app_password', app_password)
+# app.config['MAIL_PASSWORD'] = os.environ.get('app_password', app_password)    # Comment out for production
+# Comment out for development
+app.config['MAIL_PASSWORD'] = os.environ['app_password']
+
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
@@ -39,7 +42,12 @@ CURR_USER_KEY = "user_id"
 # API_BASE_URL = "https://api.spoonacular.com"
 API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 # API_KEY = api_key
-API_KEY = os.environ.get('student_key', student_key)
+
+# Comment out for production
+# API_KEY = os.environ.get('student_key', student_key)
+
+# Comment out for development
+API_KEY = os.environ['student_key']
 
 #####################################
 #     User Signup/Login/Logout      #
