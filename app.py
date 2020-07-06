@@ -5,7 +5,8 @@ from forms import SignupForm, LoginForm, GroceryListForm
 from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db, valid_cuisines, valid_diets, do_logout, do_login
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
-from secrets import app_password, api_key, student_key  # comment out for production
+# COMMENT OUT THIS LINE FOR PRODUCTION
+from secrets import app_password, api_key, student_key
 import requests
 import os
 
