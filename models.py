@@ -150,6 +150,7 @@ class Ingredient(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False, unique=True)
+    original = db.Column(db.String)
 
     def __repr__(self):
         return f'<Ingredient: {self.name}>'
@@ -158,7 +159,8 @@ class Ingredient(db.Model):
         """ Serialize Ingredient instance for JSON """
         return {
             'id': self.id,
-            'name': self.name
+            'name': self.name,
+            'original': self.original
         }
 
 

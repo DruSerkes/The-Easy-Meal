@@ -137,26 +137,40 @@ def add_ingredients_to_db(recipe_data):
     recipe_data (obj): recipe data from the Spoonacular API with extendedIngredients - a list of ingredient objects 
     Returns a list of SQLAlchemy ingredient objects
     """
-    ingredients = []
+    ingredient_list = []
     for ingredient in recipe_data['extendedIngredients']:
         try:
-            id = ingredient.get('id', None)
-            name = ingredient.get('name', None)
+            db_ingredient = Ingredient.query.filter_by(
+                id=ingredient['id']).first()
+            if db_ingredient:
+                ingredient_list.append(db_ingredient)
+            else:
+                id = ingredient.get('id', None)
+                name = ingredient.get('name', None)
+                original = ingredient.get('original', None)
 
-            new_ingredient = Ingredient(id=id, name=name)
-            add_and_commit(new_ingredient)
+                new_ingredient = Ingredient(
+                    id=id, name=name, original=original)
 
-            add_measurement_for_ingredient(recipe_data, new_ingredient)
+                new_ingredient = add_and_commit(new_ingredient)
+                print(f"\n Created new ingredient {new_ingredient} \n")
 
-            ingredients.append(new_ingredient)
-        except Exception:
+                ingredient_list.append(new_ingredient)
+                print(f"\n Ingredient added to list: {ingredient_list} \n")
+
+                recipe_data = add_measurement_for_ingredient(
+                    ingredient, recipe_data)
+
+        except Exception as e:
+            print(str(e))
+            # import pdb
+            # pdb.set_trace()
             db.session.rollback()
-            print(Exception)
             continue
-    return ingredients
+    return ingredient_list
 
 
-def add_measurement_for_ingredient(recipe_data, ingredient):
+def add_measurement_for_ingredient(ingredient, recipe_data):
     """
     Add measurements for corresponding ingredients in a recipe to the db 
     recipe_data (obj): recipe data from the Spoonacular API 
@@ -164,17 +178,21 @@ def add_measurement_for_ingredient(recipe_data, ingredient):
     Returns the recipe from the db 
     """
     try:
-        ingredient_id = ingredient.get('id', None)
         recipe_id = recipe_data.get('id', None)
+        ingredient_id = ingredient.get('id', None)
         amount = ingredient.get('amount', None)
         unit = ingredient.get('unit', None)
-
         new_measurement = Measurement(
-            ingredient_id=ingredient_id, recipe_id=recipe_id, amont=amount, unit=unit)
-        add_and_commit(new_measurement)
-    except Exception:
+            ingredient_id=ingredient_id, recipe_id=recipe_id, amount=amount, unit=unit)
+        new_measurement = add_and_commit(new_measurement)
+
+    except Exception as e:
         db.session.rollback()
-        print(Exception)
+        # import pdb
+        # pdb.set_trace()
+        print('***********************')
+        print(str(e))
+        print('***********************')
 
     return recipe_data
 
@@ -204,8 +222,10 @@ def add_recipe_to_db(recipe_data):
     recipe = Recipe(id=id, title=title, image=image, sourceName=sourceName, sourceUrl=sourceUrl,
                     readyInMinutes=readyInMinutes, servings=servings, instructions=instructions, vegetarian=vegetarian, vegan=vegan, glutenFree=glutenFree, dairyFree=dairyFree, sustainable=sustainable, ketogenic=ketogenic, whole30=whole30)
     try:
-        add_and_commit(recipe)
+        recipe = add_and_commit(recipe)
     except Exception:
+        # import pdb
+        # pdb.set_trace()
         db.session.rollback()
         print(str(Exception))
         return "Recipe couldn't be saved. Please try again."
