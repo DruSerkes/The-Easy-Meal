@@ -1,12 +1,10 @@
 # The Easy Meal
 
----
 
 ##### Link to Deployed Site:
 
 [The Easy Meal](https://the-easy-meal.herokuapp.com/)
 
----
 
 __A web app for finding recipes & putting together a shopping list__  
 
@@ -20,7 +18,6 @@ From the recipe detail page, users can auto-populate their grocery list with the
 
 While viewing their grocery list, users can email their list to themselves, clear their list, and add or remove individual items at their discretion. 
 
----
 ## Features
 
 This web app goes a bit beyond basic CRUD with the recipe search and grocery list email features.  
@@ -28,8 +25,7 @@ This web app goes a bit beyond basic CRUD with the recipe search and grocery lis
 I chose to focus my time this app implementing these features as I believe they offered the greatest value to users.  
 
 Looking forward I would love to revisit this project to add the ability to sort user favorites, and view/follow other users to see their favorite recipes. 
-
---- 
+ 
 
 ## Data:  
 
@@ -37,7 +33,6 @@ This website uses the [Spoonacular API](https://spoonacular.com/food-api/) for r
 
 They have a really well-made product with excellent customer service, so integrating with their API was _almost_ a no-brainer. 
 
----
 
 ## Tech:
 
