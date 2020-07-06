@@ -6,7 +6,7 @@ from helpers import generate_login_data, generate_user_data, generate_headers, g
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
 # COMMENT OUT THIS LINE FOR PRODUCTION
-from secrets import app_password, api_key, student_key
+# from secrets import app_password, api_key, student_key
 import requests
 import os
 
@@ -19,10 +19,10 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_DEFAULT_SENDER'] = (
     'Easy Meals', 'EasyMealsOfficial@gmail.com')
 app.config['MAIL_USERNAME'] = 'EasyMealsOfficial@gmail.com'
-app.config['MAIL_PASSWORD'] = os.environ.get(
-    'app_password', app_password)    # Comment out for production
-# Comment out for development
-# app.config['MAIL_PASSWORD'] = os.environ['app_password']
+# COMMENT OUT THIS LINE FOR PRODUCTION
+# app.config['MAIL_PASSWORD'] = os.environ.get('app_password', app_password)
+# Comment OUT THIS LINE FOR DEVELOPMENT
+app.config['MAIL_PASSWORD'] = os.environ['app_password']
 
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -45,11 +45,11 @@ CURR_USER_KEY = "user_id"
 API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 # API_KEY = api_key
 
-# Comment out for production
-API_KEY = os.environ.get('student_key', student_key)
+# COMMENT OUT FOR PRODUCTION
+# API_KEY = os.environ.get('student_key', student_key)
 
-# Comment out for development
-# API_KEY = os.environ['student_key']
+# COMMENT OUT FOR DEVELOPMENT
+API_KEY = os.environ['student_key']
 
 #####################################
 #     User Signup/Login/Logout      #
