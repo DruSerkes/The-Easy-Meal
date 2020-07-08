@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Easy Meals{% endblock %}</title>
+    <meta property="og:title" content="The Easy Meal" />
+    <meta property="og:description" content="Do you love food? We have over 380,000 diverse recipes from the web ready for you to make! Lets get cookin!">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&w=1000&q=80">
+    <meta property='og:url' content='https://the-easy-meal.herokuapp.com/'/>
+    <meta name="title" content="The Easy Meal" />
+    <meta name="description" content="Do you love food? We have over 380,000 diverse recipes from the web ready for you to make! Lets get cookin!">
+    <meta name="author" content="Dru Serkes">
+    <title>{% block title %}The Easy Meal{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/styles/theme_1593064276523.css">
     <link rel="stylesheet" href="/static/styles/styles.css">
@@ -12,7 +19,7 @@
 
     <!-- Begin Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <a class="navbar-brand" href="{{ url_for('home_page') }}">Easy Meals</a>
+        <a class="navbar-brand" href="{{ url_for('home_page') }}">The Easy Meal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
