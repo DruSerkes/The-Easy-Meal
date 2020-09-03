@@ -138,17 +138,6 @@ async function removeIngredientFromGroceryList(evt) {
 	displayAndRemove.call(this, response.data);
 }
 
-async function sendEmail() {
-	const id = $(this).data('id');
-	response = await axios.get(`/email/${id}`);
-
-	if (response.data.errors) {
-		displayErrorAlert(response);
-	} else {
-		displaySuccessAlert(response);
-	}
-}
-
 async function clearList() {
 	const id = $(this).data('id');
 	response = await axios.delete(`/groceries/${id}`);
@@ -157,6 +146,17 @@ async function clearList() {
 		displayErrorAlert(response);
 	} else {
 		updateListContainer();
+		displaySuccessAlert(response);
+	}
+}
+
+async function sendEmail() {
+	const id = $(this).data('id');
+	response = await axios.get(`/email/${id}`);
+
+	if (response.data.errors) {
+		displayErrorAlert(response);
+	} else {
 		displaySuccessAlert(response);
 	}
 }
