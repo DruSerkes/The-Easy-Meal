@@ -342,8 +342,7 @@ def add_ingredients_to_list():
     # Make a grocery list if user doesn't already have one
     if not g.user.grocery_list:
         new_list = GroceryList(user_id=g.user.id)
-        db.session.add(new_list)
-        db.session.commit()
+        add_and_commit(new_list)
     # Grab most recent grocery list and recipe being added
     grocery_list = GroceryList.query.filter_by(user_id=g.user.id).order_by(
         GroceryList.date_created.desc()).first()
