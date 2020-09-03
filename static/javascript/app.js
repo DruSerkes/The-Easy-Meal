@@ -109,10 +109,11 @@ async function handleSearch(evt) {
 	offset = 0;
 
 	const response = await axios.get('/search', { params: { id, query, diet, cuisine, offset } });
-	if (response.data !== {}) {
-		displayResults(response);
+	if (response.status !== 200) {
+		console.log('There was an error - please refresh and try again');
+		console.log('response: ', response);
 	} else {
-		console.log('needs logic!');
+		displayResults(response);
 	}
 
 	setTimeout(() => {
