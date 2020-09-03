@@ -304,7 +304,8 @@ def view_recipe_details(id):
     if not recipe:
         response = get_recipe(id)
         data = response.json()
-        return render_template('recipes/details.html', recipe=data)
+        recipe = add_recipe_to_db(data)
+        return render_template('recipes/details.html', recipe=recipe)
     else:
         return render_template('recipes/details.html', recipe=recipe)
 
