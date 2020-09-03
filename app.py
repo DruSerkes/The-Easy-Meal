@@ -234,6 +234,23 @@ def update_user(id):
         return jsonify(errors=str(e))
 
 
+########################
+#    Recipe Routes     #
+########################
+
+
+@ app.route('/favorites/')
+def view_saved_recipes():
+    """ Route to view saved recipes """
+    if not g.user:
+        flash('You must be logged in to do that', 'warning')
+        return redirect(url_for('login'))
+
+    id_list = [recipe.id for recipe in g.user.recipes]
+
+    return render_template('users/favorites.html', id_list=id_list)
+
+
 @ app.route('/favorites/<int:id>', methods=['POST'])
 def add_favorite(id):
     """ Favorite a recipe """
@@ -274,23 +291,6 @@ def remove_favorite(id):
     except Exception as e:
         print(str(e))
         return jsonify(errors=str(e))
-
-
-########################
-#    Recipe Routes     #
-########################
-
-
-@ app.route('/favorites/')
-def view_saved_recipes():
-    """ Route to view saved recipes """
-    if not g.user:
-        flash('You must be logged in to do that', 'warning')
-        return redirect(url_for('login'))
-
-    id_list = [recipe.id for recipe in g.user.recipes]
-
-    return render_template('users/favorites.html', id_list=id_list)
 
 
 @ app.route('/recipes/<int:id>')
