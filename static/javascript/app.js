@@ -143,14 +143,8 @@ async function sendEmail() {
 	response = await axios.get(`/email/${id}`);
 
 	if (response.data.errors) {
-		// const alertHTML = generateAlertHTML(response.data.errors, 'danger');
-		// $('body').append(alertHTML).alert();
-		// $('.feedback').hide().fadeIn(800).delay(300).fadeOut(800);
 		displayErrorAlert(response);
 	} else {
-		// const alertHTML = generateAlertHTML(response.data.message, 'success');
-		// $('body').append(alertHTML).alert();
-		// $('.feedback').hide().fadeIn(800).delay(300).fadeOut(800);
 		displaySuccessAlert(response);
 	}
 }
