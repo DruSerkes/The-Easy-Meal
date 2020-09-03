@@ -31,7 +31,7 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[
         InputRequired(message="Password required")])
 
-
+# Unused feature
 class GroceryListForm(FlaskForm):
     """ Form to create a new grocery list """
     title = StringField("List title", validators=[

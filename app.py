@@ -2,11 +2,11 @@ from flask import Flask, render_template, redirect, session, request, flash, jso
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User, Recipe, Ingredient, GroceryList, Step, Measurement, UserRecipe
 from forms import SignupForm, LoginForm, GroceryListForm
-from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db, valid_cuisines, valid_diets, do_logout, do_login
+from helpers import generate_login_data, generate_user_data, generate_headers, generate_search_params, add_and_commit, get_recipe, do_search, add_ingredients_to_db, add_measurement_for_ingredient, add_recipe_to_db, valid_cuisines, valid_diets, do_logout, do_login, API_BASE_URL
 from flask_mail import Mail, Message
 from sqlalchemy.exc import IntegrityError
 # COMMENT OUT THIS LINE FOR PRODUCTION
-# from secrets import app_password, api_key, student_key
+from secrets import app_password, api_key, student_key
 import requests
 import os
 
@@ -20,9 +20,9 @@ app.config['MAIL_DEFAULT_SENDER'] = (
     'Easy Meals', 'EasyMealsOfficial@gmail.com')
 app.config['MAIL_USERNAME'] = 'EasyMealsOfficial@gmail.com'
 # COMMENT OUT THIS LINE FOR PRODUCTION
-# app.config['MAIL_PASSWORD'] = os.environ.get('app_password', app_password)
+app.config['MAIL_PASSWORD'] = os.environ.get('app_password', app_password)
 # Comment OUT THIS LINE FOR DEVELOPMENT
-app.config['MAIL_PASSWORD'] = os.environ['app_password']
+# app.config['MAIL_PASSWORD'] = os.environ['app_password']
 
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -42,14 +42,14 @@ db.create_all()
 
 CURR_USER_KEY = "user_id"
 # API_BASE_URL = "https://api.spoonacular.com"
-API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+# API_BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 # API_KEY = api_key
 
 # COMMENT OUT FOR PRODUCTION
-# API_KEY = os.environ.get('student_key', student_key)
+API_KEY = os.environ.get('student_key', student_key)
 
 # COMMENT OUT FOR DEVELOPMENT
-API_KEY = os.environ['student_key']
+# API_KEY = os.environ['student_key']
 
 #####################################
 #     User Signup/Login/Logout      #
@@ -149,9 +149,6 @@ def logout():
 @ app.route('/')
 def home_page():
     """ Home Page """
-    if not g.user:
-        return redirect(url_for('signup'))
-
     return render_template('index.html')
 
 
