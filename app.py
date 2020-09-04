@@ -366,19 +366,22 @@ def add_ingredients_to_list():
 
 @app.route('/groceries/<int:list_id>', methods=['POST'])
 def add_one_ingredient_to_list(list_id):
-    """ Add a single ingredient to users grocery list """
+    """ Add a single ingredient to users grocery list via the session """
     if not g.user:
         return abort(401)
     grocery_list = GroceryList.query.get_or_404(list_id)
     ingredient = request.json.get('ingredient', None)
 
-    if ingredient:
+    if not ingredient:
+        response_json = jsonify(message='ingredient required')
+        return (response_json, 400)
+    # add the ingredient to the session and return it 
+    else:
         ingredients = session.get('ingredients', [])
         ingredients.append(ingredient)
         session['ingredients'] = ingredients
-
-    response_json = jsonify(ingredient=ingredient)
-    return (response_json, 201)
+        response_json = jsonify(ingredient=ingredient)
+        return (response_json, 201)
 
 
 @ app.route('/groceries/<int:list_id>', methods=['PATCH'])
