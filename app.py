@@ -421,9 +421,6 @@ def remove_ingredient_from_list(list_id):
         return jsonify(errors=str(e))
 
 
-    
-
-
 @ app.route('/groceries/<int:list_id>', methods=['DELETE'])
 def empty_list(list_id):
     """ Remove all ingredients from a grocery list """
