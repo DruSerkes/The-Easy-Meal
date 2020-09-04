@@ -395,7 +395,7 @@ def remove_ingredient_from_list(list_id):
         return abort(401)
 
     grocery_list = GroceryList.query.get_or_404(list_id)
-
+    # session ingredient removal logic
     if not request.json['id']:
         ingredients = session.get('ingredients', [])
         i_to_remove = request.json['ingredient']
@@ -404,18 +404,24 @@ def remove_ingredient_from_list(list_id):
         response_json = jsonify(
             grocery_list=grocery_list.serialize(), message="List updated!")
         return (response_json, 200)
+    # db ingredient removal logic 
+    try:
+        i_to_remove = Ingredient.query.get_or_404(request.json['id'])
 
-    i_to_remove = Ingredient.query.get_or_404(request.json['id'])
+        for ingredient in grocery_list.ingredients:
+            if ingredient == i_to_remove:
+                grocery_list.ingredients.remove(ingredient)
+                break
+        db.session.commit()
 
-    for ingredient in grocery_list.ingredients:
-        if ingredient == i_to_remove:
-            grocery_list.ingredients.remove(ingredient)
-            break
-    db.session.commit()
+        response_json = jsonify(grocery_list=grocery_list.serialize(), message="List updated!")
+        return (response_json, 200)
+    except Exception as e:
+        print(str(e))
+        return jsonify(errors=str(e))
 
-    response_json = jsonify(
-        grocery_list=grocery_list.serialize(), message="List updated!")
-    return (response_json, 200)
+
+    
 
 
 @ app.route('/groceries/<int:list_id>', methods=['DELETE'])
