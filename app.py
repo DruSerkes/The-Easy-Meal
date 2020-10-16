@@ -375,7 +375,7 @@ def add_one_ingredient_to_list(list_id):
     if not ingredient:
         response_json = jsonify(message='ingredient required')
         return (response_json, 400)
-    # add the ingredient to the session and return it 
+    # add the ingredient to the session and return it
     else:
         ingredients = session.get('ingredients', [])
         ingredients.append(ingredient)
@@ -404,7 +404,7 @@ def remove_ingredient_from_list(list_id):
         response_json = jsonify(
             grocery_list=grocery_list.serialize(), message="List updated!")
         return (response_json, 200)
-    # db ingredient removal logic 
+    # db ingredient removal logic
     try:
         i_to_remove = Ingredient.query.get_or_404(request.json['id'])
 
@@ -414,7 +414,8 @@ def remove_ingredient_from_list(list_id):
                 break
         db.session.commit()
 
-        response_json = jsonify(grocery_list=grocery_list.serialize(), message="List updated!")
+        response_json = jsonify(
+            grocery_list=grocery_list.serialize(), message="List updated!")
         return (response_json, 200)
     except Exception as e:
         print(str(e))
