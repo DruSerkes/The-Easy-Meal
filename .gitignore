@@ -7,3 +7,4 @@ secrets.py
 static/images/rickroll.gif
 static/images/tg.jpeg
 templates/tg.html
+.vscode/

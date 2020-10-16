@@ -2,7 +2,8 @@ from unittest import TestCase
 
 from models import User, db, Recipe, Ingredient, Measurement, Step
 from helpers import CURR_USER_KEY, generate_headers, generate_search_params, generate_login_data, generate_user_data
-from secrets import student_key 
+from secrets import student_key
+
 
 class TestData():
     def __init__(self, data):
@@ -16,7 +17,9 @@ class TestForm():
         self.email = email
         self.img_url = img_url
 
-form = TestForm(username=TestData("test"), password=TestData("testword"), email=TestData("test@test.com"), img_url=TestData("test_url"))
+
+form = TestForm(username=TestData("test"), password=TestData(
+    "testword"), email=TestData("test@test.com"), img_url=TestData("test_url"))
 
 
 class HelpersTestCase(TestCase):
@@ -43,7 +46,7 @@ class HelpersTestCase(TestCase):
         })
 
     def test_generate_user_data(self):
-        """ generate_user_data tests """ 
+        """ generate_user_data tests """
         self.assertIsInstance(generate_user_data(form), object)
         self.assertEqual(generate_user_data(form), {
             'username': form.username.data,
@@ -53,11 +56,9 @@ class HelpersTestCase(TestCase):
         })
 
     def test_generate_login_data(self):
-        """ generate_user_data tests """ 
+        """ generate_user_data tests """
         self.assertIsInstance(generate_login_data(form), object)
         self.assertEqual(generate_login_data(form), {
             'username': form.username.data,
             'password': form.password.data,
         })
-    
-        

@@ -20,7 +20,7 @@ db.create_all()
 
 
 class ModelsTestcase(TestCase):
-    """ Unit tests for helper functions """
+    """ Unit tests for Models """
 
     def setUp(self):
         """Make demo data."""
