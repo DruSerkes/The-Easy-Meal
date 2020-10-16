@@ -98,10 +98,10 @@ footer {
 #profile-link {
 	width: 70px;
     height: 70px;
-    background-position: center;
+    background-position: top;
     background-repeat: no-repeat;
-    background-size: contain;
-    border-radius: 50px;
+	background-size: cover;
+	border-radius: 50px;
 }
 
 /*****************/
